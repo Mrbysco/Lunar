@@ -1,0 +1,26 @@
+{
+  "lunar.event.start": "A %s has appeared!",
+
+  "lunar.event.blood_moon": "Blood Moon",
+  "lunar.event.miner_moon": "Miner Moon",
+  "lunar.event.crimson_moon": "Crimson Moon",
+  "lunar.event.white_moon": "White Moon",
+  "lunar.event.big_moon": "Big Moon",
+  "lunar.event.tiny_moon": "Tiny Moon",
+  "lunar.event.bad_omen_moon": "Bad Omen Moon",
+  "lunar.event.hero_moon": "Hero Moon",
+
+  "text.autoconfig.lunar.option.general": "General",
+  "text.autoconfig.lunar.option.general.lunarEventChance": "Lunar Event Chance",
+  "text.autoconfig.lunar.option.events": "Events",
+  "text.autoconfig.lunar.option.events.bloodMoonWeight": "Blood Moon Weight",
+  "text.autoconfig.lunar.option.events.crimsonMoonWeight": "Crimson Moon Weight",
+  "text.autoconfig.lunar.option.events.minerMoonWeight": "Miner Moon Weight",
+  "text.autoconfig.lunar.option.events.whiteMoonWeight": "White Moon Weight",
+  "text.autoconfig.lunar.option.events.tinyMoonWeight": "Tiny Moon Weight",
+  "text.autoconfig.lunar.option.events.bigMoonWeight": "Big Moon Weight",
+  "text.autoconfig.lunar.option.events.badOmenMoonWeight": "Bad Omen Moon Weight",
+  "text.autoconfig.lunar.option.events.heroMoonWeight": "Hero Moon Weight",
+  "text.autoconfig.lunar.option.crimson": "Crimson",
+  "text.autoconfig.lunar.option.events.crimsonReplacements": "Crimson Replacements"
+}

@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+issueTrackerURL="https://github.com/Mrbysco/Lunar/issues"
+license="MIT"
+
+[[mods]]
+modId="lunar"
+version="${file.jarVersion}"
+displayName="Lunar"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/lunar"
+logoFile="icon.png"
+authors="Mrbysco"
+description='''
+Adding Lunar events to the game
+'''
+[[dependencies.lunar]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18.2,1.19)"
+ordering="NONE"
+side="BOTH"

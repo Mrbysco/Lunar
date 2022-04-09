@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8.4",
+  "package": "com.mrbysco.lunar.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+	"BaseSpawnerMixin",
+	"CatSpawnerMixin",
+	"NaturalSpawnerMixin",
+	"PlayerListMixin"
+  ],
+  "client": [
+  ],
+  "server": [
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}
