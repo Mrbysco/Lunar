@@ -45,6 +45,15 @@ public interface ILunarEvent {
 	}
 
 	/**
+	 * Called to change the texture of the moon.
+	 *
+	 * @return the resource location of the custom moon texture
+	 */
+	default ResourceLocation moonTexture() {
+		return null;
+	}
+
+	/**
 	 * The weight in which the lunar event will be picked.
 	 *
 	 * @return The spawn weight, 0 being disabled and 100 being really common (min 0, max 100)

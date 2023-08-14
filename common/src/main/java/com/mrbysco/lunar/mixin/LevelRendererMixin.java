@@ -6,12 +6,14 @@ import com.mrbysco.lunar.client.MoonHandler;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -50,5 +52,22 @@ public class LevelRendererMixin {
 			matrix.multiply(MoonHandler.getMoonScale());
 		}
 		return matrix;
+	}
+
+	@ModifyArg(method = "renderSky",
+			slice = @Slice(
+					from = @At(ordinal = 0, value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/resources/ResourceLocation;)V"),
+					to = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getMoonPhase()I")
+			),
+			at = @At(
+					value = "INVOKE",
+					target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/resources/ResourceLocation;)V"),
+			index = 1)
+	public ResourceLocation leashedRestoreLeashFromSaveChangeDrop(ResourceLocation location) {
+		ResourceLocation customLocation = MoonHandler.getMoonTexture();
+		if (customLocation != null) {
+			return customLocation;
+		}
+		return location;
 	}
 }

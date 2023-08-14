@@ -5,11 +5,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 public class MoonHandler {
 	private static String moonID = null;
 	private static float[] moonColor = null;
 	private static Matrix4f moonScale;
+	private static ResourceLocation moonTexture;
 
 	public static void colorTheMoon(ClientLevel level, PoseStack poseStack, Matrix4f matrix4f, float f, Camera camera) {
 		if (isEventActive()) {
@@ -28,10 +31,15 @@ public class MoonHandler {
 		}
 	}
 
+	public static void setMoonTexture(@Nullable ResourceLocation location) {
+		moonTexture = location;
+	}
+
 	public static void disableMoon() {
 		moonColor = null;
 		moonID = null;
 		moonScale = null;
+		moonTexture = null;
 	}
 
 	public static boolean isEventActive() {
@@ -40,6 +48,10 @@ public class MoonHandler {
 
 	public static boolean isMoonScaled() {
 		return moonScale != null;
+	}
+
+	public static ResourceLocation getMoonTexture() {
+		return moonTexture;
 	}
 
 	public static Matrix4f getMoonScale() {
