@@ -18,7 +18,7 @@ public class BadOmenMoonEvent extends LunarEvent {
 
 	@Override
 	public int spawnWeight() {
-		return Services.PLATFORM.getMinerMoonWeight();
+		return Services.PLATFORM.getBadOmenMoonWeight();
 	}
 
 	@Override
