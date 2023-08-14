@@ -5,39 +5,36 @@
   "name": "Lunar",
   "description": "Adding Lunar events to the game",
   "authors": [
-	"Mrbysco, ShyNieke"
+    "Mrbysco, ShyNieke"
   ],
   "contact": {
-	"homepage": "https://www.curseforge.com/minecraft/mc-mods/lunar",
-	"sources": "https://github.com/Mrbysco/Lunar",
-	"issues": "https://github.com/Mrbysco/Lunar/issues"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/lunar",
+    "sources": "https://github.com/Mrbysco/Lunar",
+    "issues": "https://github.com/Mrbysco/Lunar/issues"
   },
   "license": "MIT",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
-	"main": [
-	  "com.mrbysco.lunar.Lunar"
-	],
-	"client": [
-	  "com.mrbysco.lunar.LunarClient"
-	],
-	"modmenu": [
-	  "com.mrbysco.lunar.config.LunarModMenuIntegration"
-	]
+    "main": [
+      "com.mrbysco.lunar.Lunar"
+    ],
+    "client": [
+      "com.mrbysco.lunar.LunarClient"
+    ],
+    "modmenu": [
+      "com.mrbysco.lunar.config.LunarModMenuIntegration"
+    ]
   },
   "mixins": [
-	"lunar.mixins.json",
-	"lunar.fabric.mixins.json"
+    "lunar.mixins.json",
+    "lunar.fabric.mixins.json"
   ],
   "depends": {
-	"fabricloader": ">=0.13",
-	"fabric": "*",
-	"minecraft": "1.18.x",
-	"java": ">=17",
-	"cloth-config": ">=6.0.42"
-  },
-  "suggests": {
-	"another-mod": "*"
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": "1.19.x",
+    "java": ">=17",
+    "cloth-config": ">=7.0.67"
   }
 }

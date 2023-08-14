@@ -7,6 +7,7 @@ import com.mrbysco.lunar.registry.LunarEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -16,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-import java.util.Random;
 import java.util.UUID;
 
 public class BloodMoonEvent extends LunarEvent {
@@ -46,7 +46,7 @@ public class BloodMoonEvent extends LunarEvent {
 	public void applySpawnEffect(LivingEntity livingEntity, MobSpawnType spawnType) {
 		if (spawnType == MobSpawnType.NATURAL) {
 			final float difficultyMultiplier = livingEntity.level.getCurrentDifficultyAt(livingEntity.blockPosition()).getSpecialMultiplier();
-			final Random random = livingEntity.getRandom();
+			final RandomSource random = livingEntity.getRandom();
 
 			AttributeInstance attackAttribute = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
 			if (attackAttribute != null) {

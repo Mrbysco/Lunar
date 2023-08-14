@@ -33,7 +33,7 @@ public class Lunar {
 		MinecraftForge.EVENT_BUS.addListener(this::onSleepCheck);
 		MinecraftForge.EVENT_BUS.addListener(this::onLivingSpawn);
 		MinecraftForge.EVENT_BUS.addListener(this::onCheckSpawn);
-		MinecraftForge.EVENT_BUS.addListener(this::onWorldTick);
+		MinecraftForge.EVENT_BUS.addListener(this::onLevelTick);
 		MinecraftForge.EVENT_BUS.addListener(this::onLogin);
 
 		MinecraftForge.EVENT_BUS.addListener(this::onCommandRegister);
@@ -50,7 +50,7 @@ public class Lunar {
 	}
 
 	private void onSleepCheck(SleepingLocationCheckEvent event) {
-		if (event.getEntityLiving() instanceof Player player && player.level.dimension().equals(Level.OVERWORLD)) {
+		if (event.getEntity() instanceof Player player && player.level.dimension().equals(Level.OVERWORLD)) {
 			EventResult result = LunarHandler.canSleep(player, event.getSleepingLocation());
 			if (result != EventResult.DEFAULT) {
 				event.setResult(result == EventResult.DENY ? Result.DENY : Result.ALLOW);
@@ -59,14 +59,14 @@ public class Lunar {
 	}
 
 	private void onLivingSpawn(LivingSpawnEvent.SpecialSpawn event) {
-		if (event.getEntityLiving().level.dimension().equals(Level.OVERWORLD)) {
-			LunarHandler.uponLivingSpawn(event.getSpawnReason(), event.getEntityLiving());
+		if (event.getEntity().level.dimension().equals(Level.OVERWORLD)) {
+			LunarHandler.uponLivingSpawn(event.getSpawnReason(), event.getEntity());
 		}
 	}
 
 	private void onCheckSpawn(LivingSpawnEvent.CheckSpawn event) {
-		if (event.getEntityLiving().level.dimension().equals(Level.OVERWORLD)) {
-			EventResult spawnResult = LunarHandler.getSpawnResult(event.getSpawnReason(), event.getEntityLiving());
+		if (event.getEntity().level.dimension().equals(Level.OVERWORLD)) {
+			EventResult spawnResult = LunarHandler.getSpawnResult(event.getSpawnReason(), event.getEntity());
 			if (spawnResult != EventResult.DEFAULT) {
 				if (spawnResult == EventResult.ALLOW) {
 					event.setResult(Result.ALLOW);
@@ -77,16 +77,14 @@ public class Lunar {
 		}
 	}
 
-	private void onWorldTick(TickEvent.WorldTickEvent event) {
-		if (event.phase == TickEvent.Phase.END && event.side.isServer()) {
-			if (event.world.dimension().equals(Level.OVERWORLD)) {
-				LunarHandler.onWorldTick(event.world);
-			}
+	private void onLevelTick(TickEvent.LevelTickEvent event) {
+		if (event.phase == TickEvent.Phase.END && event.side.isServer() && event.level.dimension().equals(Level.OVERWORLD)) {
+			LunarHandler.onWorldTick(event.level);
 		}
 	}
 
 	public void onLogin(PlayerLoggedInEvent event) {
-		Player player = event.getPlayer();
+		Player player = event.getEntity();
 		Level level = player.level;
 		if (!level.isClientSide) {
 			LunarPhaseData phaseData = LunarPhaseData.get(player.level);

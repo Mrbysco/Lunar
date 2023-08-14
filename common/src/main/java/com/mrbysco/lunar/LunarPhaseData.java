@@ -3,9 +3,8 @@ package com.mrbysco.lunar;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.ILunarEvent;
 import com.mrbysco.lunar.registry.LunarRegistry;
-import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -71,8 +70,8 @@ public class LunarPhaseData extends SavedData {
 			if (rng <= Services.PLATFORM.getLunarChance()) {
 				ILunarEvent event = LunarRegistry.instance().getRandomLunarEvent(level);
 				if (event != null) {
-					TranslatableComponent startComponent = new TranslatableComponent("lunar.event.start", new TranslatableComponent(event.getTranslationKey()));
-					level.players().forEach(player -> player.sendMessage(startComponent, Util.NIL_UUID));
+					Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
+					level.players().forEach(player -> player.sendSystemMessage(startComponent));
 				}
 				setActiveEvent(event);
 			} else {

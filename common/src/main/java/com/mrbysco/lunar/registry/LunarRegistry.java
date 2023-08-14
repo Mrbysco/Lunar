@@ -53,7 +53,7 @@ public class LunarRegistry {
 	public void addEvent(ILunarEvent event) {
 		ResourceLocation id = event.getID();
 		if (!eventMap.containsKey(id)) {
-			Constants.LOGGER.info("Adding Lunar Event: " + id.toString());
+			Constants.LOGGER.debug("Adding Lunar Event: " + id.toString());
 			eventMap.put(id, event);
 			eventList.add(event);
 		} else {

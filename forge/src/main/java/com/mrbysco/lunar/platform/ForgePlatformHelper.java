@@ -93,11 +93,11 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
 	@Override
 	public ResourceLocation getEntityTypeLocation(EntityType<?> entityType) {
-		return entityType.getRegistryName();
+		return ForgeRegistries.ENTITY_TYPES.getKey(entityType);
 	}
 
 	@Override
 	public EntityType<?> getEntityType(ResourceLocation location) {
-		return ForgeRegistries.ENTITIES.getValue(location);
+		return ForgeRegistries.ENTITY_TYPES.getValue(location);
 	}
 }
