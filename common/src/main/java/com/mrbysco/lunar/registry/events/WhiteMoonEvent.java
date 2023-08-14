@@ -11,9 +11,9 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 
-public class WhiteMoon extends LunarEvent {
+public class WhiteMoonEvent extends LunarEvent {
 
-	public WhiteMoon() {
+	public WhiteMoonEvent() {
 		super(new ResourceLocation(Constants.MOD_ID, "white_moon"), 0x1f1f1f);
 	}
 

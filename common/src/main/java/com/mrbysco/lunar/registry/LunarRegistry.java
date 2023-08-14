@@ -9,7 +9,7 @@ import com.mrbysco.lunar.registry.events.CrimsonMoonEvent;
 import com.mrbysco.lunar.registry.events.HeroMoonEvent;
 import com.mrbysco.lunar.registry.events.MinerMoonEvent;
 import com.mrbysco.lunar.registry.events.TinyMoonEvent;
-import com.mrbysco.lunar.registry.events.WhiteMoon;
+import com.mrbysco.lunar.registry.events.WhiteMoonEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import org.apache.commons.compress.utils.Lists;
@@ -37,7 +37,7 @@ public class LunarRegistry {
 		addEvent(new BloodMoonEvent());
 		addEvent(new CrimsonMoonEvent());
 		addEvent(new MinerMoonEvent());
-		addEvent(new WhiteMoon());
+		addEvent(new WhiteMoonEvent());
 		addEvent(new BigMoonEvent());
 		addEvent(new TinyMoonEvent());
 		addEvent(new BadOmenMoonEvent());
