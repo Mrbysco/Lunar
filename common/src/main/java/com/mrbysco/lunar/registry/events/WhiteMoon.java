@@ -6,8 +6,6 @@ import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.LunarEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
@@ -32,11 +30,6 @@ public class WhiteMoon extends LunarEvent {
 	@Override
 	public boolean applyPlayerEffect() {
 		return true;
-	}
-
-	@Override
-	public void applyPlayerEffect(Player player) {
-		player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0, false, true));
 	}
 
 	@Override
