@@ -13,4 +13,4 @@ pluginManagement {
 }
 
 rootProject.name = 'Lunar'
-include("Common", "Fabric", "Forge")
+include("common", "fabric", "forge")
