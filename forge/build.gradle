@@ -120,7 +120,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         apiKey = System.getenv().CURSEFORGE_KEY
         project {
             id = project.curseforge_id
-            releaseType = "release"
+            releaseType = "beta"
             addGameVersion "Forge"
             addGameVersion "${minecraft_version}"
             addGameVersion "Java 17"
@@ -136,7 +136,7 @@ if (System.getenv().MODRINTH_KEY) {
     modrinth {
         token = System.getenv().MODRINTH_KEY
         projectId = project.modrinth_id
-        versionType = "release"
+        versionType = "beta"
         versionName = "${mod_name} ${minecraft_version}"
         versionNumber = project.version
         uploadFile = jar
