@@ -1,4 +1,4 @@
-package com.mrbysco.lunar.registry;
+package com.mrbysco.lunar.api;
 
 import com.mrbysco.lunar.handler.result.EventResult;
 import net.minecraft.core.BlockPos;

@@ -1,5 +1,6 @@
-package com.mrbysco.lunar.registry;
+package com.mrbysco.lunar.api;
 
+import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.resources.ResourceLocation;
 
 public abstract class LunarEvent implements ILunarEvent {

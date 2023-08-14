@@ -1,7 +1,7 @@
 package com.mrbysco.lunar.network.message;
 
 import com.mrbysco.lunar.client.MoonHandler;
-import com.mrbysco.lunar.registry.ILunarEvent;
+import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.DistExecutor.SafeRunnable;

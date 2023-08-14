@@ -2,6 +2,7 @@ package com.mrbysco.lunar.registry;
 
 import com.google.common.collect.Maps;
 import com.mrbysco.lunar.Constants;
+import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.registry.events.BadOmenMoonEvent;
 import com.mrbysco.lunar.registry.events.BigMoonEvent;
 import com.mrbysco.lunar.registry.events.BloodMoonEvent;
@@ -35,24 +36,22 @@ public class LunarRegistry {
 		eventMap.clear();
 		eventList.clear();
 
-		addEvent(new BloodMoonEvent());
-		addEvent(new CrimsonMoonEvent());
-		addEvent(new MinerMoonEvent());
-		addEvent(new WhiteMoonEvent());
-		addEvent(new BigMoonEvent());
-		addEvent(new TinyMoonEvent());
-		addEvent(new BadOmenMoonEvent());
-		addEvent(new HeroMoonEvent());
-		addEvent(new EclipseMoonEvent());
-
-		sortByWeight();
+		registerEvent(new BloodMoonEvent());
+		registerEvent(new CrimsonMoonEvent());
+		registerEvent(new MinerMoonEvent());
+		registerEvent(new WhiteMoonEvent());
+		registerEvent(new BigMoonEvent());
+		registerEvent(new TinyMoonEvent());
+		registerEvent(new BadOmenMoonEvent());
+		registerEvent(new HeroMoonEvent());
+		registerEvent(new EclipseMoonEvent());
 	}
 
 	public void sortByWeight() {
 		eventList.sort(Comparator.comparingInt(ILunarEvent::spawnWeight));
 	}
 
-	public void addEvent(ILunarEvent event) {
+	public void registerEvent(ILunarEvent event) {
 		ResourceLocation id = event.getID();
 		if (!eventMap.containsKey(id)) {
 			Constants.LOGGER.debug("Adding Lunar Event: " + id.toString());
@@ -61,6 +60,7 @@ public class LunarRegistry {
 		} else {
 			Constants.LOGGER.error("Failed to add lunar event. There was an attempt to add duplicate lunar event {} of class {}", id, event.getClass().getName());
 		}
+		sortByWeight();
 	}
 
 	public ILunarEvent getEventByID(ResourceLocation ID) {

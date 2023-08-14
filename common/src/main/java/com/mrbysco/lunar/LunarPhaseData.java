@@ -1,7 +1,7 @@
 package com.mrbysco.lunar;
 
 import com.mrbysco.lunar.platform.Services;
-import com.mrbysco.lunar.registry.ILunarEvent;
+import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.registry.LunarRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

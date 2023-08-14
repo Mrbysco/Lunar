@@ -3,7 +3,7 @@ package com.mrbysco.lunar.registry.events;
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
-import com.mrbysco.lunar.registry.LunarEvent;
+import com.mrbysco.lunar.api.LunarEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

@@ -1,6 +1,6 @@
 package com.mrbysco.lunar.platform.services;
 
-import com.mrbysco.lunar.registry.ILunarEvent;
+import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;

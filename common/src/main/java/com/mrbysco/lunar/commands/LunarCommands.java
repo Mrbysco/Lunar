@@ -6,7 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.LunarPhaseData;
-import com.mrbysco.lunar.registry.ILunarEvent;
+import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.registry.LunarRegistry;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSourceStack;
