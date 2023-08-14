@@ -99,6 +99,13 @@ public interface IPlatformHelper {
 	int getHeroMoonWeight();
 
 	/**
+	 * Returns the configured weight of the Eclipse Moon event.
+	 *
+	 * @return the Eclipse Moon Weight
+	 */
+	int getEclipseMoonWeight();
+
+	/**
 	 * Returns the configured Crimson Replacement Map to be used during the Crimson Moon event
 	 *
 	 * @return the configured Crimson Replacement Map.

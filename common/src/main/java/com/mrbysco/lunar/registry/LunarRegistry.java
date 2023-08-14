@@ -6,6 +6,7 @@ import com.mrbysco.lunar.registry.events.BadOmenMoonEvent;
 import com.mrbysco.lunar.registry.events.BigMoonEvent;
 import com.mrbysco.lunar.registry.events.BloodMoonEvent;
 import com.mrbysco.lunar.registry.events.CrimsonMoonEvent;
+import com.mrbysco.lunar.registry.events.EclipseMoonEvent;
 import com.mrbysco.lunar.registry.events.HeroMoonEvent;
 import com.mrbysco.lunar.registry.events.MinerMoonEvent;
 import com.mrbysco.lunar.registry.events.TinyMoonEvent;
@@ -42,6 +43,7 @@ public class LunarRegistry {
 		addEvent(new TinyMoonEvent());
 		addEvent(new BadOmenMoonEvent());
 		addEvent(new HeroMoonEvent());
+		addEvent(new EclipseMoonEvent());
 
 		sortByWeight();
 	}

@@ -115,6 +115,12 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	}
 
 	@Override
+	public int getEclipseMoonWeight() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.events.eclipseMoon;
+	}
+
+	@Override
 	public Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap() {
 		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
 		Map<ResourceLocation, ResourceLocation> map = Maps.newHashMap();

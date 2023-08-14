@@ -63,6 +63,8 @@ public class LunarPhaseData extends SavedData {
 
 	public void setRandomLunarEvent(Level level) {
 		if (forcedEvent != null) {
+			Component startComponent = Component.translatable("lunar.event.start", Component.translatable(forcedEvent.getTranslationKey()));
+			level.players().forEach(player -> player.sendSystemMessage(startComponent));
 			setActiveEvent(forcedEvent);
 			setForcedEvent(null);
 		} else {

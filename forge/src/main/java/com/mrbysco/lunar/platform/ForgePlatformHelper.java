@@ -80,6 +80,11 @@ public class ForgePlatformHelper implements IPlatformHelper {
 	}
 
 	@Override
+	public int getEclipseMoonWeight() {
+		return LunarConfig.COMMON.eclipseMoonWeight.get();
+	}
+
+	@Override
 	public Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap() {
 		Map<ResourceLocation, ResourceLocation> map = Maps.newHashMap();
 		LunarConfig.COMMON.crimsonReplacements.get().forEach(entry -> {

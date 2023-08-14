@@ -9,6 +9,7 @@
   "lunar.event.tiny_moon": "Tiny Moon",
   "lunar.event.bad_omen_moon": "Bad Omen Moon",
   "lunar.event.hero_moon": "Hero Moon",
+  "lunar.event.eclipse_moon": "Eclipse Moon",
 
   "text.autoconfig.lunar.option.general": "General",
   "text.autoconfig.lunar.option.general.lunarEventChance": "Lunar Event Chance",
@@ -21,6 +22,7 @@
   "text.autoconfig.lunar.option.events.bigMoonWeight": "Big Moon Weight",
   "text.autoconfig.lunar.option.events.badOmenMoonWeight": "Bad Omen Moon Weight",
   "text.autoconfig.lunar.option.events.heroMoonWeight": "Hero Moon Weight",
+  "text.autoconfig.lunar.option.events.eclipseMoonWeight": "Eclipse Moon Weight",
   "text.autoconfig.lunar.option.crimson": "Crimson",
   "text.autoconfig.lunar.option.events.crimsonReplacements": "Crimson Replacements"
 }

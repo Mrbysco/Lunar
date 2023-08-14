@@ -8,10 +8,12 @@ import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.registry.ILunarEvent;
 import com.mrbysco.lunar.registry.LunarRegistry;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -33,6 +35,8 @@ public class LunarCommands {
 		LunarPhaseData phaseData = LunarPhaseData.get(level);
 		ILunarEvent event = LunarRegistry.instance().getEventByID(eventID);
 		phaseData.setForcedEvent(event);
+
+		ctx.getSource().sendSuccess(Component.literal("Successfully forced a " + I18n.get(event.getTranslationKey()) + " moon next night"), true);
 
 		return 0;
 	}

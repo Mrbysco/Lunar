@@ -21,6 +21,7 @@ public class LunarConfig {
 		public final IntValue bigMoonWeight;
 		public final IntValue badOmenMoonWeight;
 		public final IntValue heroMoonWeight;
+		public final IntValue eclipseMoonWeight;
 
 		public final ConfigValue<List<? extends String>> crimsonReplacements;
 
@@ -67,6 +68,10 @@ public class LunarConfig {
 			heroMoonWeight = builder
 					.comment("Weight of the Hero Moon Event [Default: 5]")
 					.defineInRange("heroMoonWeight", 5, 0, 100);
+
+			eclipseMoonWeight = builder
+					.comment("Weight of the Eclipse Moon Event [Default: 2]")
+					.defineInRange("eclipseMoonWeight", 2, 0, 100);
 
 			builder.pop();
 			builder.comment("Crimson Replacement settings")
