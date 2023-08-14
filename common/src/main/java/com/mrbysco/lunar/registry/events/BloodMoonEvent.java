@@ -81,7 +81,7 @@ public class BloodMoonEvent extends LunarEvent {
 
 					AttributeInstance healthAttribute = livingEntity.getAttribute(Attributes.MAX_HEALTH);
 					if (healthAttribute != null) {
-						attackAttribute.removePermanentModifier(HEALTH_MODIFIER_UUID);
+						healthAttribute.removePermanentModifier(HEALTH_MODIFIER_UUID);
 					}
 				}
 			}
