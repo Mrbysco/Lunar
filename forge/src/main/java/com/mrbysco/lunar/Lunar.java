@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -50,7 +50,7 @@ public class Lunar {
 	}
 
 	private void onSleepCheck(SleepingLocationCheckEvent event) {
-		if (event.getEntity() instanceof Player player && player.level().dimension().equals(Level.OVERWORLD)) {
+		if (event.getEntity() instanceof Player player && player.level.dimension().equals(Level.OVERWORLD)) {
 			EventResult result = LunarHandler.canSleep(player, event.getSleepingLocation());
 			if (result != EventResult.DEFAULT) {
 				event.setResult(result == EventResult.DENY ? Result.DENY : Result.ALLOW);
@@ -58,15 +58,15 @@ public class Lunar {
 		}
 	}
 
-	private void onLivingSpawn(MobSpawnEvent.FinalizeSpawn event) {
-		if (event.getEntity().level().dimension().equals(Level.OVERWORLD)) {
-			LunarHandler.uponLivingSpawn(event.getSpawnType(), event.getEntity());
+	private void onLivingSpawn(LivingSpawnEvent.SpecialSpawn event) {
+		if (event.getEntity().level.dimension().equals(Level.OVERWORLD)) {
+			LunarHandler.uponLivingSpawn(event.getSpawnReason(), event.getEntity());
 		}
 	}
 
-	private void onCheckSpawn(MobSpawnEvent.PositionCheck event) {
-		if (event.getLevel().getLevel().dimension().equals(Level.OVERWORLD)) {
-			EventResult spawnResult = LunarHandler.getSpawnResult(event.getSpawnType(), event.getEntity());
+	private void onCheckSpawn(LivingSpawnEvent.CheckSpawn event) {
+		if (event.getEntity().level.dimension().equals(Level.OVERWORLD)) {
+			EventResult spawnResult = LunarHandler.getSpawnResult(event.getSpawnReason(), event.getEntity());
 			if (spawnResult != EventResult.DEFAULT) {
 				if (spawnResult == EventResult.ALLOW) {
 					event.setResult(Result.ALLOW);
@@ -85,9 +85,9 @@ public class Lunar {
 
 	public void onLogin(PlayerLoggedInEvent event) {
 		Player player = event.getEntity();
-		Level level = player.level();
+		Level level = player.level;
 		if (!level.isClientSide) {
-			LunarPhaseData phaseData = LunarPhaseData.get(player.level());
+			LunarPhaseData phaseData = LunarPhaseData.get(player.level);
 			phaseData.syncEvent((ServerPlayer) player);
 		}
 	}

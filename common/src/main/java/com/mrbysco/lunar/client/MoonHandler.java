@@ -2,11 +2,11 @@ package com.mrbysco.lunar.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
 
 public class MoonHandler {
 	private static String moonID = null;
@@ -27,7 +27,7 @@ public class MoonHandler {
 		moonColor = new float[]{(float) r / 255.0F, (float) g / 255.0F, (float) b / 255.0F};
 		moonID = eventID;
 		if (scale != 1.0F) {
-			moonScale = (new Matrix4f()).translation(scale, 1F, scale);
+			moonScale = Matrix4f.createScaleMatrix(scale, 1F, scale);
 		}
 	}
 

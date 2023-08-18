@@ -45,7 +45,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult getSpawnResult(LivingEntity livingEntity, MobSpawnType spawnType) {
-		ServerLevel level = (ServerLevel) livingEntity.level();
+		ServerLevel level = (ServerLevel) livingEntity.level;
 		if (spawnType == MobSpawnType.NATURAL) {
 			Map<ResourceLocation, ResourceLocation> replacementMap = Services.PLATFORM.getCrimsonReplacementMap();
 			ResourceLocation entityLocation = Services.PLATFORM.getEntityTypeLocation(livingEntity.getType());

@@ -36,7 +36,7 @@ public class LunarCommands {
 		ILunarEvent event = LunarRegistry.instance().getEventByID(eventID);
 		phaseData.setForcedEvent(event);
 
-		ctx.getSource().sendSuccess(() -> Component.literal("Successfully forced a " + I18n.get(event.getTranslationKey()) + " moon next night"), true);
+		ctx.getSource().sendSuccess(Component.literal("Successfully forced a " + I18n.get(event.getTranslationKey()) + " moon next night"), true);
 
 		return 0;
 	}
