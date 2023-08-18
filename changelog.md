@@ -1,1 +1,1 @@
-* Initial beta build
+* Initial beta build for 1.20

@@ -9,7 +9,7 @@ import com.mrbysco.lunar.api.ILunarEvent;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -135,11 +135,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
 	@Override
 	public ResourceLocation getEntityTypeLocation(EntityType<?> entityType) {
-		return Registry.ENTITY_TYPE.getKey(entityType);
+		return BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
 	}
 
 	@Override
 	public EntityType<?> getEntityType(ResourceLocation location) {
-		return Registry.ENTITY_TYPE.get(location);
+		return BuiltInRegistries.ENTITY_TYPE.get(location);
 	}
 }

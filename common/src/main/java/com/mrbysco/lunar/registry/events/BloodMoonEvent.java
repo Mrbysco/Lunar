@@ -45,7 +45,7 @@ public class BloodMoonEvent extends LunarEvent {
 	@Override
 	public void applySpawnEffect(LivingEntity livingEntity, MobSpawnType spawnType) {
 		if (spawnType == MobSpawnType.NATURAL) {
-			final float difficultyMultiplier = livingEntity.level.getCurrentDifficultyAt(livingEntity.blockPosition()).getSpecialMultiplier();
+			final float difficultyMultiplier = livingEntity.level().getCurrentDifficultyAt(livingEntity.blockPosition()).getSpecialMultiplier();
 			final RandomSource random = livingEntity.getRandom();
 
 			AttributeInstance attackAttribute = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);

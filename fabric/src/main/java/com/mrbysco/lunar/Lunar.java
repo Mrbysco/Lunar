@@ -52,7 +52,7 @@ public class Lunar implements ModInitializer {
 	}
 
 	private InteractionResult onSleepCheck(Player player, BlockPos sleepingPos, boolean vanillaResult) {
-		if (player.level.dimension().equals(Level.OVERWORLD)) {
+		if (player.level().dimension().equals(Level.OVERWORLD)) {
 			EventResult result = LunarHandler.canSleep(player, sleepingPos);
 			if (result != EventResult.DEFAULT) {
 				return result == EventResult.DENY ? InteractionResult.FAIL : InteractionResult.SUCCESS;
@@ -63,14 +63,14 @@ public class Lunar implements ModInitializer {
 	}
 
 	private InteractionResult onLivingSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, MobSpawnType spawnReason) {
-		if (entity.level.dimension().equals(Level.OVERWORLD)) {
+		if (entity.level().dimension().equals(Level.OVERWORLD)) {
 			LunarHandler.uponLivingSpawn(spawnReason, entity);
 		}
 		return InteractionResult.PASS;
 	}
 
 	private InteractionResult onCheckSpawn(LivingEntity entity, LevelAccessor level, double x, double y, double z, MobSpawnType type, @Nullable BaseSpawner spawner) {
-		if (entity.level.dimension().equals(Level.OVERWORLD)) {
+		if (entity.level().dimension().equals(Level.OVERWORLD)) {
 			EventResult spawnResult = LunarHandler.getSpawnResult(type, entity);
 			if (spawnResult != EventResult.DEFAULT) {
 				if (spawnResult == EventResult.ALLOW) {
@@ -90,9 +90,9 @@ public class Lunar implements ModInitializer {
 	}
 
 	public void onLogin(ServerPlayer player) {
-		Level level = player.level;
+		Level level = player.level();
 		if (!level.isClientSide) {
-			LunarPhaseData phaseData = LunarPhaseData.get(player.level);
+			LunarPhaseData phaseData = LunarPhaseData.get(player.level());
 			phaseData.syncEvent(player);
 		}
 	}

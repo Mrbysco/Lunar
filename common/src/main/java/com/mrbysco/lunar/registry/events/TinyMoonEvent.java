@@ -45,7 +45,7 @@ public class TinyMoonEvent extends LunarEvent {
 
 	@Override
 	public void applyPlayerEffect(Player player) {
-		if (!player.level.isClientSide)
+		if (!player.level().isClientSide)
 			Services.PLATFORM.syncDeltaMovement((ServerPlayer) player, player.getDeltaMovement());
 	}
 

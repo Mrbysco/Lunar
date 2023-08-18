@@ -1,13 +1,13 @@
 package com.mrbysco.lunar.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
 import com.mrbysco.lunar.client.MoonHandler;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +25,7 @@ public class LevelRendererMixin {
 	@Nullable
 	private ClientLevel level;
 
-	@Inject(method = "renderSky(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/math/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V", at = @At(
+	@Inject(method = "renderSky(Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V", at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/client/multiplayer/ClientLevel;getMoonPhase()I",
 			shift = Shift.BEFORE,
@@ -49,7 +49,7 @@ public class LevelRendererMixin {
 	)
 	private Matrix4f makeMoonBigger(Matrix4f matrix) {
 		if (MoonHandler.isMoonScaled()) {
-			matrix.multiply(MoonHandler.getMoonScale());
+			matrix.mul(MoonHandler.getMoonScale());
 		}
 		return matrix;
 	}

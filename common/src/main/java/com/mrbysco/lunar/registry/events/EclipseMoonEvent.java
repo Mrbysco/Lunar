@@ -34,7 +34,7 @@ public class EclipseMoonEvent extends LunarEvent {
 
 	@Override
 	public void applyPlayerEffect(Player player) {
-		if (player.level.canSeeSky(new BlockPos(player.getEyePosition())))
+		if (player.level().canSeeSky(BlockPos.containing(player.getEyePosition())))
 			player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 80, 0, false, true));
 	}
 
