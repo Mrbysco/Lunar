@@ -3,6 +3,8 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'fabric-loom'
+    id 'com.matthewprenger.cursegradle'
+    id 'com.modrinth.minotaur'
 }
 
 base {

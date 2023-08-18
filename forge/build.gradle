@@ -3,6 +3,8 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle'
     id 'org.spongepowered.mixin'
+    id 'com.matthewprenger.cursegradle'
+    id 'com.modrinth.minotaur'
 }
 
 base {
