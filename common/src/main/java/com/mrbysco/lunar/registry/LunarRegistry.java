@@ -14,7 +14,6 @@ import com.mrbysco.lunar.registry.events.TinyMoonEvent;
 import com.mrbysco.lunar.registry.events.WhiteMoonEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,7 +23,7 @@ import java.util.Map;
 public class LunarRegistry {
 	private static LunarRegistry INSTANCE;
 	private final Map<ResourceLocation, ILunarEvent> eventMap = Maps.newHashMap();
-	private final List<ILunarEvent> eventList = Lists.newArrayList();
+	private final List<ILunarEvent> eventList = new ArrayList<>();
 
 	public static LunarRegistry instance() {
 		if (INSTANCE == null)
@@ -97,7 +96,7 @@ public class LunarRegistry {
 	}
 
 	public List<String> getIDList() {
-		List<String> list = Lists.newArrayList();
+		List<String> list = new ArrayList<>();
 		for (ILunarEvent i : eventList) {
 			list.add(i.getID().toString());
 		}
