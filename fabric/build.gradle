@@ -37,6 +37,12 @@ dependencies {
 }
 
 loom {
+    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
+        accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
     runs {
         client {
             client()
@@ -54,21 +60,18 @@ loom {
 }
 
 
-processResources {
-    from project(":common").sourceSets.main.resources
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-
-    filesMatching('*.mixins.json') {
-        expand "refmap_target": "${archivesBaseName}-"
-    }
+tasks.withType(JavaCompile).configureEach {
+    source(project(":common").sourceSets.main.allSource)
+}
+tasks.withType(Javadoc).configureEach {
+    source(project(":common").sourceSets.main.allJava)
+}
+tasks.named("sourcesJar", Jar) {
+    from(project(":common").sourceSets.main.allSource)
 }
 
-tasks.withType(JavaCompile) {
-    source(project(":common").sourceSets.main.allSource)
+processResources {
+    from project(":common").sourceSets.main.resources
 }
 
 publishing {
