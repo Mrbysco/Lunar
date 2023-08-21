@@ -1,1 +1,1 @@
-* Fix server crash
+* Fix Fabric Mixin Crash
