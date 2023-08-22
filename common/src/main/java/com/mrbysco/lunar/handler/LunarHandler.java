@@ -1,8 +1,8 @@
 package com.mrbysco.lunar.handler;
 
 import com.mrbysco.lunar.LunarPhaseData;
-import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.api.ILunarEvent;
+import com.mrbysco.lunar.handler.result.EventResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -75,11 +75,5 @@ public class LunarHandler {
 				lunarEvent.applySpawnEffect(livingEntity, mobSpawnType);
 			}
 		}
-	}
-
-	public static int onLooting(Player player) {
-
-
-		return 0;
 	}
 }

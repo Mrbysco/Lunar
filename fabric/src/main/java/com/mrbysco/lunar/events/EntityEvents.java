@@ -26,14 +26,8 @@ public class EntityEvents {
 
 	public static final Event<SpecialSpawn> LIVING_SPECIAL_SPAWN = EventFactory.createArrayBacked(SpecialSpawn.class, callbacks -> (entity, world, x, y, z, type, spawner) -> {
 		for (SpecialSpawn callback : callbacks) {
-			InteractionResult result = callback.specialSpawn(entity, world, x, y, z, type, spawner);
-
-			if (result != InteractionResult.PASS) {
-				return result;
-			}
+			callback.specialSpawn(entity, world, x, y, z, type, spawner);
 		}
-
-		return InteractionResult.PASS;
 	});
 
 	@FunctionalInterface
@@ -43,6 +37,6 @@ public class EntityEvents {
 
 	@FunctionalInterface
 	public interface SpecialSpawn {
-		InteractionResult specialSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, MobSpawnType spawnReason);
+		void specialSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, MobSpawnType spawnReason);
 	}
 }

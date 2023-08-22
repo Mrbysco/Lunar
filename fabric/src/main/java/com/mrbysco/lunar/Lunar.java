@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,7 +47,18 @@ public class Lunar implements ModInitializer {
 
 		EntitySleepEvents.ALLOW_SLEEP_TIME.register(this::onSleepCheck);
 		EntityEvents.LIVING_SPECIAL_SPAWN.register(this::onLivingSpawn);
-		EntityEvents.LIVING_CHECK_SPAWN.register(this::onCheckSpawn);
+		if (FabricLoader.getInstance().isModLoaded("architectury")) {
+			dev.architectury.event.events.common.EntityEvent.LIVING_CHECK_SPAWN.register((entity, level, x, y, z, type, spawner) -> {
+				InteractionResult result = onCheckSpawn(entity, level, x, y, z, type, spawner);
+				if (result == InteractionResult.FAIL)
+					return dev.architectury.event.EventResult.interruptDefault();
+				if (result == InteractionResult.SUCCESS)
+					return dev.architectury.event.EventResult.interruptTrue();
+				return dev.architectury.event.EventResult.pass();
+			});
+		} else {
+			EntityEvents.LIVING_CHECK_SPAWN.register(this::onCheckSpawn);
+		}
 		ServerTickEvents.END_WORLD_TICK.register(this::onWorldTick);
 		PlayerEvents.PLAYER_LOGIN.register(this::onLogin);
 	}
@@ -62,11 +74,10 @@ public class Lunar implements ModInitializer {
 		return InteractionResult.PASS;
 	}
 
-	private InteractionResult onLivingSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, MobSpawnType spawnReason) {
+	private void onLivingSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, MobSpawnType spawnReason) {
 		if (entity.level().dimension().equals(Level.OVERWORLD)) {
 			LunarHandler.uponLivingSpawn(spawnReason, entity);
 		}
-		return InteractionResult.PASS;
 	}
 
 	private InteractionResult onCheckSpawn(LivingEntity entity, LevelAccessor level, double x, double y, double z, MobSpawnType type, @Nullable BaseSpawner spawner) {
