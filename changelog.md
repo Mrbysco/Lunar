@@ -1,1 +1,1 @@
-* Fix fabric mixin crash
+* Fix blood moon event crashing
