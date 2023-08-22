@@ -50,7 +50,11 @@ public class BloodMoonEvent extends LunarEvent {
 
 			AttributeInstance attackAttribute = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
 			if (attackAttribute != null) {
-				int damageBoost = difficultyMultiplier > 0 ? random.nextInt((int) (2 * difficultyMultiplier)) : 0;
+				int damageBoost = 0;
+				if (difficultyMultiplier > 0) {
+					int i = (int) Math.floor(2 * difficultyMultiplier);
+					damageBoost = i > 0 ? random.nextInt(i) : 0;
+				}
 				if (damageBoost > 0) {
 					attackAttribute.addPermanentModifier(
 							new AttributeModifier(DAMAGE_MODIFIER_UUID, "Blood moon damage boost", (double) damageBoost, AttributeModifier.Operation.ADDITION));
@@ -59,7 +63,11 @@ public class BloodMoonEvent extends LunarEvent {
 
 			AttributeInstance healthAttribute = livingEntity.getAttribute(Attributes.MAX_HEALTH);
 			if (healthAttribute != null) {
-				int healthBoost = difficultyMultiplier > 0 ? random.nextInt((int) (2 * difficultyMultiplier)) : 0;
+				int healthBoost = 0;
+				if (difficultyMultiplier > 0) {
+					int i = (int) Math.floor(2 * difficultyMultiplier);
+					healthBoost = i > 0 ? random.nextInt(i) : 0;
+				}
 				if (healthBoost > 0) {
 					healthAttribute.addPermanentModifier(
 							new AttributeModifier(HEALTH_MODIFIER_UUID, "Blood moon health boost", (double) healthBoost, AttributeModifier.Operation.ADDITION));
