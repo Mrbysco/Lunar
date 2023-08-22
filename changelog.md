@@ -1,1 +1,1 @@
-* Fix blood moon event crashing
+* Fix incompatibility with architectury on Fabric
