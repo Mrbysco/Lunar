@@ -50,8 +50,11 @@ public class MoonHandler {
 		return moonScale != null;
 	}
 
-	public static ResourceLocation getMoonTexture() {
-		return moonTexture;
+	public static ResourceLocation getMoonTexture(ResourceLocation defaultTexture) {
+		if (moonTexture != null) {
+			return moonTexture;
+		}
+		return defaultTexture;
 	}
 
 	public static Matrix4f getMoonScale() {
