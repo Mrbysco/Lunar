@@ -31,7 +31,7 @@ public class LevelRendererMixin {
 			shift = Shift.BEFORE,
 			ordinal = 0
 	))
-	private void renderLunarMoonStart(PoseStack poseStack, Matrix4f matrix4f, float f, Camera camera, boolean bl, Runnable runnable, CallbackInfo ci) {
+	private void lunar_colorMoon(PoseStack poseStack, Matrix4f matrix4f, float f, Camera camera, boolean bl, Runnable runnable, CallbackInfo ci) {
 		if (this.level != null) {
 			MoonHandler.colorTheMoon(level, poseStack, matrix4f, f, camera);
 		}
@@ -47,7 +47,7 @@ public class LevelRendererMixin {
 			ordinal = 1,
 			require = 0
 	)
-	private Matrix4f makeMoonBigger(Matrix4f matrix) {
+	private Matrix4f lunar_scaleMoon(Matrix4f matrix) {
 		if (MoonHandler.isMoonScaled()) {
 			matrix.mul(MoonHandler.getMoonScale());
 		}
@@ -56,18 +56,14 @@ public class LevelRendererMixin {
 
 	@ModifyArg(method = "renderSky",
 			slice = @Slice(
-					from = @At(ordinal = 0, value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/resources/ResourceLocation;)V"),
+					from = @At(ordinal = 1, value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/BufferUploader;drawWithShader(Lcom/mojang/blaze3d/vertex/BufferBuilder$RenderedBuffer;)V"),
 					to = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getMoonPhase()I")
 			),
 			at = @At(
 					value = "INVOKE",
 					target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/resources/ResourceLocation;)V"),
 			index = 1)
-	public ResourceLocation leashedRestoreLeashFromSaveChangeDrop(ResourceLocation location) {
-		ResourceLocation customLocation = MoonHandler.getMoonTexture();
-		if (customLocation != null) {
-			return customLocation;
-		}
-		return location;
+	public ResourceLocation lunar_changeMoonTexture(ResourceLocation location) {
+		return MoonHandler.getMoonTexture(location);
 	}
 }
