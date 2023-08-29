@@ -53,9 +53,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
 		int moonColor = event != null ? event.moonColor() : -1;
 		String eventID = event != null ? event.getID().toString() : "";
 		float moonScale = event != null ? event.moonScale() : 1.0F;
+		String customTexture = event != null ? event.moonTexture().toString() : "";
 		buf.writeInt(moonColor);
 		buf.writeUtf(eventID);
 		buf.writeFloat(moonScale);
+		buf.writeUtf(customTexture);
 
 		return buf;
 	}
