@@ -1,1 +1,1 @@
-* Fix incompatibility with architectury on Fabric
+* Fix being able to load into a world on Fabric
