@@ -1,1 +1,2 @@
-* Fix being able to load into a world on Fabric
+* Properly fix incompatibility with Architectury (fabric)
+* Fix other crash on world load (fabric)
