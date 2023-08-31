@@ -1,6 +1,5 @@
 package com.mrbysco.lunar.plugin;
 
-import com.mrbysco.lunar.Constants;
 import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -13,7 +12,7 @@ public class LunarMixinPlugin implements IMixinConfigPlugin {
 	@Override
 	public void onLoad(String mixinPackage) {
 		if (FabricLoader.getInstance().isModLoaded("architectury")) {
-			Constants.LOGGER.info("Applying Architectury compatibility");
+			System.out.println("[Lunar] Applying Architectury compatibility");
 		}
 	}
 
