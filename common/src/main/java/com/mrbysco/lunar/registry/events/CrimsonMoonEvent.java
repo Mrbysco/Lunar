@@ -1,9 +1,9 @@
 package com.mrbysco.lunar.registry.events;
 
 import com.mrbysco.lunar.Constants;
+import com.mrbysco.lunar.api.LunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
-import com.mrbysco.lunar.api.LunarEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;
@@ -56,12 +57,23 @@ public class CrimsonMoonEvent extends LunarEvent {
 					if (replacementType != null) {
 						Entity replacementEntity = replacementType.create(level);
 						if (replacementEntity != null) {
-							replacementEntity.moveTo(livingEntity.blockPosition(), livingEntity.getYRot(), livingEntity.getXRot());
+							BlockPos position = livingEntity.blockPosition();
+							replacementEntity.moveTo(position, livingEntity.getYRot(), livingEntity.getXRot());
 							if (replacementEntity instanceof Mob mob) {
-								mob.finalizeSpawn(level, level.getCurrentDifficultyAt(livingEntity.blockPosition()), MobSpawnType.NATURAL, null, null);
+								if (!mob.checkSpawnObstruction(level)) {
+									return EventResult.DEFAULT;
+								}
+								mob.finalizeSpawn(level, level.getCurrentDifficultyAt(position), MobSpawnType.NATURAL, null, null);
 							}
-							level.addFreshEntity(replacementEntity);
-							livingEntity.discard();
+							if (replacementEntity instanceof Ghast) {
+								if (level.random.nextDouble() <= 0.5) {
+									level.addFreshEntity(replacementEntity);
+								}
+								livingEntity.discard();
+							} else {
+								level.addFreshEntity(replacementEntity);
+								livingEntity.discard();
+							}
 							return EventResult.DENY;
 						}
 					}
