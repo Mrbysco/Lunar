@@ -74,10 +74,11 @@ public class LunarPhaseData extends SavedData {
 				if (event != null) {
 					Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
 					level.players().forEach(player -> player.sendSystemMessage(startComponent));
+					setActiveEvent(event);
 				}
-				setActiveEvent(event);
+				setActiveEvent(LunarRegistry.getDefaultMoon());
 			} else {
-				setActiveEvent(null);
+				setActiveEvent(LunarRegistry.getDefaultMoon());
 			}
 		}
 	}
@@ -89,6 +90,11 @@ public class LunarPhaseData extends SavedData {
 
 	public void eraseEvent() {
 		this.setActiveEvent(null);
+		this.setForcedEvent(null);
+	}
+
+	public void setDefaultMoon() {
+		this.setActiveEvent(LunarRegistry.getDefaultMoon());
 		this.setForcedEvent(null);
 	}
 

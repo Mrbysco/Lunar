@@ -1,6 +1,8 @@
 {
   "lunar.event.start": "A %s has appeared!",
+  "lunar.event.rain": "Due to bad weather the effects of %s have been cleansed!",
 
+  "lunar.event.regular": "Moon",
   "lunar.event.blood_moon": "Blood Moon",
   "lunar.event.miner_moon": "Miner Moon",
   "lunar.event.crimson_moon": "Crimson Moon",

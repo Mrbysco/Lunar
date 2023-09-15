@@ -10,6 +10,7 @@ import com.mrbysco.lunar.registry.events.CrimsonMoonEvent;
 import com.mrbysco.lunar.registry.events.EclipseMoonEvent;
 import com.mrbysco.lunar.registry.events.HeroMoonEvent;
 import com.mrbysco.lunar.registry.events.MinerMoonEvent;
+import com.mrbysco.lunar.registry.events.RegularMoonEvent;
 import com.mrbysco.lunar.registry.events.TinyMoonEvent;
 import com.mrbysco.lunar.registry.events.WhiteMoonEvent;
 import net.minecraft.resources.ResourceLocation;
@@ -44,6 +45,10 @@ public class LunarRegistry {
 		registerEvent(new BadOmenMoonEvent());
 		registerEvent(new HeroMoonEvent());
 		registerEvent(new EclipseMoonEvent());
+	}
+
+	public static ILunarEvent getDefaultMoon() {
+		return new RegularMoonEvent();
 	}
 
 	public void sortByWeight() {

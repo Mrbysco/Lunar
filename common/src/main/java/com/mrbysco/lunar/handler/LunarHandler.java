@@ -4,6 +4,7 @@ import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -16,18 +17,29 @@ public class LunarHandler {
 			ServerLevel serverLevel = (ServerLevel) level;
 			LunarPhaseData phaseData = LunarPhaseData.get(serverLevel);
 			ILunarEvent event = phaseData.getActiveLunarEvent();
+			boolean raining = serverLevel.isRaining();
 			if (serverLevel.isNight()) {
-				if (!phaseData.hasEventActive()) {
-					phaseData.setRandomLunarEvent(serverLevel);
-					phaseData.syncEvent(serverLevel);
-					return;
-				} else {
+				if (raining && phaseData.hasEventActive()) {
+					Component rainComponent = Component.translatable("lunar.event.rain", Component.translatable(event.getTranslationKey()));
+					level.players().forEach(player -> player.sendSystemMessage(rainComponent));
 					if (event != null) {
-						if (event.applyEntityEffect()) {
-							serverLevel.getAllEntities().forEach(event::applyEntityEffect);
-						}
-						if (event.applyPlayerEffect()) {
-							serverLevel.players().forEach(event::applyPlayerEffect);
+						event.stopEffects(serverLevel);
+					}
+
+					phaseData.setDefaultMoon();
+					phaseData.syncEvent(serverLevel);
+				} else {
+					if (!phaseData.hasEventActive()) {
+						phaseData.setRandomLunarEvent(serverLevel);
+						phaseData.syncEvent(serverLevel);
+					} else {
+						if (event != null) {
+							if (event.applyEntityEffect()) {
+								serverLevel.getAllEntities().forEach(event::applyEntityEffect);
+							}
+							if (event.applyPlayerEffect()) {
+								serverLevel.players().forEach(event::applyPlayerEffect);
+							}
 						}
 					}
 				}
