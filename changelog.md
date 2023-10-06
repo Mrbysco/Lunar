@@ -1,1 +1,1 @@
-* Fix chat being spammed if it's raining
+* Fix a mistake that overwrote the lunar events
