@@ -1,1 +1,1 @@
-* Fix a mistake that overwrote the lunar events
+* Fix the forced event being cleared when it turns day
