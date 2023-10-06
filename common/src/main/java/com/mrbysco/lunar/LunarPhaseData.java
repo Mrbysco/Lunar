@@ -89,7 +89,6 @@ public class LunarPhaseData extends SavedData {
 
 	public void eraseEvent() {
 		this.setActiveEvent(null);
-		this.setForcedEvent(null);
 	}
 
 	public void setDefaultMoon() {
