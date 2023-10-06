@@ -1,7 +1,7 @@
 package com.mrbysco.lunar;
 
-import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.api.ILunarEvent;
+import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.LunarRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -75,11 +75,10 @@ public class LunarPhaseData extends SavedData {
 					Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
 					level.players().forEach(player -> player.sendSystemMessage(startComponent));
 					setActiveEvent(event);
+					return;
 				}
-				setActiveEvent(LunarRegistry.getDefaultMoon());
-			} else {
-				setActiveEvent(LunarRegistry.getDefaultMoon());
 			}
+			setDefaultMoon();
 		}
 	}
 
@@ -100,7 +99,6 @@ public class LunarPhaseData extends SavedData {
 
 	private void setActiveEvent(ILunarEvent storage) {
 		this.activeEvent = storage;
-		Constants.LOGGER.debug("Setting active event to " + storage);
 		setDirty();
 	}
 
