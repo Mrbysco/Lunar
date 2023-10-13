@@ -11,7 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
 public class EclipseMoonEvent extends LunarEvent {
-	private static final ResourceLocation ECLIPSE_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/environment/eclipse.png");
+	private static final ResourceLocation MOON_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/environment/eclipse.png");
 
 	public EclipseMoonEvent() {
 		super(new ResourceLocation(Constants.MOD_ID, "eclipse_moon"), 0x000008);
@@ -40,7 +40,7 @@ public class EclipseMoonEvent extends LunarEvent {
 
 	@Override
 	public ResourceLocation moonTexture() {
-		return ECLIPSE_TEXTURE;
+		return MOON_TEXTURE;
 	}
 
 	@Override

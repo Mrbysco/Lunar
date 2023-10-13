@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
 public class HeroMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/environment/hero.png");
 
 	public HeroMoonEvent() {
 		super(new ResourceLocation(Constants.MOD_ID, "hero_moon"), 0x17dd61);
@@ -34,6 +35,11 @@ public class HeroMoonEvent extends LunarEvent {
 	@Override
 	public void applyPlayerEffect(Player player) {
 		player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 40, 0, false, true));
+	}
+
+	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
 	}
 
 	@Override
