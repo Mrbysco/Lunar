@@ -1,1 +1,1 @@
-* Fix the forced event being cleared when it turns day
+* Initial update to 1.20.2
