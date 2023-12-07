@@ -1,14 +1,11 @@
 package com.mrbysco.lunar.network.message;
 
-import com.mrbysco.lunar.client.MoonHandler;
 import com.mrbysco.lunar.api.ILunarEvent;
+import com.mrbysco.lunar.client.MoonHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.DistExecutor.SafeRunnable;
-import net.minecraftforge.network.NetworkEvent.Context;
-
-import java.io.Serial;
-import java.util.function.Supplier;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
 
 public class SyncEventMessage {
 	private final int color;
@@ -41,34 +38,21 @@ public class SyncEventMessage {
 		buffer.writeUtf(customTexture == null ? "" : customTexture.toString());
 	}
 
-	public void handle(Supplier<Context> context) {
-		Context ctx = context.get();
+	public void handle(Context ctx) {
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isClient()) {
-				UpdateEvent.update(this.eventID, this.color, this.moonScale, this.customTexture).run();
-			}
-		});
-		ctx.setPacketHandled(true);
-	}
-
-	private static class UpdateEvent {
-		private static SafeRunnable update(String eventID, int moonColor, float moonScale, ResourceLocation customTexture) {
-			return new SafeRunnable() {
-				@Serial
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void run() {
-					if (moonColor == -1 || eventID.isBlank()) {
+				if (FMLEnvironment.dist.isClient()) {
+					if (color == -1 || eventID.isBlank()) {
 						MoonHandler.disableMoon();
 					} else {
-						MoonHandler.setMoon(eventID, moonColor, moonScale);
+						MoonHandler.setMoon(eventID, color, moonScale);
 						if (customTexture != null) {
 							MoonHandler.setMoonTexture(customTexture);
 						}
 					}
 				}
-			};
-		}
+			}
+		});
+		ctx.setPacketHandled(true);
 	}
 }

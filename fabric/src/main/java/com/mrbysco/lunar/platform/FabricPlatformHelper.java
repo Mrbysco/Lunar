@@ -3,18 +3,16 @@ package com.mrbysco.lunar.platform;
 import com.google.common.collect.Maps;
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.Lunar;
+import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
-import com.mrbysco.lunar.api.ILunarEvent;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -133,15 +131,5 @@ public class FabricPlatformHelper implements IPlatformHelper {
 			}
 		});
 		return map;
-	}
-
-	@Override
-	public ResourceLocation getEntityTypeLocation(EntityType<?> entityType) {
-		return BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
-	}
-
-	@Override
-	public EntityType<?> getEntityType(ResourceLocation location) {
-		return BuiltInRegistries.ENTITY_TYPE.get(location);
 	}
 }

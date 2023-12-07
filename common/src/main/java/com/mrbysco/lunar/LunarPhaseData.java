@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
@@ -58,7 +59,7 @@ public class LunarPhaseData extends SavedData {
 		ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
 
 		DimensionDataStorage storage = overworld.getDataStorage();
-		return storage.computeIfAbsent(LunarPhaseData::load, LunarPhaseData::new, DATA_NAME);
+		return storage.computeIfAbsent(new SavedData.Factory<>(LunarPhaseData::new, LunarPhaseData::load, null), DATA_NAME);
 	}
 
 	public void setRandomLunarEvent(Level level) {

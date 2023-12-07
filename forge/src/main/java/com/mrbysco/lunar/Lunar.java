@@ -8,35 +8,34 @@ import com.mrbysco.lunar.network.PacketHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.neoforged.neoforge.event.entity.player.SleepingLocationCheckEvent;
+import net.neoforged.bus.api.Event.Result;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.bus.api.Event;
 
 @Mod(Constants.MOD_ID)
 public class Lunar {
 
-	public Lunar() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	public Lunar(IEventBus eventBus) {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, LunarConfig.commonSpec);
 		eventBus.addListener(this::setup);
 
-		MinecraftForge.EVENT_BUS.addListener(this::onSleepCheck);
-		MinecraftForge.EVENT_BUS.addListener(this::onLivingSpawn);
-		MinecraftForge.EVENT_BUS.addListener(this::onCheckSpawn);
-		MinecraftForge.EVENT_BUS.addListener(this::onLevelTick);
-		MinecraftForge.EVENT_BUS.addListener(this::onLogin);
+		NeoForge.EVENT_BUS.addListener(this::onSleepCheck);
+		NeoForge.EVENT_BUS.addListener(this::onLivingSpawn);
+		NeoForge.EVENT_BUS.addListener(this::onCheckSpawn);
+		NeoForge.EVENT_BUS.addListener(this::onLevelTick);
+		NeoForge.EVENT_BUS.addListener(this::onLogin);
 
-		MinecraftForge.EVENT_BUS.addListener(this::onCommandRegister);
+		NeoForge.EVENT_BUS.addListener(this::onCommandRegister);
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {

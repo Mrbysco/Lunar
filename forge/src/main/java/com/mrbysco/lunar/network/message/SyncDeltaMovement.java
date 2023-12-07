@@ -2,11 +2,8 @@ package com.mrbysco.lunar.network.message;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.DistExecutor.SafeRunnable;
-import net.minecraftforge.network.NetworkEvent.Context;
-
-import java.io.Serial;
-import java.util.function.Supplier;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 public class SyncDeltaMovement {
 	private final Vec3 deltaMovement;
@@ -25,27 +22,14 @@ public class SyncDeltaMovement {
 		buffer.writeDouble(deltaMovement.z);
 	}
 
-	public void handle(Supplier<Context> context) {
-		Context ctx = context.get();
+	public void handle(NetworkEvent.Context ctx) {
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isClient()) {
-				UpdateEvent.update(this.deltaMovement).run();
+				if (FMLEnvironment.dist.isClient()) {
+					net.minecraft.client.Minecraft.getInstance().player.setDeltaMovement(deltaMovement);
+				}
 			}
 		});
 		ctx.setPacketHandled(true);
-	}
-
-	private static class UpdateEvent {
-		private static SafeRunnable update(Vec3 deltaMovement) {
-			return new SafeRunnable() {
-				@Serial
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void run() {
-					net.minecraft.client.Minecraft.getInstance().player.setDeltaMovement(deltaMovement);
-				}
-			};
-		}
 	}
 }

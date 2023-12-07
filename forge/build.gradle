@@ -1,96 +1,80 @@
 plugins {
+    id 'java-library'
+    id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle'
-    id 'org.spongepowered.mixin'
-    id 'com.matthewprenger.cursegradle'
+    id 'net.neoforged.gradle.userdev' version '7.0.60'
+    id 'net.darkhax.curseforgegradle'
     id 'com.modrinth.minotaur'
 }
 
 base {
-    archivesName = "${mod_name}-forge-${minecraft_version}"
+    archivesName = "${mod_name}-neoforge-${minecraft_version}"
 }
 
-mixin {
-    add(sourceSets.main, "${mod_id}.refmap.json")
-
-    config("${mod_id}.mixins.json")
+if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
+    minecraft.accessTransformers.file file('src/main/resources/META-INF/accesstransformer.cfg')
 }
 
-minecraft {
-    mappings channel: 'official', version: minecraft_version
+runs {
+    // applies to all the run configs below
+    configureEach {
+        // Recommended logging data for a userdev environment
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
 
-    if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
-        accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+        // Recommended logging level for the console
+        systemProperty 'forge.logging.console.level', 'debug'
+
+        //Limit ram usage for the dev environment to 4GB
+        jvmArgument '-Xmx4G'
+
+        systemProperty 'mixin.env.disableRefMap', 'true'
+
+        modSource project.sourceSets.main
     }
 
-    runs {
-        client {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Client'
-            mods {
-                modClientRun {
-                    source sourceSets.main
-                    source project(":common").sourceSets.main
-                }
-            }
-        }
+    client {
+        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+        systemProperty 'neoforge.enabledGameTestNamespaces', "${mod_id}"
+    }
 
-        server {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Server'
-            mods {
-                modServerRun {
-                    source sourceSets.main
-                    source project(":common").sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            taskName 'Data'
-            mods {
-                modDataRun {
-                    source sourceSets.main
-                    source project(":common").sourceSets.main
-                }
-            }
-        }
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', "${mod_id}"
+        programArgument '--nogui'
     }
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    implementation "net.neoforged:neoforge:${neo_version}"
     compileOnly project(":common")
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
-tasks.withType(JavaCompile).configureEach {
+// NeoGradle compiles the game, but we don't want to add our common code to the game's code
+TaskCollection.metaClass.excludingNeoTasks = { ->
+    delegate.matching { !it.name.startsWith("neo") }
+}
+
+tasks.withType(JavaCompile).excludingNeoTasks().configureEach {
     source(project(":common").sourceSets.main.allSource)
 }
-tasks.withType(Javadoc).configureEach {
+
+tasks.withType(Javadoc).excludingNeoTasks().configureEach {
     source(project(":common").sourceSets.main.allJava)
 }
+
 tasks.named("sourcesJar", Jar) {
     from(project(":common").sourceSets.main.allSource)
 }
 
-processResources {
+tasks.withType(ProcessResources).excludingNeoTasks().configureEach {
     from project(":common").sourceSets.main.resources
 }
 
-jar.finalizedBy('reobfJar')
-
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        register('mavenJava', MavenPublication) {
             groupId project.group
             artifactId base.archivesName.get()
             version project.version
@@ -100,7 +84,7 @@ publishing {
     repositories {
         if (System.getenv().SAP_SECRET) {
             maven {
-                url "https://maven.saps.dev/minecraft"
+                url "https://maven.saps.dev/releases"
                 credentials {
                     username = "mrbysco"
                     password = "${System.getenv().SAP_SECRET}"
@@ -111,32 +95,33 @@ publishing {
 }
 
 if (System.getenv().CURSEFORGE_KEY) {
-    curseforge {
-        apiKey = System.getenv().CURSEFORGE_KEY
-        project {
-            id = project.curseforge_id
-            releaseType = "beta"
-            addGameVersion "Forge"
-            addGameVersion "${minecraft_version}"
-            addGameVersion "Java 17"
-            mainArtifact(jar)
-            changelog = file("$project.rootDir/changelog.md")
-            changelogType = 'markdown'
-        }
+    task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+        apiToken = System.getenv().CURSEFORGE_KEY
+
+        def mainFile = upload(project.curseforge_id, jar)
+        mainFile.releaseType = 'alpha'
+        mainFile.addGameVersion "NeoForge"
+        mainFile.addGameVersion "${minecraft_version}"
+        mainFile.addGameVersion "Java 17"
+
+        mainFile.changelog = file("$project.rootDir/changelog.md")
+        mainFile.changelogType = 'markdown'
+
+//        mainFile.addRequirement()
+//        mainFile.addOptional()
     }
 }
 
 if (System.getenv().MODRINTH_KEY) {
-    String fileContents = file("$project.rootDir/changelog.md").text
     modrinth {
         token = System.getenv().MODRINTH_KEY
         projectId = project.modrinth_id
-        versionType = "beta"
+        versionType = "alpha"
         versionName = "${mod_name} ${minecraft_version}"
         versionNumber = project.version
         uploadFile = jar
-        changelog = fileContents
+        changelog = file("$project.rootDir/changelog.md").text
         gameVersions = ["${minecraft_version}"]
-        loaders = ["forge"]
+        loaders = ["neoforge"]
     }
 }

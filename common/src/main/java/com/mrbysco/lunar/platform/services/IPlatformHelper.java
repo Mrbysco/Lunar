@@ -3,7 +3,6 @@ package com.mrbysco.lunar.platform.services;
 import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -111,18 +110,4 @@ public interface IPlatformHelper {
 	 * @return the configured Crimson Replacement Map.
 	 */
 	Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap();
-
-	/**
-	 * Returns the associated ResourceLocation for the given EntityType.
-	 *
-	 * @return the ResourceLocation.
-	 */
-	ResourceLocation getEntityTypeLocation(EntityType<?> entityType);
-
-	/**
-	 * Returns the associated EntityType for the given ResourceLocation.
-	 *
-	 * @return the EntityType.
-	 */
-	EntityType<?> getEntityType(ResourceLocation location);
 }

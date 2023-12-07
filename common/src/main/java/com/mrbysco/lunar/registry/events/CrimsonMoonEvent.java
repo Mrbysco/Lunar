@@ -5,6 +5,7 @@ import com.mrbysco.lunar.api.LunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -49,11 +50,11 @@ public class CrimsonMoonEvent extends LunarEvent {
 		ServerLevel level = (ServerLevel) livingEntity.level();
 		if (spawnType == MobSpawnType.NATURAL) {
 			Map<ResourceLocation, ResourceLocation> replacementMap = Services.PLATFORM.getCrimsonReplacementMap();
-			ResourceLocation entityLocation = Services.PLATFORM.getEntityTypeLocation(livingEntity.getType());
+			ResourceLocation entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
 			if (replacementMap.containsKey(entityLocation)) {
 				ResourceLocation replacementLocation = replacementMap.get(entityLocation);
 				if (replacementLocation != null) {
-					EntityType<?> replacementType = Services.PLATFORM.getEntityType(replacementLocation);
+					EntityType<?> replacementType = BuiltInRegistries.ENTITY_TYPE.get(replacementLocation);
 					if (replacementType != null) {
 						Entity replacementEntity = replacementType.create(level);
 						if (replacementEntity != null) {
