@@ -117,7 +117,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public int getEclipseMoonWeight() {
 		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.eclipseMoon;
+		return Lunar.config.events.eclipseMoonWeight;
 	}
 
 	@Override

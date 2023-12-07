@@ -64,7 +64,7 @@ public class LunarConfig implements ConfigData {
 
 		@Comment("Weight of the Eclipse Moon Event [Default: 2]")
 		@BoundedDiscrete(min = 0, max = 100)
-		public int eclipseMoon = 2;
+		public int eclipseMoonWeight = 2;
 	}
 
 	public static class Crimson {

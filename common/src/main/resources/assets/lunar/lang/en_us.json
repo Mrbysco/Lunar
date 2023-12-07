@@ -13,6 +13,7 @@
   "lunar.event.hero_moon": "Hero Moon",
   "lunar.event.eclipse_moon": "Eclipse Moon",
 
+  "text.autoconfig.lunar.title": "Title",
   "text.autoconfig.lunar.option.general": "General",
   "text.autoconfig.lunar.option.general.lunarEventChance": "Lunar Event Chance",
   "text.autoconfig.lunar.option.events": "Events",
