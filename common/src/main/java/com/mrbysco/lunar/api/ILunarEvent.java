@@ -72,6 +72,7 @@ public interface ILunarEvent {
 	 *
 	 * @param livingEntity the entity being checked
 	 * @param spawnType    the spawn reason
+	 * @return if the lunar event changes mob spawning rules
 	 */
 	default EventResult getSpawnResult(LivingEntity livingEntity, MobSpawnType spawnType) {
 		return EventResult.DEFAULT;
