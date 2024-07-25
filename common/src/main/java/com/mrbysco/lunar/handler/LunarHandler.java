@@ -4,6 +4,7 @@ import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.registry.events.RegularMoonEvent;
+import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -19,8 +20,11 @@ public class LunarHandler {
 			LunarPhaseData phaseData = LunarPhaseData.get(serverLevel);
 			ILunarEvent event = phaseData.getActiveLunarEvent();
 			boolean raining = serverLevel.isRaining();
-			if (serverLevel.isNight()) {
-				if (raining && phaseData.hasEventActive() && !(phaseData.getActiveLunarEvent() instanceof RegularMoonEvent)) {
+			boolean cleanseIfRaining = Services.PLATFORM.getLunarWeatherCleanse();
+			int currentTime = (int)(serverLevel.getDayTime() % 24000L);
+			
+			if (currentTime > 13000 && currentTime < 23000) {
+				if (cleanseIfRaining && raining && phaseData.hasEventActive() && !(phaseData.getActiveLunarEvent() instanceof RegularMoonEvent)) {
 					Component rainComponent = Component.translatable("lunar.event.rain", Component.translatable(event.getTranslationKey()));
 					level.players().forEach(player -> player.sendSystemMessage(rainComponent));
 					if (event != null) {
