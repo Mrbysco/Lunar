@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class LunarConfig {
 	public static class Common {
 		public final DoubleValue lunarEventChance;
+		public final BooleanValue lunarEventWeatherCleanse;
 
 		public final IntValue bloodMoonWeight;
 		public final IntValue crimsonMoonWeight;
@@ -32,6 +34,10 @@ public class LunarConfig {
 			lunarEventChance = builder
 					.comment("Chance of a Lunar Event happening when night falls [Default: 0.4]")
 					.defineInRange("lunarEventChance", 0.4, 0, 1);
+			
+			lunarEventWeatherCleanse = builder
+					.comment("Allows for rain to cleanse the effects of a Lunar Event [Default: true]")
+					.define("lunarEventWeatherCleanse", true);
 
 			builder.pop();
 			builder.comment("Event settings")
