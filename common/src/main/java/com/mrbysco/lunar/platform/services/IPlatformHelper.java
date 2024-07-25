@@ -42,6 +42,13 @@ public interface IPlatformHelper {
 	float getLunarChance();
 
 	/**
+	 * Returns the configured option if bad weather cleanses Lunar Event effects.
+	 *
+	 * @return the Lunar Event Weather Cleanse boolean
+	 */
+	boolean getLunarWeatherCleanse();
+
+	/**
 	 * Returns the configured weight of the Blood Moon event.
 	 *
 	 * @return the Blood Moon Weight
