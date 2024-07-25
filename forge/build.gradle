@@ -1,8 +1,8 @@
 plugins {
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle'
-    id 'org.spongepowered.mixin'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version "0.7-SNAPSHOT"
     id 'com.matthewprenger.cursegradle'
     id 'com.modrinth.minotaur'
 }
@@ -29,6 +29,7 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Client'
+            jvmArgs("-Xmx4G") // Set the memory allocation for the run task to 4GB
             mods {
                 modClientRun {
                     source sourceSets.main
@@ -41,6 +42,7 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Server'
+            jvmArgs("-Xmx4G") // Set the memory allocation for the run task to 4GB
             mods {
                 modServerRun {
                     source sourceSets.main
@@ -54,6 +56,7 @@ minecraft {
             ideaModule "${rootProject.name}.${project.name}.main"
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             taskName 'Data'
+            jvmArgs("-Xmx4G") // Set the memory allocation for the run task to 4GB
             mods {
                 modDataRun {
                     source sourceSets.main
