@@ -1,12 +1,12 @@
 package com.mrbysco.lunar.platform;
 
 import com.google.common.collect.Maps;
+import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
 import com.mrbysco.lunar.network.PacketHandler;
 import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
-import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
