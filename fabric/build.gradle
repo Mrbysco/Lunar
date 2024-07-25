@@ -50,12 +50,14 @@ loom {
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
             runDir("run")
+            vmArgs("-Xmx4G") // Set the memory allocation for the run task to 4GB
         }
         server {
             server()
             setConfigName("Fabric Server")
             ideConfigGenerated(true)
             runDir("run")
+            vmArgs("-Xmx4G") // Set the memory allocation for the run task to 4GB
         }
     }
 }
