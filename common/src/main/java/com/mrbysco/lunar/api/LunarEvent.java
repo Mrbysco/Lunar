@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public abstract class LunarEvent implements ILunarEvent {
 	private final ResourceLocation resourceLocation;
-	private int moonColor;
+	private final int moonColor;
 
 	public LunarEvent(ResourceLocation resourceLocation, int moonColor) {
 		this.resourceLocation = resourceLocation;

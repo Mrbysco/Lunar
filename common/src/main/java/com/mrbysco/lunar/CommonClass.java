@@ -5,7 +5,7 @@ import com.mrbysco.lunar.registry.LunarRegistry;
 import java.util.List;
 
 public class CommonClass {
-	public static List<String> DEFAULT_CRIMSON_REPLACEMENT = List.of(
+	public static final List<String> DEFAULT_CRIMSON_REPLACEMENT = List.of(
 			"minecraft:zombie,minecraft:zombified_piglin",
 			"minecraft:husk,minecraft:zombified_piglin",
 			"minecraft:drowned,minecraft:zombified_piglin",
