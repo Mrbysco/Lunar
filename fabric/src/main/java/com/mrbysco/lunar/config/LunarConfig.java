@@ -26,6 +26,9 @@ public class LunarConfig implements ConfigData {
 		@Comment("Chance of a Lunar Event happening when night falls [Default: 0.4]")
 		@BoundedDiscrete(min = 0, max = 1)
 		public float lunarEventChance = 0.4F;
+		
+		@Comment("Allows for rain to cleanse the effects of a Lunar Event [Default: true]")
+		public boolean lunarEventWeatherCleanse = true;
 	}
 
 	public static class Events {
