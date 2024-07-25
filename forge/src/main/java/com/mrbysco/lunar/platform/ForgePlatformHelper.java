@@ -38,6 +38,11 @@ public class ForgePlatformHelper implements IPlatformHelper {
 	}
 
 	@Override
+	public boolean getLunarWeatherCleanse() {
+		return LunarConfig.COMMON.lunarEventChance.get();
+	}
+
+	@Override
 	public int getBloodMoonWeight() {
 		return LunarConfig.COMMON.bloodMoonWeight.get();
 	}
