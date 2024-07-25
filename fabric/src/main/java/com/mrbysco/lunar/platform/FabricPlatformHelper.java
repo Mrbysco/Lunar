@@ -3,9 +3,9 @@ package com.mrbysco.lunar.platform;
 import com.google.common.collect.Maps;
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.Lunar;
+import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
-import com.mrbysco.lunar.api.ILunarEvent;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -66,12 +66,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	public float getLunarChance() {
 		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
 		return Lunar.config.general.lunarEventChance;
-	}
-
-	@Override
-	public boolean getLunarWeatherCleanse() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.general.getLunarWeatherCleanse;
 	}
 
 	@Override
