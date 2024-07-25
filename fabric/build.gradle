@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'maven-publish'
-    id 'fabric-loom'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'com.matthewprenger.cursegradle'
     id 'com.modrinth.minotaur'
 }
