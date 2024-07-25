@@ -67,12 +67,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	}
 
 	@Override
-	public boolean getLunarWeatherCleanse() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.general.getLunarWeatherCleanse;
-	}
-
-	@Override
 	public int getBloodMoonWeight() {
 		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
 		return Lunar.config.events.bloodMoonWeight;

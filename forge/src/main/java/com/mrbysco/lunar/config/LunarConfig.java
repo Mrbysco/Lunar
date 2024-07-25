@@ -12,7 +12,6 @@ import java.util.List;
 public class LunarConfig {
 	public static class Common {
 		public final DoubleValue lunarEventChance;
-		public final BooleanValue lunarEventWeatherCleanse;
 
 		public final IntValue bloodMoonWeight;
 		public final IntValue crimsonMoonWeight;
@@ -26,17 +25,13 @@ public class LunarConfig {
 
 		public final ConfigValue<List<? extends String>> crimsonReplacements;
 
-		Common(ForgeConfigSpec.Builder builder) {
+		Common(ModConfigSpec.Builder builder) {
 			builder.comment("General settings")
 					.push("General");
 
 			lunarEventChance = builder
 					.comment("Chance of a Lunar Event happening when night falls [Default: 0.4]")
 					.defineInRange("lunarEventChance", 0.4, 0, 1);
-			
-			lunarEventWeatherCleanse = builder
-					.comment("Allows for rain to cleanse the effects of a Lunar Event [Default: true]")
-					.define("lunarEventWeatherCleanse", true);
 
 			builder.pop();
 			builder.comment("Event settings")
