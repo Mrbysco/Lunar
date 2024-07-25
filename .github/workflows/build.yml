@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew publish
       - uses: actions/upload-artifact@v4
         with:
-          name: ForgeArtifact
+          name: NeoForgeArtifact
           path: ./forge/build/libs/*.jar
       - uses: actions/upload-artifact@v4
         with:

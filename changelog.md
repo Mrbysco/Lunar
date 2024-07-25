@@ -1,1 +1,2 @@
-* Initial update to 1.20.2
+* Fix effects being applied to spectators
+* Fix weather clearing the moon event (Thanks to Cephelo)
