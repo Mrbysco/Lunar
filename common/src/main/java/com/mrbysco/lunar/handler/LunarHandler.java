@@ -25,7 +25,10 @@ public class LunarHandler {
 				} else {
 					if (event != null) {
 						if (event.applyEntityEffect()) {
-							serverLevel.getAllEntities().forEach(event::applyEntityEffect);
+							serverLevel.getAllEntities().forEach(entity -> {
+								if (entity.isSpectator()) return;
+								event.applyEntityEffect(entity);
+							});
 						}
 						if (event.applyPlayerEffect()) {
 							serverLevel.players().forEach(event::applyPlayerEffect);
