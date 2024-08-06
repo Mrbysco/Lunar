@@ -3,7 +3,6 @@ package com.mrbysco.lunar.platform;
 import com.google.common.collect.Maps;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
-import com.mrbysco.lunar.network.PacketHandler;
 import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
@@ -15,21 +14,21 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Map;
 
-public class ForgePlatformHelper implements IPlatformHelper {
+public class NeoForgePlatformHelper implements IPlatformHelper {
 
 	@Override
 	public void syncEvent(Level level, ILunarEvent event) {
-		PacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new SyncEventMessage(event));
+		PacketDistributor.ALL.noArg().send(new SyncEventMessage(event));
 	}
 
 	@Override
 	public void syncEvent(ServerPlayer player, ILunarEvent event) {
-		PacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncEventMessage(event));
+		player.connection.send(new SyncEventMessage(event));
 	}
 
 	@Override
 	public void syncDeltaMovement(ServerPlayer player, Vec3 deltaMovement) {
-		PacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SyncDeltaMovement(deltaMovement));
+		player.connection.send(new SyncDeltaMovement(deltaMovement));
 	}
 
 	@Override

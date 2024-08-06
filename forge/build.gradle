@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.84'
+    id 'net.neoforged.gradle.userdev' version '7.0.145'
     id 'net.darkhax.curseforgegradle'
     id 'com.modrinth.minotaur'
 }
@@ -98,9 +98,10 @@ if (System.getenv().CURSEFORGE_KEY) {
 
         def mainFile = upload(project.curseforge_id, jar)
         mainFile.releaseType = 'alpha'
-        mainFile.addGameVersion "NeoForge"
-        mainFile.addGameVersion "${minecraft_version}"
-        mainFile.addGameVersion "Java 17"
+        mainFile.addModLoader("NeoForge")
+        mainFile.addGameVersion("${mc_version}")
+        mainFile.addJavaVersion("Java 17")
+        mainFile.addEnvironment('Server', 'Client')
 
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'

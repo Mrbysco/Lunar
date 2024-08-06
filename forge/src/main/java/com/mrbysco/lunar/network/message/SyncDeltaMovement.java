@@ -1,35 +1,25 @@
 package com.mrbysco.lunar.network.message;
 
+import com.mrbysco.lunar.Constants;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.network.NetworkEvent;
 
-public class SyncDeltaMovement {
-	private final Vec3 deltaMovement;
+public record SyncDeltaMovement(Vec3 deltaMovement) implements CustomPacketPayload {
 
-	public SyncDeltaMovement(Vec3 deltaMovement) {
-		this.deltaMovement = deltaMovement;
+	public SyncDeltaMovement(final FriendlyByteBuf buffer) {
+		this(new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()));
 	}
 
-	public static SyncDeltaMovement decode(final FriendlyByteBuf buffer) {
-		return new SyncDeltaMovement(new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()));
-	}
-
-	public void encode(FriendlyByteBuf buffer) {
+	public void write(FriendlyByteBuf buffer) {
 		buffer.writeDouble(deltaMovement.x);
 		buffer.writeDouble(deltaMovement.y);
 		buffer.writeDouble(deltaMovement.z);
 	}
 
-	public void handle(NetworkEvent.Context ctx) {
-		ctx.enqueueWork(() -> {
-			if (ctx.getDirection().getReceptionSide().isClient()) {
-				if (FMLEnvironment.dist.isClient()) {
-					net.minecraft.client.Minecraft.getInstance().player.setDeltaMovement(deltaMovement);
-				}
-			}
-		});
-		ctx.setPacketHandled(true);
+	@Override
+	public ResourceLocation id() {
+		return Constants.SYNC_MOVEMENT_EVENT_ID;
 	}
 }

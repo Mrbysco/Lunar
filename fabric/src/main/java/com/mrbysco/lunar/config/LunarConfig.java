@@ -13,13 +13,13 @@ import java.util.List;
 @Config(name = Constants.MOD_ID)
 public class LunarConfig implements ConfigData {
 	@CollapsibleObject
-	public General general = new General();
+	public final General general = new General();
 
 	@CollapsibleObject
-	public Events events = new Events();
+	public final Events events = new Events();
 
 	@CollapsibleObject
-	public Crimson crimson = new Crimson();
+	public final Crimson crimson = new Crimson();
 
 	public static class General {
 		//General
