@@ -1,6 +1,5 @@
 package com.mrbysco.lunar.mixin;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrbysco.lunar.client.MoonHandler;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -25,20 +24,21 @@ public class LevelRendererMixin {
 	@Nullable
 	private ClientLevel level;
 
-	@Inject(method = "renderSky(Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V", at = @At(
+	@Inject(method = "renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V", at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/client/multiplayer/ClientLevel;getMoonPhase()I",
 			shift = Shift.BEFORE,
 			ordinal = 0
 	))
-	private void lunar_colorMoon(PoseStack poseStack, Matrix4f matrix4f, float f, Camera camera, boolean bl, Runnable runnable, CallbackInfo ci) {
+	private void lunar_colorMoon(Matrix4f frustumMatrix, Matrix4f projectionMatrix, float partialTick, Camera camera,
+	                             boolean isFoggy, Runnable skyFogSetup, CallbackInfo ci) {
 		if (this.level != null) {
-			MoonHandler.colorTheMoon(level, poseStack, matrix4f, f, camera);
+			MoonHandler.colorTheMoon(level, frustumMatrix, projectionMatrix, partialTick, camera);
 		}
 	}
 
 	@ModifyVariable(
-			method = "renderSky",
+			method = "renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V",
 			slice = @Slice(
 					from = @At(ordinal = 0, value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/resources/ResourceLocation;)V"),
 					to = @At(ordinal = 1, value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderTexture(ILnet/minecraft/resources/ResourceLocation;)V")
@@ -54,9 +54,9 @@ public class LevelRendererMixin {
 		return matrix;
 	}
 
-	@ModifyArg(method = "renderSky",
+	@ModifyArg(method = "renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V",
 			slice = @Slice(
-					from = @At(ordinal = 1, value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/BufferUploader;drawWithShader(Lcom/mojang/blaze3d/vertex/BufferBuilder$RenderedBuffer;)V"),
+					from = @At(ordinal = 1, value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/BufferUploader;drawWithShader(Lcom/mojang/blaze3d/vertex/MeshData;)V"),
 					to = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getMoonPhase()I")
 			),
 			at = @At(

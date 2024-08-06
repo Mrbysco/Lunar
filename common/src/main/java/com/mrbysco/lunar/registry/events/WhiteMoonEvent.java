@@ -5,7 +5,6 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.api.LunarEvent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
@@ -14,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 public class WhiteMoonEvent extends LunarEvent {
 
 	public WhiteMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "white_moon"), 0x1f1f1f);
+		super(Constants.modLoc("white_moon"), 0x1f1f1f);
 	}
 
 	@Override

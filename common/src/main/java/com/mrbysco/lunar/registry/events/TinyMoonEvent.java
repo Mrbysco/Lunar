@@ -5,7 +5,6 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.api.LunarEvent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 public class TinyMoonEvent extends LunarEvent {
 
 	public TinyMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "tiny_moon"), 0xFFFFF1);
+		super(Constants.modLoc("tiny_moon"), 0xFFFFF1);
 	}
 
 	@Override

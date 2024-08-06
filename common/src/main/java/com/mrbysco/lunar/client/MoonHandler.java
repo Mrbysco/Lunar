@@ -1,7 +1,6 @@
 package com.mrbysco.lunar.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +13,8 @@ public class MoonHandler {
 	private static Matrix4f moonScale;
 	private static ResourceLocation moonTexture;
 
-	public static void colorTheMoon(ClientLevel level, PoseStack poseStack, Matrix4f matrix4f, float partialTick, Camera camera) {
+	public static void colorTheMoon(ClientLevel level, Matrix4f frustumMatrix, Matrix4f projectionMatrix,
+	                                float partialTick, Camera camera) {
 		if (isEventActive()) {
 			RenderSystem.setShaderColor(moonColor[0], moonColor[1], moonColor[2], 1.0F);
 		}

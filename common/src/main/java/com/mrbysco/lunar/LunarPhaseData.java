@@ -3,6 +3,7 @@ package com.mrbysco.lunar;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.LunarRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +32,7 @@ public class LunarPhaseData extends SavedData {
 		setForcedEvent(forcedEvent);
 	}
 
-	public CompoundTag save(CompoundTag compound) {
+	public CompoundTag save(CompoundTag compound, HolderLookup.Provider provider) {
 		if (activeEvent != null) {
 			compound.putString("event", activeEvent.getID().toString());
 		}
@@ -41,7 +42,7 @@ public class LunarPhaseData extends SavedData {
 		return compound;
 	}
 
-	public static LunarPhaseData load(CompoundTag compound) {
+	public static LunarPhaseData load(CompoundTag compound, HolderLookup.Provider provider) {
 		ResourceLocation eventID = compound.getString("event").isEmpty() ? null : ResourceLocation.tryParse(compound.getString("event"));
 		ILunarEvent event = eventID != null ? LunarRegistry.instance().getEventByID(eventID) : null;
 

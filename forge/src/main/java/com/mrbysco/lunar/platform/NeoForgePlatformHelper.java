@@ -18,7 +18,7 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 
 	@Override
 	public void syncEvent(Level level, ILunarEvent event) {
-		PacketDistributor.ALL.noArg().send(new SyncEventMessage(event));
+		PacketDistributor.sendToAllPlayers(new SyncEventMessage(event));
 	}
 
 	@Override

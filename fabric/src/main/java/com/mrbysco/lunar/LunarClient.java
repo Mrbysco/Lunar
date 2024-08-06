@@ -1,6 +1,8 @@
 package com.mrbysco.lunar;
 
 import com.mrbysco.lunar.client.MoonHandler;
+import com.mrbysco.lunar.network.message.SyncDeltaMovement;
+import com.mrbysco.lunar.network.message.SyncEventMessage;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
@@ -11,25 +13,25 @@ public class LunarClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ClientPlayNetworking.registerGlobalReceiver(Constants.SYNC_EVENT_ID, (client, handler, buf, responseSender) -> {
-			int moonColor = buf.readInt();
-			String eventID = buf.readUtf();
-			float moonScale = buf.readFloat();
-			String customTexture = buf.readUtf();
-			client.execute(() -> {
+		ClientPlayNetworking.registerGlobalReceiver(SyncEventMessage.ID, (payload, context) -> {
+			int moonColor = payload.color();
+			String eventID = payload.eventID();
+			float moonScale = payload.moonScale();
+			ResourceLocation customTexture = payload.customTexture();
+			context.client().execute(() -> {
 				if (moonColor == -1 || eventID.isBlank()) {
 					MoonHandler.disableMoon();
 				} else {
 					MoonHandler.setMoon(eventID, moonColor, moonScale);
-					if (!customTexture.isEmpty()) {
-						MoonHandler.setMoonTexture(ResourceLocation.tryParse(customTexture));
+					if (customTexture != null) {
+						MoonHandler.setMoonTexture(customTexture);
 					}
 				}
 			});
 		});
-		ClientPlayNetworking.registerGlobalReceiver(Constants.SYNC_MOVEMENT_EVENT_ID, (client, handler, buf, responseSender) -> {
-			Vec3 deltaMovement = new Vec3(buf.readDouble(), buf.readDouble(), buf.readDouble());
-			client.execute(() -> {
+		ClientPlayNetworking.registerGlobalReceiver(SyncDeltaMovement.ID, (payload, context) -> {
+			Vec3 deltaMovement = payload.deltaMovement();
+			context.client().execute(() -> {
 				Minecraft.getInstance().player.setDeltaMovement(deltaMovement);
 			});
 		});

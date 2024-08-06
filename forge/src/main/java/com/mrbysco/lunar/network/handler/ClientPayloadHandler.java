@@ -5,7 +5,7 @@ import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPayloadHandler {
 	private static final ClientPayloadHandler INSTANCE = new ClientPayloadHandler();
@@ -14,21 +14,21 @@ public class ClientPayloadHandler {
 		return INSTANCE;
 	}
 
-	public void handleDelta(final SyncDeltaMovement payload, final PlayPayloadContext context) {
-		context.workHandler().submitAsync(() -> {
+	public void handleDelta(final SyncDeltaMovement payload, final IPayloadContext context) {
+		context.enqueueWork(() -> {
 					//Open Captcha Screen
 					Minecraft mc = Minecraft.getInstance();
 					mc.player.setDeltaMovement(payload.deltaMovement());
 				})
 				.exceptionally(e -> {
 					// Handle exception
-					context.packetHandler().disconnect(Component.translatable("lunar.networking.sync_movement_event.failed", e.getMessage()));
+					context.disconnect(Component.translatable("lunar.networking.sync_movement_event.failed", e.getMessage()));
 					return null;
 				});
 	}
 
-	public void handleSync(final SyncEventMessage payload, final PlayPayloadContext context) {
-		context.workHandler().submitAsync(() -> {
+	public void handleSync(final SyncEventMessage payload, final IPayloadContext context) {
+		context.enqueueWork(() -> {
 					//Open Captcha Screen
 					if (payload.color() == -1 || payload.eventID().isBlank()) {
 						MoonHandler.disableMoon();
@@ -41,7 +41,7 @@ public class ClientPayloadHandler {
 				})
 				.exceptionally(e -> {
 					// Handle exception
-					context.packetHandler().disconnect(Component.translatable("lunar.networking.sync_event.failed", e.getMessage()));
+					context.disconnect(Component.translatable("lunar.networking.sync_event.failed", e.getMessage()));
 					return null;
 				});
 	}

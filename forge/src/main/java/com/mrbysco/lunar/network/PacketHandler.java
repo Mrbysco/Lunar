@@ -4,15 +4,13 @@ import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.network.handler.ClientPayloadHandler;
 import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class PacketHandler {
-	public static void setupPackets(final RegisterPayloadHandlerEvent event) {
-		final IPayloadRegistrar registrar = event.registrar(Constants.MOD_ID);
-		registrar.play(Constants.SYNC_MOVEMENT_EVENT_ID, SyncDeltaMovement::new, handler -> handler
-				.client(ClientPayloadHandler.getInstance()::handleDelta));
-		registrar.play(Constants.SYNC_EVENT_ID, SyncEventMessage::new, handler -> handler
-				.client(ClientPayloadHandler.getInstance()::handleSync));
+	public static void setupPackets(final RegisterPayloadHandlersEvent event) {
+		final PayloadRegistrar registrar = event.registrar(Constants.MOD_ID);
+		registrar.playToClient(SyncDeltaMovement.ID, SyncDeltaMovement.CODEC, ClientPayloadHandler.getInstance()::handleDelta);
+		registrar.playToClient(SyncEventMessage.ID, SyncEventMessage.CODEC, ClientPayloadHandler.getInstance()::handleSync);
 	}
 }

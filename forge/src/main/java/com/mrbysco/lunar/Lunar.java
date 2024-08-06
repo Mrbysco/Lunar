@@ -5,27 +5,28 @@ import com.mrbysco.lunar.config.LunarConfig;
 import com.mrbysco.lunar.handler.LunarHandler;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.network.PacketHandler;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.Event.Result;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.neoforged.neoforge.event.entity.player.SleepingLocationCheckEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 @Mod(Constants.MOD_ID)
 public class Lunar {
 
-	public Lunar(IEventBus eventBus) {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, LunarConfig.commonSpec);
+	public Lunar(IEventBus eventBus, ModContainer container) {
+		container.registerConfig(ModConfig.Type.COMMON, LunarConfig.commonSpec);
 		eventBus.addListener(this::setup);
 
 		eventBus.addListener(PacketHandler::setupPackets);
@@ -47,16 +48,16 @@ public class Lunar {
 		LunarCommands.initializeCommands(event.getDispatcher());
 	}
 
-	private void onSleepCheck(SleepingLocationCheckEvent event) {
-		if (event.getEntity() instanceof Player player && player.level().dimension().equals(Level.OVERWORLD)) {
-			EventResult result = LunarHandler.canSleep(player, event.getSleepingLocation());
+	private void onSleepCheck(CanContinueSleepingEvent event) {
+		if (event.getEntity() instanceof Player player && player.level().dimension().equals(Level.OVERWORLD) && player.getSleepingPos().isPresent()) {
+			EventResult result = LunarHandler.canSleep(player, player.getSleepingPos().get());
 			if (result != EventResult.DEFAULT) {
-				event.setResult(result == EventResult.DENY ? Result.DENY : Result.ALLOW);
+				event.setContinueSleeping(result == EventResult.DENY ? false : event.mayContinueSleeping());
 			}
 		}
 	}
 
-	private void onLivingSpawn(MobSpawnEvent.FinalizeSpawn event) {
+	private void onLivingSpawn(FinalizeSpawnEvent event) {
 		if (event.getEntity().level().dimension().equals(Level.OVERWORLD)) {
 			LunarHandler.uponLivingSpawn(event.getSpawnType(), event.getEntity());
 		}
@@ -67,17 +68,17 @@ public class Lunar {
 			EventResult spawnResult = LunarHandler.getSpawnResult(event.getSpawnType(), event.getEntity());
 			if (spawnResult != EventResult.DEFAULT) {
 				if (spawnResult == EventResult.ALLOW) {
-					event.setResult(Result.ALLOW);
+					event.setResult(MobSpawnEvent.PositionCheck.Result.SUCCEED);
 				} else {
-					event.setResult(Result.DENY);
+					event.setResult(MobSpawnEvent.PositionCheck.Result.FAIL);
 				}
 			}
 		}
 	}
 
-	private void onLevelTick(TickEvent.LevelTickEvent event) {
-		if (event.phase == TickEvent.Phase.END && event.side.isServer() && event.level.dimension().equals(Level.OVERWORLD)) {
-			LunarHandler.onWorldTick(event.level);
+	private void onLevelTick(LevelTickEvent.Post event) {
+		if (event.getLevel() instanceof ServerLevel serverLevel && serverLevel.dimension().equals(Level.OVERWORLD)) {
+			LunarHandler.onWorldTick(serverLevel);
 		}
 	}
 

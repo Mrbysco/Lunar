@@ -21,7 +21,7 @@ import java.util.Map;
 public class CrimsonMoonEvent extends LunarEvent {
 
 	public CrimsonMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "crimson_moon"), 0xDC143C);
+		super(Constants.modLoc("crimson_moon"), 0xDC143C);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 								if (!mob.checkSpawnObstruction(level)) {
 									return EventResult.DEFAULT;
 								}
-								mob.finalizeSpawn(level, level.getCurrentDifficultyAt(position), MobSpawnType.NATURAL, null, null);
+								mob.finalizeSpawn(level, level.getCurrentDifficultyAt(position), MobSpawnType.NATURAL, null);
 							}
 							if (replacementEntity instanceof Ghast) {
 								if (level.random.nextDouble() <= 0.5) {

@@ -13,6 +13,9 @@
   "lunar.event.hero_moon": "Hero Moon",
   "lunar.event.eclipse_moon": "Eclipse Moon",
 
+  "lunar.networking.sync_movement_event.failed": "Failed to sync movement event %s",
+  "lunar.networking.sync_event.failed": "Failed to sync event %s",
+
   "text.autoconfig.lunar.title": "Title",
   "text.autoconfig.lunar.option.general": "General",
   "text.autoconfig.lunar.option.general.lunarEventChance": "Lunar Event Chance",

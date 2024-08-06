@@ -3,11 +3,16 @@ package com.mrbysco.lunar.network.message;
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 public record SyncEventMessage(int color, String eventID, float moonScale,
                                ResourceLocation customTexture) implements CustomPacketPayload {
+	public static final StreamCodec<FriendlyByteBuf, SyncEventMessage> CODEC = CustomPacketPayload.codec(
+			SyncEventMessage::write,
+			SyncEventMessage::new);
+	public static final Type<SyncEventMessage> ID = new Type<>(Constants.SYNC_EVENT_ID);
 
 	public SyncEventMessage(ILunarEvent event) {
 		this(
@@ -39,7 +44,7 @@ public record SyncEventMessage(int color, String eventID, float moonScale,
 	}
 
 	@Override
-	public ResourceLocation id() {
-		return Constants.SYNC_EVENT_ID;
+	public Type<? extends CustomPacketPayload> type() {
+		return ID;
 	}
 }

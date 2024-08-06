@@ -11,10 +11,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
 public class BadOmenMoonEvent extends LunarEvent {
-	private static final ResourceLocation MOON_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/environment/bad_omen.png");
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/bad_omen.png");
 
 	public BadOmenMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "bad_omen_moon"), 0xae1a19);
+		super(Constants.modLoc("bad_omen_moon"), 0xae1a19);
 	}
 
 	@Override

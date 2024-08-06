@@ -6,6 +6,8 @@ import com.mrbysco.lunar.events.EntityEvents;
 import com.mrbysco.lunar.events.PlayerEvents;
 import com.mrbysco.lunar.handler.LunarHandler;
 import com.mrbysco.lunar.handler.result.EventResult;
+import com.mrbysco.lunar.network.message.SyncDeltaMovement;
+import com.mrbysco.lunar.network.message.SyncEventMessage;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
@@ -15,6 +17,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -36,6 +39,9 @@ public class Lunar implements ModInitializer {
 	public void onInitialize() {
 		ConfigHolder<LunarConfig> holder = AutoConfig.register(LunarConfig.class, Toml4jConfigSerializer::new);
 		config = holder.getConfig();
+
+		PayloadTypeRegistry.playS2C().register(SyncDeltaMovement.ID, SyncDeltaMovement.CODEC);
+		PayloadTypeRegistry.playS2C().register(SyncEventMessage.ID, SyncEventMessage.CODEC);
 
 		ServerLifecycleEvents.SERVER_STARTING.register((server) -> {
 			CommonClass.initRegistry();

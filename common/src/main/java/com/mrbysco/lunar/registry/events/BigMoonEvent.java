@@ -5,7 +5,6 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.api.LunarEvent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 public class BigMoonEvent extends LunarEvent {
 
 	public BigMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "big_moon"), 0xFFFFF1);
+		super(Constants.modLoc("big_moon"), 0xFFFFF1);
 	}
 
 	@Override

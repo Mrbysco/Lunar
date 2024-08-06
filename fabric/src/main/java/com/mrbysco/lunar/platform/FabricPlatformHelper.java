@@ -1,10 +1,11 @@
 package com.mrbysco.lunar.platform;
 
 import com.google.common.collect.Maps;
-import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.Lunar;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
+import com.mrbysco.lunar.network.message.SyncDeltaMovement;
+import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -23,17 +24,15 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public void syncEvent(Level level, ILunarEvent event) {
 		if (!level.isClientSide) {
-			FriendlyByteBuf buf = getSyncByteBuf(event);
 			for (ServerPlayer player : ((ServerLevel) level).players()) {
-				ServerPlayNetworking.send(player, Constants.SYNC_EVENT_ID, buf);
+				ServerPlayNetworking.send(player, new SyncEventMessage(event));
 			}
 		}
 	}
 
 	@Override
 	public void syncEvent(ServerPlayer player, ILunarEvent event) {
-		FriendlyByteBuf buf = getSyncByteBuf(event);
-		ServerPlayNetworking.send(player, Constants.SYNC_EVENT_ID, buf);
+		ServerPlayNetworking.send(player, new SyncEventMessage(event));
 	}
 
 	@Override
@@ -43,21 +42,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 		buf.writeDouble(deltaMovement.y);
 		buf.writeDouble(deltaMovement.z);
 
-		ServerPlayNetworking.send(player, Constants.SYNC_MOVEMENT_EVENT_ID, buf);
-	}
-
-	private FriendlyByteBuf getSyncByteBuf(ILunarEvent event) {
-		FriendlyByteBuf buf = PacketByteBufs.create();
-		int moonColor = event != null ? event.moonColor() : -1;
-		String eventID = event != null ? event.getID().toString() : "";
-		float moonScale = event != null ? event.moonScale() : 1.0F;
-		String customTexture = (event != null && event.moonTexture() != null) ? event.moonTexture().toString() : "";
-		buf.writeInt(moonColor);
-		buf.writeUtf(eventID);
-		buf.writeFloat(moonScale);
-		buf.writeUtf(customTexture);
-
-		return buf;
+		ServerPlayNetworking.send(player, new SyncDeltaMovement(deltaMovement));
 	}
 
 	@Override
