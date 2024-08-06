@@ -99,7 +99,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         def mainFile = upload(project.curseforge_id, jar)
         mainFile.releaseType = 'alpha'
         mainFile.addModLoader("NeoForge")
-        mainFile.addGameVersion("${mc_version}")
+        mainFile.addGameVersion("${minecraft_version}")
         mainFile.addJavaVersion("Java 17")
         mainFile.addEnvironment('Server', 'Client')
 
