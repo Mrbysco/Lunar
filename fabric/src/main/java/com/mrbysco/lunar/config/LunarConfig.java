@@ -24,6 +24,9 @@ public class LunarConfig implements ConfigData {
 	@CollapsibleObject
 	public Phases phases = new Phases();
 
+	@CollapsibleObject
+	public Days days = new Days();
+
 	public static class General {
 		//General
 		@Comment("Chance of a Lunar Event happening when night falls [Default: 0.4]")
@@ -141,9 +144,9 @@ public class LunarConfig implements ConfigData {
 		@BoundedDiscrete(min = 0, max = 255)
 		public int heroMoonDay = 0;
 
-		@Comment("Triggers the Crimson Moon every number of days, as defined. [Default: 0; Disabled]")
+		@Comment("Triggers the Eclipse Moon every number of days, as defined. [Default: 0; Disabled]")
 		@BoundedDiscrete(min = 0, max = 255)
-		public int crimsonMoonDay = 0;
+		public int eclipseMoonDay = 0;
 	}
 
 	public static class Crimson {
