@@ -23,6 +23,16 @@ public class EclipseMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getEclipseMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getEclipseMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.eclipse_moon";
 	}

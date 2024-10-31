@@ -23,6 +23,16 @@ public class WhiteMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getWhiteMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getWhiteMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.white_moon";
 	}

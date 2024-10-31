@@ -23,6 +23,16 @@ public class HeroMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getHeroMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getHeroMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.hero_moon";
 	}

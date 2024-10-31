@@ -23,6 +23,16 @@ public class BadOmenMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getBadOmenMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getBadOmenMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.bad_omen_moon";
 	}

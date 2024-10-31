@@ -19,6 +19,12 @@ public class RegularMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() { return 0; }
+
+	@Override
+	public int getDay() { return 0; }
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.regular";
 	}

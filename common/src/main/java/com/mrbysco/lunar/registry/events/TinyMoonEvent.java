@@ -23,6 +23,16 @@ public class TinyMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getTinyMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getTinyMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.tiny_moon";
 	}

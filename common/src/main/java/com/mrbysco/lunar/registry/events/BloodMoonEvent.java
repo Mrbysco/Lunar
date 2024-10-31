@@ -33,6 +33,16 @@ public class BloodMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getBloodMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getBloodMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.blood_moon";
 	}
