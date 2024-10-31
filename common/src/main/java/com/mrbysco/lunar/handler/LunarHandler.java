@@ -3,6 +3,7 @@ package com.mrbysco.lunar.handler;
 import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
+import com.mrbysco.lunar.registry.LunarRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +21,12 @@ public class LunarHandler {
 
 			if (currentTime > 13000 && currentTime < 23000) {
 				if (!phaseData.hasEventActive()) {
-					phaseData.setRandomLunarEvent(serverLevel);
+
+					if(!phaseData.setPhaseEvent(serverLevel)){
+						if(!phaseData.setDayEvent(serverLevel)){
+							phaseData.setRandomLunarEvent(serverLevel); //I'm not sure I'm *that* happy with how this looks, but it's the best way I could think to do it so
+						}
+					}
 					phaseData.syncEvent(serverLevel);
 				} else {
 					if (event != null) {
