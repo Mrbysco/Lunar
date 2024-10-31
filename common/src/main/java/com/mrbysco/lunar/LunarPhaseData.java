@@ -63,6 +63,7 @@ public class LunarPhaseData extends SavedData {
 
 	public void setRandomLunarEvent(Level level) {
 		if (forcedEvent != null) {
+			//Technically, this code block is redundant given setRandomLunarEvent is evaluated last, but I figured I'd keep it just in case something changes down the line.
 			Component startComponent = Component.translatable("lunar.event.start", Component.translatable(forcedEvent.getTranslationKey()));
 			level.players().forEach(player -> player.sendSystemMessage(startComponent));
 			setActiveEvent(forcedEvent);
@@ -79,6 +80,53 @@ public class LunarPhaseData extends SavedData {
 				}
 			}
 			setDefaultMoon();
+		}
+	}
+
+	public boolean setPhaseEvent(Level level) {
+		if(!LunarRegistry.instance().phaseConfigured())
+			return false;
+
+		if (forcedEvent != null){
+			Component startComponent = Component.translatable("lunar.event.start", Component.translatable(forcedEvent.getTranslationKey()));
+			level.players().forEach(player -> player.sendSystemMessage(startComponent));
+			setActiveEvent(forcedEvent);
+			setForcedEvent(null);
+			return true;
+		} else {
+			ILunarEvent event = LunarRegistry.instance().getPhaseEvent(level);
+
+			if(event != null){
+				Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
+				level.players().forEach(player -> player.sendSystemMessage(startComponent));
+				setActiveEvent(event);
+				return true;
+			}
+			return false;
+		}
+	}
+
+	public boolean setDayEvent(Level level) {
+		if(!LunarRegistry.instance().dayConfigured())
+			return false;
+
+		if (forcedEvent != null){
+			//Technically, this code block is redundant given setDayEvent comes after setPhaseEvent, but I figured I'd keep it just in case something changes down the line.
+			Component startComponent = Component.translatable("lunar.event.start", Component.translatable(forcedEvent.getTranslationKey()));
+			level.players().forEach(player -> player.sendSystemMessage(startComponent));
+			setActiveEvent(forcedEvent);
+			setForcedEvent(null);
+			return true;
+		} else {
+			ILunarEvent event = LunarRegistry.instance().getDayEvent(level);
+
+			if(event != null){
+				Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
+				level.players().forEach(player -> player.sendSystemMessage(startComponent));
+				setActiveEvent(event);
+				return true;
+			}
+			return false;
 		}
 	}
 
