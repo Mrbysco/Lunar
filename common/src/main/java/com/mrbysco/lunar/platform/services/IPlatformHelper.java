@@ -162,6 +162,13 @@ public interface IPlatformHelper {
 	int getHeroMoonPhase();
 
 	/**
+	 * Returns the configured phase of the Eclipse Moon event.
+	 *
+	 * @return the Eclipse Moon Phase
+	 */
+	int getEclipseMoonPhase();
+
+	/**
 	 * Returns the configured nth day of the Blood Moon event.
 	 *
 	 * @return the Blood Moon Day
@@ -216,6 +223,13 @@ public interface IPlatformHelper {
 	 * @return the Hero Moon Day
 	 */
 	int getHeroMoonDay();
+
+	/**
+	 * Returns the configured nth day of the Eclipse Moon event.
+	 *
+	 * @return the Eclipse Moon Day
+	 */
+	int getEclipseMoonDay();
 
 	/**
 	 * Returns the configured Crimson Replacement Map to be used during the Crimson Moon event
