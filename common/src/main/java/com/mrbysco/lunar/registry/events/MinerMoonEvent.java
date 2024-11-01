@@ -22,6 +22,16 @@ public class MinerMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getMinerMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getMinerMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.miner_moon";
 	}

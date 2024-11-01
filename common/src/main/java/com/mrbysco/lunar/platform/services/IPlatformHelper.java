@@ -106,6 +106,132 @@ public interface IPlatformHelper {
 	int getEclipseMoonWeight();
 
 	/**
+	 * Returns the configured phase of the Blood Moon event.
+	 *
+	 * @return the Blood Moon Phase
+	 */
+	int getBloodMoonPhase();
+
+	/**
+	 * Returns the configured phase of the Crimson Moon event.
+	 *
+	 * @return the Crimson Moon Phase
+	 */
+	int getCrimsonMoonPhase();
+
+	/**
+	 * Returns the configured phase of the Miner Moon event.
+	 *
+	 * @return the Miner Moon Phase
+	 */
+	int getMinerMoonPhase();
+
+	/**
+	 * Returns the configured phase of the White Moon event.
+	 *
+	 * @return the White Moon Phase
+	 */
+	int getWhiteMoonPhase();
+
+	/**
+	 * Returns the configured phase of the Big Moon event.
+	 *
+	 * @return the Big Moon Phase
+	 */
+	int getBigMoonPhase();
+
+	/**
+	 * Returns the configured phase of the Tiny Moon event.
+	 *
+	 * @return the Tiny Moon Phase
+	 */
+	int getTinyMoonPhase();
+
+	/**
+	 * Returns the configured phase of the Bad Omen Moon event.
+	 *
+	 * @return the Bad Omen Moon Phase
+	 */
+	int getBadOmenMoonPhase();
+
+	/**
+	 * Returns the configured phase of the Hero Moon event.
+	 *
+	 * @return the Hero Moon Phase
+	 */
+	int getHeroMoonPhase();
+
+	/**
+	 * Returns the configured phase of the Eclipse Moon event.
+	 *
+	 * @return the Eclipse Moon Phase
+	 */
+	int getEclipseMoonPhase();
+
+	/**
+	 * Returns the configured nth day of the Blood Moon event.
+	 *
+	 * @return the Blood Moon Day
+	 */
+	int getBloodMoonDay();
+
+	/**
+	 * Returns the configured nth day of the Crimson Moon event.
+	 *
+	 * @return the Crimson Moon Day
+	 */
+	int getCrimsonMoonDay();
+
+	/**
+	 * RReturns the configured nth day of the Miner Moon event.
+	 *
+	 * @return the Miner Moon Day
+	 */
+	int getMinerMoonDay();
+
+	/**
+	 * Returns the configured nth day of the White Moon event.
+	 *
+	 * @return the White Moon Day
+	 */
+	int getWhiteMoonDay();
+
+	/**
+	 * Returns the configured nth day of the Big Moon event.
+	 *
+	 * @return the Big Moon Day
+	 */
+	int getBigMoonDay();
+
+	/**
+	 * Returns the configured nth day of the Tiny Moon event.
+	 *
+	 * @return the Tiny Moon Day
+	 */
+	int getTinyMoonDay();
+
+	/**
+	 * Returns the configured nth day of the Bad Omen Moon event.
+	 *
+	 * @return the Bad Omen Moon Day
+	 */
+	int getBadOmenMoonDay();
+
+	/**
+	 * Returns the configured nth day of the Hero Moon event.
+	 *
+	 * @return the Hero Moon Day
+	 */
+	int getHeroMoonDay();
+
+	/**
+	 * Returns the configured nth day of the Eclipse Moon event.
+	 *
+	 * @return the Eclipse Moon Day
+	 */
+	int getEclipseMoonDay();
+
+	/**
 	 * Returns the configured Crimson Replacement Map to be used during the Crimson Moon event
 	 *
 	 * @return the configured Crimson Replacement Map.

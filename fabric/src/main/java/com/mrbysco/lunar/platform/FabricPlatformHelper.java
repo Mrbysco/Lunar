@@ -123,6 +123,114 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	}
 
 	@Override
+	public int getBloodMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.bloodMoonPhase;
+	}
+
+	@Override
+	public int getCrimsonMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.crimsonMoonPhase;
+	}
+
+	@Override
+	public int getMinerMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.minerMoonPhase;
+	}
+
+	@Override
+	public int getWhiteMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.whiteMoonPhase;
+	}
+
+	@Override
+	public int getTinyMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.tinyMoonPhase;
+	}
+
+	@Override
+	public int getBigMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.bigMoonPhase;
+	}
+
+	@Override
+	public int getBadOmenMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.badOmenMoonPhase;
+	}
+
+	@Override
+	public int getHeroMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.heroMoonPhase;
+	}
+
+	@Override
+	public int getEclipseMoonPhase() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.phases.eclipseMoonPhase;
+	}
+
+	@Override
+	public int getBloodMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.bloodMoonDay;
+	}
+
+	@Override
+	public int getCrimsonMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.crimsonMoonDay;
+	}
+
+	@Override
+	public int getMinerMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.minerMoonDay;
+	}
+
+	@Override
+	public int getWhiteMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.whiteMoonDay;
+	}
+
+	@Override
+	public int getBigMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.bigMoonDay;
+	}
+
+	@Override
+	public int getTinyMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.tinyMoonDay;
+	}
+
+	@Override
+	public int getBadOmenMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.badOmenMoonDay;
+	}
+
+	@Override
+	public int getHeroMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.heroMoonDay;
+	}
+
+	@Override
+	public int getEclipseMoonDay() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.days.eclipseMoonDay;
+	}
+
+	@Override
 	public Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap() {
 		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
 		Map<ResourceLocation, ResourceLocation> map = Maps.newHashMap();

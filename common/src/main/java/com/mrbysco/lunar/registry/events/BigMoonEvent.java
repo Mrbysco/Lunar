@@ -22,6 +22,16 @@ public class BigMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getBigMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getBigMoonDay();
+	}
+
+	@Override
 	public String getTranslationKey() {
 		return "lunar.event.big_moon";
 	}

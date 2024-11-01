@@ -21,6 +21,12 @@ public class LunarConfig implements ConfigData {
 	@CollapsibleObject
 	public Crimson crimson = new Crimson();
 
+	@CollapsibleObject
+	public Phases phases = new Phases();
+
+	@CollapsibleObject
+	public Days days = new Days();
+
 	public static class General {
 		//General
 		@Comment("Chance of a Lunar Event happening when night falls [Default: 0.4]")
@@ -65,6 +71,82 @@ public class LunarConfig implements ConfigData {
 		@Comment("Weight of the Eclipse Moon Event [Default: 2]")
 		@BoundedDiscrete(min = 0, max = 100)
 		public int eclipseMoonWeight = 2;
+	}
+
+	public static class Phases {
+		@Comment("Moon phase that the Blood Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int bloodMoonPhase = -1;
+
+		@Comment("Moon phase that the Crimson Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int crimsonMoonPhase = -1;
+
+		@Comment("Moon phase that the Miner Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int minerMoonPhase = -1;
+
+		@Comment("Moon phase that the White Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int whiteMoonPhase = -1;
+
+		@Comment("Moon phase that the Tiny Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int tinyMoonPhase = -1;
+
+		@Comment("Moon phase that the Big Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int bigMoonPhase = -1;
+
+		@Comment("Moon phase that the Bad Omen Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int badOmenMoonPhase = -1;
+
+		@Comment("Moon phase that the Hero Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int heroMoonPhase = -1;
+
+		@Comment("Moon phase that the Eclipse Moon should trigger on. [Default: -1]")
+		@BoundedDiscrete(min = -1, max = 7)
+		public int eclipseMoonPhase = -1;
+	}
+
+	public static class Days {
+		@Comment("Triggers the Blood Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int bloodMoonDay = 0;
+
+		@Comment("Triggers the Crimson Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int crimsonMoonDay = 0;
+
+		@Comment("Triggers the Miner Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int minerMoonDay = 0;
+
+		@Comment("Triggers the White Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int whiteMoonDay = 0;
+
+		@Comment("Triggers the Big Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int bigMoonDay = 0;
+
+		@Comment("Triggers the Tiny Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int tinyMoonDay = 0;
+
+		@Comment("Triggers the Bad Omen Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int badOmenMoonDay = 0;
+
+		@Comment("Triggers the Hero Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int heroMoonDay = 0;
+
+		@Comment("Triggers the Eclipse Moon every number of days, as defined. [Default: 0; Disabled]")
+		@BoundedDiscrete(min = 0, max = 255)
+		public int eclipseMoonDay = 0;
 	}
 
 	public static class Crimson {
