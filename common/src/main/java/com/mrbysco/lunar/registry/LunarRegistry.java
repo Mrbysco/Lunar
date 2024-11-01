@@ -111,7 +111,7 @@ public class LunarRegistry {
 	}
 
 	public ILunarEvent getPhaseEvent(Level level) {
-		List<ILunarEvent> phaseEventListCopy = new ArrayList<>(eventList);
+		List<ILunarEvent> phaseEventListCopy = new ArrayList<>(phaseEventList);
 
 		for(ILunarEvent i : phaseEventListCopy){
 			if(level.getMoonPhase() == i.getPhase()){
@@ -123,10 +123,10 @@ public class LunarRegistry {
 	}
 
 	public ILunarEvent getDayEvent(Level level) {
-		List<ILunarEvent> dayEventListCopy = new ArrayList<>(eventList);
+		List<ILunarEvent> dayEventListCopy = new ArrayList<>(dayEventList);
 
 		for(ILunarEvent i : dayEventListCopy){
-			if(level.getDayTime() / 24000 == i.getDay()){
+			if((level.getDayTime() / 24000) % i.getDay() == 0){
 				return i;
 			}
 		}
