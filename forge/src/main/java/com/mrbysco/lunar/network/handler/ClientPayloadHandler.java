@@ -3,7 +3,6 @@ package com.mrbysco.lunar.network.handler;
 import com.mrbysco.lunar.client.MoonHandler;
 import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -16,9 +15,8 @@ public class ClientPayloadHandler {
 
 	public void handleDelta(final SyncDeltaMovement payload, final IPayloadContext context) {
 		context.enqueueWork(() -> {
-					//Open Captcha Screen
-					Minecraft mc = Minecraft.getInstance();
-					mc.player.setDeltaMovement(payload.deltaMovement());
+					//Sync delta movement
+					context.player().setDeltaMovement(payload.deltaMovement());
 				})
 				.exceptionally(e -> {
 					// Handle exception
@@ -29,7 +27,7 @@ public class ClientPayloadHandler {
 
 	public void handleSync(final SyncEventMessage payload, final IPayloadContext context) {
 		context.enqueueWork(() -> {
-					//Open Captcha Screen
+					//Sync moon event
 					if (payload.color() == -1 || payload.eventID().isBlank()) {
 						MoonHandler.disableMoon();
 					} else {
