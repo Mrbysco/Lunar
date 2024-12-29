@@ -79,7 +79,7 @@ public class LunarConfig {
 
 			crimsonReplacements = builder
 					.comment("List of entities to replace during the Crimson Moon Event [Example: \"minecraft:zombie,minecraft:zombified_piglin\"]")
-					.defineListAllowEmpty(List.of("crimsonReplacements"), () -> CommonClass.DEFAULT_CRIMSON_REPLACEMENT, o -> (o instanceof String entry && entry.contains(",")));
+					.defineListAllowEmpty(List.of("crimsonReplacements"), () -> CommonClass.DEFAULT_CRIMSON_REPLACEMENT, String::new, o -> (o instanceof String entry && entry.contains(",")));
 
 			builder.pop();
 		}
