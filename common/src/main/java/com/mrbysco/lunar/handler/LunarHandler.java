@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class LunarHandler {
-	public static void onWorldTick(Level level) {
+	public static void onLevelTick(Level level) {
 		if (level.getGameTime() % 20 == 0 && !level.isClientSide) {
 			ServerLevel serverLevel = (ServerLevel) level;
 			LunarPhaseData phaseData = LunarPhaseData.get(serverLevel);
