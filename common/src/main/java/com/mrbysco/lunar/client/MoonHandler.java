@@ -27,7 +27,7 @@ public class MoonHandler {
 		moonColor = new float[]{(float) r / 255.0F, (float) g / 255.0F, (float) b / 255.0F};
 		moonID = eventID;
 		if (scale != 1.0F) {
-			moonScale = (new Matrix4f()).translation(scale, 1F, scale);
+			moonScale = (new Matrix4f()).scale(scale, 1F, scale);
 		}
 	}
 
@@ -59,5 +59,12 @@ public class MoonHandler {
 
 	public static Matrix4f getMoonScale() {
 		return moonScale;
+	}
+
+	public static Matrix4f scaleMoon(Matrix4f matrix) {
+//		if (isMoonScaled() && moonScale != null) { TODO: Figure out how to scale just the moon!
+//			matrix.mul(moonScale);
+//		}
+		return matrix;
 	}
 }

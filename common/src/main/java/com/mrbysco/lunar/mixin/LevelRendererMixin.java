@@ -27,7 +27,7 @@ public class LevelRendererMixin {
 	@Inject(method = "renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V", at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/client/multiplayer/ClientLevel;getMoonPhase()I",
-			shift = Shift.BEFORE,
+			shift = Shift.AFTER,
 			ordinal = 0
 	))
 	private void lunar_colorMoon(Matrix4f frustumMatrix, Matrix4f projectionMatrix, float partialTick, Camera camera,
@@ -45,13 +45,10 @@ public class LevelRendererMixin {
 			),
 			at = @At(value = "CONSTANT", args = "floatValue=20.0"),
 			ordinal = 1,
-			require = 0
-	)
+			require = 0,
+			argsOnly = true)
 	private Matrix4f lunar_scaleMoon(Matrix4f matrix) {
-		if (MoonHandler.isMoonScaled()) {
-			matrix.mul(MoonHandler.getMoonScale());
-		}
-		return matrix;
+		return MoonHandler.scaleMoon(matrix);
 	}
 
 	@ModifyArg(method = "renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V",
