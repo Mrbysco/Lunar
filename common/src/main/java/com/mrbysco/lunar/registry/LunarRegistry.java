@@ -13,8 +13,11 @@ import com.mrbysco.lunar.registry.events.MinerMoonEvent;
 import com.mrbysco.lunar.registry.events.RegularMoonEvent;
 import com.mrbysco.lunar.registry.events.TinyMoonEvent;
 import com.mrbysco.lunar.registry.events.WhiteMoonEvent;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -98,6 +101,14 @@ public class LunarRegistry {
 			}
 		}
 		return eventCopy.get(randomIndex);
+	}
+
+	public List<Pair<Holder<Attribute>, ResourceLocation>> getEventModifiers() {
+		List<Pair<Holder<Attribute>, ResourceLocation>> list = new ArrayList<>();
+		for (ILunarEvent i : eventList) {
+			list.addAll(i.getAttributePairs());
+		}
+		return list;
 	}
 
 	public List<String> getIDList() {

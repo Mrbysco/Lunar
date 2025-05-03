@@ -6,7 +6,6 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 public class BloodMoonEvent extends LunarEvent {
 	private static final ResourceLocation DAMAGE_MODIFIER_UUID = Constants.modLoc("blood_moon_damage_modifier");
@@ -77,21 +75,16 @@ public class BloodMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public void stopEffects(Level level) {
-		if (!level.isClientSide) {
-			ServerLevel serverLevel = (ServerLevel) level;
-			for (Entity entity : serverLevel.getAllEntities()) {
-				if (entity instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
-					AttributeInstance attackAttribute = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
-					if (attackAttribute != null) {
-						attackAttribute.removeModifier(DAMAGE_MODIFIER_UUID);
-					}
+	public void removeEntityEffect(Entity entity) {
+		if (entity instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
+			AttributeInstance attackAttribute = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
+			if (attackAttribute != null) {
+				attackAttribute.removeModifier(DAMAGE_MODIFIER_UUID);
+			}
 
-					AttributeInstance healthAttribute = livingEntity.getAttribute(Attributes.MAX_HEALTH);
-					if (healthAttribute != null) {
-						healthAttribute.removeModifier(HEALTH_MODIFIER_UUID);
-					}
-				}
+			AttributeInstance healthAttribute = livingEntity.getAttribute(Attributes.MAX_HEALTH);
+			if (healthAttribute != null) {
+				healthAttribute.removeModifier(HEALTH_MODIFIER_UUID);
 			}
 		}
 	}

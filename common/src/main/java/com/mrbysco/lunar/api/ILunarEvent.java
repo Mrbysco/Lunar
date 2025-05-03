@@ -2,12 +2,18 @@ package com.mrbysco.lunar.api;
 
 import com.mrbysco.lunar.handler.result.EventResult;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface ILunarEvent {
 
@@ -115,6 +121,14 @@ public interface ILunarEvent {
 	}
 
 	/**
+	 * Called when the lunar event tries to remove an effect from an entity.
+	 *
+	 * @param entity the entity the effect is removed from
+	 */
+	default void removeEntityEffect(Entity entity) {
+	}
+
+	/**
 	 * Called when the lunar event checks if it can apply an effect to entities.
 	 *
 	 * @return if the entity should have an effect applied to it
@@ -124,11 +138,19 @@ public interface ILunarEvent {
 	}
 
 	/**
-	 * Called when the lunar event tries to apply an effect to a living entity.
+	 * Called when the lunar event tries to apply an effect to a player.
 	 *
 	 * @param player the player the effect is applied to
 	 */
 	default void applyPlayerEffect(Player player) {
+	}
+
+	/**
+	 * Called when the lunar event tries to remove an effect from a player.
+	 *
+	 * @param entity the player the effect is removed from
+	 */
+	default void removePlayerEffect(Entity entity) {
 	}
 
 	/**
@@ -141,11 +163,11 @@ public interface ILunarEvent {
 	}
 
 	/**
-	 * Called when the lunar event is over and the effects are removed.
-	 *
-	 * @param level the level where the event took place
+	 * Returns a list of attribute pairs that are associated with the lunar event.
+	 * @return a list of pairs containing the attribute and the resource location of the modifier
 	 */
-	default void stopEffects(Level level) {
+	default List<Pair<Holder<Attribute>, ResourceLocation>> getAttributePairs() {
+		return new ArrayList<>();
 	}
 
 	/**
