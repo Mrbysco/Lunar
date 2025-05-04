@@ -100,9 +100,11 @@ public class Lunar implements ModInitializer {
 		return InteractionResult.PASS;
 	}
 
-	private void onWorldTick(ServerLevel level) {
-		if (level.dimension().equals(Level.OVERWORLD)) {
-			LunarHandler.onLevelTick(level);
+	private void onWorldTick(ServerLevel serverLevel) {
+		if (serverLevel.dimension().equals(Level.OVERWORLD)) {
+			LunarHandler.onOverworldTick(serverLevel);
+		} else {
+			LunarHandler.onLevelTick(serverLevel);
 		}
 	}
 

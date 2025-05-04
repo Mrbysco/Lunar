@@ -77,8 +77,12 @@ public class Lunar {
 	}
 
 	private void onLevelTick(LevelTickEvent.Post event) {
-		if (event.getLevel() instanceof ServerLevel serverLevel && serverLevel.dimension().equals(Level.OVERWORLD)) {
-			LunarHandler.onLevelTick(serverLevel);
+		if (event.getLevel() instanceof ServerLevel serverLevel) {
+			if (serverLevel.dimension().equals(Level.OVERWORLD)) {
+				LunarHandler.onOverworldTick(serverLevel);
+			} else {
+				LunarHandler.onLevelTick(serverLevel);
+			}
 		}
 	}
 

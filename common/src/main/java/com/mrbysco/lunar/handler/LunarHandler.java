@@ -17,9 +17,13 @@ import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class LunarHandler {
-	public static void onLevelTick(Level level) {
-		if (level.getGameTime() % 20 == 0 && !level.isClientSide) {
-			ServerLevel serverLevel = (ServerLevel) level;
+	/**
+	 * Called when the overworld is ticked
+	 *
+	 * @param level The level being ticked
+	 */
+	public static void onOverworldTick(Level level) {
+		if (level.getGameTime() % 20 == 0 && level instanceof ServerLevel serverLevel) {
 			LunarPhaseData phaseData = LunarPhaseData.get(serverLevel);
 			ILunarEvent event = phaseData.getActiveLunarEvent();
 			int currentTime = (int) (serverLevel.getDayTime() % 24000L);
@@ -70,6 +74,25 @@ public class LunarHandler {
 						});
 					}
 				}
+			}
+		}
+	}
+
+	/**
+	 * Called when a level other than the overworld is ticked
+	 *
+	 * @param level The level being ticked
+	 */
+	public static void onLevelTick(Level level) {
+		if (level.getGameTime() % 20 == 0 && level instanceof ServerLevel serverLevel) {
+			LunarPhaseData phaseData = LunarPhaseData.get(serverLevel);
+			ILunarEvent event = phaseData.getActiveLunarEvent();
+			if (event != null) {
+				// Remove any accidental modifiers that might have been left behind
+				serverLevel.getAllEntities().forEach(entity -> {
+					if (entity.isSpectator()) return;
+					event.removeEntityEffect(entity);
+				});
 			}
 		}
 	}
