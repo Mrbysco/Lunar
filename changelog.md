@@ -1,1 +1,1 @@
-* Fix issue where the gravity modifier was not being removed when the player left the overworld
+* Fix issue where lunar commands will error when ran through console
