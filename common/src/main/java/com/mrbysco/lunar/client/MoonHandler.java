@@ -9,7 +9,9 @@ import org.joml.Matrix4f;
 
 public class MoonHandler {
 	private static String moonID = null;
+	private static int rawMoonColor = 0xFFFFFF;
 	private static float[] moonColor = null;
+	private static float rawMoonScale = 1.0F;
 	private static Matrix4f moonScale;
 	private static ResourceLocation moonTexture;
 
@@ -21,12 +23,14 @@ public class MoonHandler {
 	}
 
 	public static void setMoon(String eventID, int color, float scale) {
+		rawMoonColor = color;
 		int r = (color >> 16) & 0xFF;
 		int g = (color >> 8) & 0xFF;
 		int b = (color >> 0) & 0xFF;
 		moonColor = new float[]{(float) r / 255.0F, (float) g / 255.0F, (float) b / 255.0F};
 		moonID = eventID;
 		if (scale != 1.0F) {
+			rawMoonScale = scale;
 			moonScale = (new Matrix4f()).scale(scale, 1F, scale);
 		}
 	}
@@ -66,5 +70,13 @@ public class MoonHandler {
 //			matrix.mul(moonScale);
 //		}
 		return matrix;
+	}
+
+	public static int getMoonColor() {
+		return rawMoonColor;
+	}
+
+	public static float getRawMoonScale() {
+		return rawMoonScale;
 	}
 }
