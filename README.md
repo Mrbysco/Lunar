@@ -7,7 +7,7 @@ Adding lunar events to Minecraft.
 
 ## License ##
 * Lunar is licensed under the MIT License
-  - (c) 2024 Mrbysco, ShyNieke
+  - (c) 2025 Mrbysco, ShyNieke
   - [![License](https://img.shields.io/badge/License-MIT-red.svg?style=flat)](http://opensource.org/licenses/MIT)
 
 ## Downloads ##
