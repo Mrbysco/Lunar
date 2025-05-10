@@ -112,9 +112,9 @@ public class MoonHandler {
 	 * @return the scaled matrix
 	 */
 	public static Matrix4f scaleMoon(Matrix4f matrix) {
-//		if (isMoonScaled() && moonScale != null) { TODO: Figure out how to scale just the moon!
-//			matrix.mul(moonScale);
-//		}
+		if (isMoonScaled() && moonScale != null) { //TODO: Figure out how to scale just the moon!
+			matrix.multiply(moonScale);
+		}
 		return matrix;
 	}
 
