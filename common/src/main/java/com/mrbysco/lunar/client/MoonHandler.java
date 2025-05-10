@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor.ARGB32;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
@@ -40,9 +41,9 @@ public class MoonHandler {
 	 */
 	public static void setMoon(String eventID, int color, float scale) {
 		rawMoonColor = color;
-		int r = (color >> 16) & 0xFF;
-		int g = (color >> 8) & 0xFF;
-		int b = (color >> 0) & 0xFF;
+		int r = ARGB32.red(color);
+		int g = ARGB32.green(color);
+		int b = ARGB32.blue(color);
 		moonColor = new float[]{(float) r / 255.0F, (float) g / 255.0F, (float) b / 255.0F};
 		moonID = eventID;
 		if (scale != 1.0F) {
