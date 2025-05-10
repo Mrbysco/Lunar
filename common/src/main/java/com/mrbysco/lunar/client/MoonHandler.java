@@ -10,7 +10,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class MoonHandler {
 	private static String moonID = null;
+	private static int rawMoonColor = 0xFFFFFF;
 	private static float[] moonColor = null;
+	private static float rawMoonScale = 1.0F;
 	private static Matrix4f moonScale;
 	private static ResourceLocation moonTexture;
 
@@ -21,6 +23,7 @@ public class MoonHandler {
 	}
 
 	public static void setMoon(String eventID, int color, float scale) {
+		rawMoonColor = color;
 		int r = (color >> 16) & 0xFF;
 		int g = (color >> 8) & 0xFF;
 		int b = (color >> 0) & 0xFF;
@@ -28,6 +31,7 @@ public class MoonHandler {
 		moonID = eventID;
 		if (scale != 1.0F) {
 			moonScale = Matrix4f.createScaleMatrix(scale, 1F, scale);
+			rawMoonScale = scale;
 		}
 	}
 
@@ -59,5 +63,20 @@ public class MoonHandler {
 
 	public static Matrix4f getMoonScale() {
 		return moonScale;
+	}
+
+	public static Matrix4f scaleMoon(Matrix4f matrix) {
+//		if (isMoonScaled() && moonScale != null) { TODO: Figure out how to scale just the moon!
+//			matrix.mul(moonScale);
+//		}
+		return matrix;
+	}
+
+	public static int getMoonColor() {
+		return rawMoonColor;
+	}
+
+	public static float getRawMoonScale() {
+		return rawMoonScale;
 	}
 }
