@@ -48,10 +48,7 @@ public class LevelRendererMixin {
 			require = 0
 	)
 	private Matrix4f lunar_scaleMoon(Matrix4f matrix) {
-		if (MoonHandler.isMoonScaled()) {
-			matrix.mul(MoonHandler.getMoonScale());
-		}
-		return matrix;
+		return MoonHandler.scaleMoon(matrix);
 	}
 
 	@ModifyArg(method = "renderSky",
