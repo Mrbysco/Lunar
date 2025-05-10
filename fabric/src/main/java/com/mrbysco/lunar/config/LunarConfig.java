@@ -21,6 +21,7 @@ public class LunarConfig implements ConfigData {
 	@CollapsibleObject
 	public Crimson crimson = new Crimson();
 
+	@SuppressWarnings("CanBeFinal")
 	public static class General {
 		//General
 		@Comment("Chance of a Lunar Event happening when night falls [Default: 0.4]")
@@ -28,6 +29,7 @@ public class LunarConfig implements ConfigData {
 		public float lunarEventChance = 0.4F;
 	}
 
+	@SuppressWarnings("CanBeFinal")
 	public static class Events {
 		//Events
 		@Comment("Weight of the Blood Moon Event [Default: 60]")
@@ -67,6 +69,7 @@ public class LunarConfig implements ConfigData {
 		public int eclipseMoonWeight = 2;
 	}
 
+	@SuppressWarnings("CanBeFinal")
 	public static class Crimson {
 		@Comment("List of entities to replace during the Crimson Moon Event [Example: \"minecraft:zombie,minecraft:zombified_piglin\"]")
 		public List<String> crimsonReplacements = CommonClass.DEFAULT_CRIMSON_REPLACEMENT;
