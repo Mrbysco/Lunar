@@ -1,2 +1,1 @@
-* Fix effects being applied to spectators
-* Fix weather clearing the moon event (Thanks to Cephelo)
+* Fix issue where lunar commands will error when ran through console
