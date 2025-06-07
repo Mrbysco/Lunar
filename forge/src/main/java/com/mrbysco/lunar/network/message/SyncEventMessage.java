@@ -27,7 +27,7 @@ public class SyncEventMessage {
 		this.color = color;
 		this.eventID = eventName;
 		this.moonScale = scale;
-		this.customTexture = (moonTexture != null && moonTexture.isEmpty()) ? null : ResourceLocation.tryParse(moonTexture);
+		this.customTexture = (moonTexture == null || moonTexture.isEmpty()) ? null : ResourceLocation.tryParse(moonTexture);
 	}
 
 	public static SyncEventMessage decode(final FriendlyByteBuf buffer) {
@@ -59,13 +59,12 @@ public class SyncEventMessage {
 
 				@Override
 				public void run() {
+					MoonHandler.disableMoon();
 					if (moonColor == -1 || eventID.isBlank()) {
-						MoonHandler.disableMoon();
+						return;
 					} else {
 						MoonHandler.setMoon(eventID, moonColor, moonScale);
-						if (customTexture != null) {
-							MoonHandler.setMoonTexture(customTexture);
-						}
+						MoonHandler.setMoonTexture(customTexture);
 					}
 				}
 			};
