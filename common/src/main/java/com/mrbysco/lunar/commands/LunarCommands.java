@@ -52,6 +52,12 @@ public class LunarCommands {
 		dispatcher.register(root);
 	}
 
+	/**
+	 * Forces a lunar event to occur, either immediately or for the next night.
+	 * @param ctx the command context
+	 * @param forceCurrent if true, forces the event to occur immediately; if false, sets it for the next night
+	 * @return 0 if successful, or an error message if the event ID is invalid
+	 */
 	private static int forceEvent(CommandContext<CommandSourceStack> ctx, boolean forceCurrent) {
 		final ResourceLocation eventID = ResourceLocationArgument.getId(ctx, "eventID");
 		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
@@ -82,6 +88,11 @@ public class LunarCommands {
 		return 0;
 	}
 
+	/**
+	 * Skips the current lunar event for tonight, resetting it to the default moon.
+	 * @param ctx the command context
+	 * @return 0 if successful
+	 */
 	private static int skipEvent(CommandContext<CommandSourceStack> ctx) {
 		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
 		LunarPhaseData phaseData = LunarPhaseData.get(level);
@@ -101,6 +112,11 @@ public class LunarCommands {
 		return 0;
 	}
 
+	/**
+	 * Randomizes the lunar event for tonight, choosing a random event from the registry.
+	 * @param ctx the command context
+	 * @return 0 if successful
+	 */
 	private static int randomizeEvent(CommandContext<CommandSourceStack> ctx) {
 		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
 		LunarPhaseData phaseData = LunarPhaseData.get(level);
