@@ -19,8 +19,8 @@ public class LunarClient implements ClientModInitializer {
 			float moonScale = payload.moonScale();
 			ResourceLocation customTexture = payload.customTexture();
 			context.client().execute(() -> {
+				MoonHandler.disableMoon();
 				if (moonColor == -1 || eventID.isBlank()) {
-					MoonHandler.disableMoon();
 				} else {
 					MoonHandler.setMoon(eventID, moonColor, moonScale);
 					if (customTexture != null) {

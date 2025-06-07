@@ -28,8 +28,8 @@ public class ClientPayloadHandler {
 	public void handleSync(final SyncEventMessage payload, final IPayloadContext context) {
 		context.enqueueWork(() -> {
 					//Sync moon event
+					MoonHandler.disableMoon();
 					if (payload.color() == -1 || payload.eventID().isBlank()) {
-						MoonHandler.disableMoon();
 					} else {
 						MoonHandler.setMoon(payload.eventID(), payload.color(), payload.moonScale());
 						if (payload.customTexture() != null) {

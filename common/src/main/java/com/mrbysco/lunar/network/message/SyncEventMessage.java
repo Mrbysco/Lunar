@@ -28,7 +28,7 @@ public record SyncEventMessage(int color, String eventID, float moonScale,
 				color,
 				eventName,
 				scale,
-				(moonTexture != null && moonTexture.isEmpty()) ? null : ResourceLocation.tryParse(moonTexture)
+				(moonTexture == null || moonTexture.isEmpty()) ? null : ResourceLocation.tryParse(moonTexture)
 		);
 	}
 

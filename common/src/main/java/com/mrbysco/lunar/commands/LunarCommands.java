@@ -8,6 +8,7 @@ import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.registry.LunarRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -54,7 +55,8 @@ public class LunarCommands {
 
 	/**
 	 * Forces a lunar event to occur, either immediately or for the next night.
-	 * @param ctx the command context
+	 *
+	 * @param ctx          the command context
 	 * @param forceCurrent if true, forces the event to occur immediately; if false, sets it for the next night
 	 * @return 0 if successful, or an error message if the event ID is invalid
 	 */
@@ -68,28 +70,40 @@ public class LunarCommands {
 			return 0;
 		}
 		if (forceCurrent) {
-			// Stop the current event effects
-			ILunarEvent activeEvent = phaseData.getActiveLunarEvent();
-			if (activeEvent != null) {
-				stopEvent(level, activeEvent);
+			int currentTime = (int) (level.getDayTime() % 24000L);
+			// If it's night time, we can override the current event
+			if (currentTime > 13000 && currentTime < 23000) {
+				// Stop the current event effects
+				ILunarEvent activeEvent = phaseData.getActiveLunarEvent();
+				if (activeEvent != null) {
+					stopEvent(level, activeEvent);
+				}
+				// Set the current event to the forced event
+				phaseData.setActiveEvent(event);
+				// Sync the event to the clients
+				phaseData.syncEvent(level);
+				ctx.getSource().sendSuccess(() ->
+						Component.literal("Successfully forced a ")
+								.append(Component.translatable(event.getTranslationKey()).withStyle(ChatFormatting.GOLD))
+								.append(" tonight"), true);
+			} else {
+				ctx.getSource().sendFailure(Component.literal("You can only force an event to occur at night!"));
+				return 0;
 			}
-			// Set the current event to the forced event
-			phaseData.setActiveEvent(event);
-			// Sync the event to the clients
-			phaseData.syncEvent(level);
-			ctx.getSource().sendSuccess(() ->
-					Component.literal("Successfully forced a " + Component.translatable(event.getTranslationKey()).getString() + " moon"), true);
 		} else {
 			// Set the forced moon for the next night
 			phaseData.setForcedEvent(event);
 			ctx.getSource().sendSuccess(() ->
-					Component.literal("Successfully forced a " + Component.translatable(event.getTranslationKey()).getString() + " moon next night"), true);
+					Component.literal("Successfully forced a ")
+							.append(Component.translatable(event.getTranslationKey()).withStyle(ChatFormatting.GOLD))
+							.append(" next night"), true);
 		}
 		return 0;
 	}
 
 	/**
 	 * Skips the current lunar event for tonight, resetting it to the default moon.
+	 *
 	 * @param ctx the command context
 	 * @return 0 if successful
 	 */
@@ -100,39 +114,54 @@ public class LunarCommands {
 		ILunarEvent event = phaseData.getActiveLunarEvent();
 		if (event != null) {
 			stopEvent(level, event);
-		}
-		// Set the current event to the default moon
-		phaseData.setDefaultMoon();
-		// Sync the event to the clients
-		phaseData.syncEvent(level);
 
-		ctx.getSource().sendSuccess(() ->
-				Component.literal("Successfully skipped the lunar event for tonight"), true);
+			// Set the current event to the default moon
+			phaseData.setDefaultMoon();
+			// Sync the event to the clients
+			phaseData.syncEvent(level);
+
+			ctx.getSource().sendSuccess(() ->
+					Component.literal("Successfully skipped the lunar event for tonight"), true);
+
+		} else {
+			ctx.getSource().sendFailure(Component.literal("There is no active lunar event to skip tonight!"));
+			return 0;
+		}
 
 		return 0;
 	}
 
 	/**
 	 * Randomizes the lunar event for tonight, choosing a random event from the registry.
+	 *
 	 * @param ctx the command context
 	 * @return 0 if successful
 	 */
 	private static int randomizeEvent(CommandContext<CommandSourceStack> ctx) {
 		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
 		LunarPhaseData phaseData = LunarPhaseData.get(level);
-		// Stop the current event effects
-		ILunarEvent event = phaseData.getActiveLunarEvent();
-		if (event != null) {
-			stopEvent(level, event);
+		int currentTime = (int) (level.getDayTime() % 24000L);
+		// If it's night time, we can override the current event
+		if (currentTime > 13000 && currentTime < 23000) {
+			// Stop the current event effects
+			ILunarEvent event = phaseData.getActiveLunarEvent();
+			if (event != null) {
+				stopEvent(level, event);
+			}
+
+			// Choose a random lunar event
+			phaseData.setRandomLunarEvent(level);
+			// Sync the event to the clients
+			phaseData.syncEvent(level);
+
+			ILunarEvent newEvent = phaseData.getActiveLunarEvent();
+			ctx.getSource().sendSuccess(() ->
+					Component.literal("Successfully randomized the lunar event for tonight to ")
+							.append(Component.translatable(newEvent.getTranslationKey()).withStyle(ChatFormatting.GOLD)), true);
+		} else {
+			ctx.getSource().sendFailure(Component.literal("You can only randomize an event to occur at night!"));
+			return 0;
 		}
-
-		// Choose a random lunar event
-		phaseData.setRandomLunarEvent(level);
-		// Sync the event to the clients
-		phaseData.syncEvent(level);
-
-		ctx.getSource().sendSuccess(() ->
-				Component.literal("Successfully randomized the lunar event for tonight"), true);
 
 		return 0;
 	}
