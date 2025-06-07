@@ -97,7 +97,7 @@ public class LunarPhaseData extends SavedData {
 		this.setForcedEvent(null);
 	}
 
-	private void setActiveEvent(ILunarEvent storage) {
+	public void setActiveEvent(ILunarEvent storage) {
 		this.activeEvent = storage;
 		setDirty();
 	}

@@ -148,9 +148,9 @@ public interface ILunarEvent {
 	/**
 	 * Called when the lunar event tries to remove an effect from a player.
 	 *
-	 * @param entity the player the effect is removed from
+	 * @param player the player the effect is removed from
 	 */
-	default void removePlayerEffect(Entity entity) {
+	default void removePlayerEffect(Player player) {
 	}
 
 	/**

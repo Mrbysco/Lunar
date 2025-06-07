@@ -1,9 +1,9 @@
 package com.mrbysco.lunar.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.api.ILunarEvent;
@@ -12,31 +12,135 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public class LunarCommands {
 	public static void initializeCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
 		final LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal(Constants.MOD_ID);
 		root.requires((sourceStack) -> sourceStack.hasPermission(2))
 				.then(Commands.literal("forceEvent")
-						.then(Commands.argument("eventID", ResourceLocationArgument.id()).suggests((cs, builder) -> {
-							return SharedSuggestionProvider.suggest(LunarRegistry.instance().getIDList(), builder);
-						}).executes(LunarCommands::forceEvent)));
+						.then(Commands.argument("eventID", ResourceLocationArgument.id())
+								.suggests((cs, builder) ->
+										SharedSuggestionProvider.suggest(LunarRegistry.instance().getIDList(), builder))
+								.executes((ctx) ->
+										forceEvent(ctx, false)
+								)
+								.then(Commands.argument("forceCurrent", BoolArgumentType.bool())
+										.executes((ctx) ->
+												forceEvent(ctx, BoolArgumentType.getBool(ctx, "forceCurrent"))
+										)
+								)
+						)
+				);
+		root.requires((sourceStack) -> sourceStack.hasPermission(2))
+				.then(Commands.literal("skip")
+						.executes(LunarCommands::skipEvent)
+				);
+		root.requires((sourceStack) -> sourceStack.hasPermission(2))
+				.then(Commands.literal("randomize")
+						.executes(LunarCommands::randomizeEvent)
+				);
 		dispatcher.register(root);
 	}
 
-	private static int forceEvent(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+	private static int forceEvent(CommandContext<CommandSourceStack> ctx, boolean forceCurrent) {
 		final ResourceLocation eventID = ResourceLocationArgument.getId(ctx, "eventID");
 		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
 		LunarPhaseData phaseData = LunarPhaseData.get(level);
 		ILunarEvent event = LunarRegistry.instance().getEventByID(eventID);
-		phaseData.setForcedEvent(event);
+		if (event == null) {
+			ctx.getSource().sendFailure(Component.literal("No lunar event found with ID: " + eventID));
+			return 0;
+		}
+		if (forceCurrent) {
+			// Stop the current event effects
+			ILunarEvent activeEvent = phaseData.getActiveLunarEvent();
+			if (activeEvent != null) {
+				stopEvent(level, activeEvent);
+			}
+			// Set the current event to the forced event
+			phaseData.setActiveEvent(event);
+			// Sync the event to the clients
+			phaseData.syncEvent(level);
+			ctx.getSource().sendSuccess(() ->
+					Component.literal("Successfully forced a " + Component.translatable(event.getTranslationKey()).getString() + " moon"), true);
+		} else {
+			// Set the forced moon for the next night
+			phaseData.setForcedEvent(event);
+			ctx.getSource().sendSuccess(() ->
+					Component.literal("Successfully forced a " + Component.translatable(event.getTranslationKey()).getString() + " moon next night"), true);
+		}
+		return 0;
+	}
 
-		ctx.getSource().sendSuccess(() -> Component.literal("Successfully forced a " + Component.translatable(event.getTranslationKey()).getString() + " moon next night"), true);
+	private static int skipEvent(CommandContext<CommandSourceStack> ctx) {
+		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
+		LunarPhaseData phaseData = LunarPhaseData.get(level);
+		// Stop the current event effects
+		ILunarEvent event = phaseData.getActiveLunarEvent();
+		if (event != null) {
+			stopEvent(level, event);
+		}
+		// Set the current event to the default moon
+		phaseData.setDefaultMoon();
+		// Sync the event to the clients
+		phaseData.syncEvent(level);
+
+		ctx.getSource().sendSuccess(() ->
+				Component.literal("Successfully skipped the lunar event for tonight"), true);
 
 		return 0;
+	}
+
+	private static int randomizeEvent(CommandContext<CommandSourceStack> ctx) {
+		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
+		LunarPhaseData phaseData = LunarPhaseData.get(level);
+		// Stop the current event effects
+		ILunarEvent event = phaseData.getActiveLunarEvent();
+		if (event != null) {
+			stopEvent(level, event);
+		}
+
+		// Choose a random lunar event
+		phaseData.setRandomLunarEvent(level);
+		// Sync the event to the clients
+		phaseData.syncEvent(level);
+
+		ctx.getSource().sendSuccess(() ->
+				Component.literal("Successfully randomized the lunar event for tonight"), true);
+
+		return 0;
+	}
+
+	private static void stopEvent(@NotNull ServerLevel level, @NotNull ILunarEvent event) {
+		if (event.applyEntityEffect()) {
+			level.getAllEntities().forEach(entity -> {
+				if (entity.isSpectator()) return;
+				event.removeEntityEffect(entity);
+			});
+		}
+		if (event.applyPlayerEffect()) {
+			level.players().forEach(event::removePlayerEffect);
+		}
+
+		for (Pair<Holder<Attribute>, ResourceLocation> modifierPair : LunarRegistry.instance().getEventModifiers()) {
+			level.getAllEntities().forEach(entity -> {
+				if (entity instanceof LivingEntity livingEntity && !entity.isSpectator()) {
+					AttributeInstance modifier = livingEntity.getAttribute(modifierPair.getLeft());
+					if (modifier != null) {
+						modifier.removeModifier(modifierPair.getRight());
+					}
+				}
+			});
+		}
 	}
 }
