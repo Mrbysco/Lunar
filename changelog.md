@@ -1,4 +1,2 @@
-This version overhauls the Lunar commands.
-* Add an extra parameter to `forceEvent` that allows you to overwrite the current moon event (`/lunar forceEvent <eventId> <forceCurrent`)
-* Add a skip command that skips the current event (`/lunar skip`)
-* Add a command to re-roll the current event (`/lunar randomize`)
+* Change the gravity effect of the big and tiny moon events
+* Add a moon texture for every lunar event (allowing for resource packs to change the moon textures)
