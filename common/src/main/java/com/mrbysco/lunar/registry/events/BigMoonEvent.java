@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
 public class BigMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/big.png");
 
 	public BigMoonEvent() {
 		super(new ResourceLocation(Constants.MOD_ID, "big_moon"), 0xFFFFF1);
@@ -42,6 +43,10 @@ public class BigMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
+	}
+
 	public float moonScale() {
 		return 4.0F;
 	}

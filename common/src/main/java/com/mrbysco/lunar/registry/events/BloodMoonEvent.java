@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import java.util.UUID;
 
 public class BloodMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/blood.png");
 	private static final UUID DAMAGE_MODIFIER_UUID = UUID.fromString("2f00d1d5-a4aa-4c2f-bb48-1d6570507666");
 	private static final UUID HEALTH_MODIFIER_UUID = UUID.fromString("267db29a-2a6f-4c9d-b3c8-512c085bdf21");
 
@@ -94,6 +95,11 @@ public class BloodMoonEvent extends LunarEvent {
 				}
 			}
 		}
+	}
+
+	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
 	}
 
 	@Override

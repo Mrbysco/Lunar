@@ -12,6 +12,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 
 public class WhiteMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/white.png");
 
 	public WhiteMoonEvent() {
 		super(new ResourceLocation(Constants.MOD_ID, "white_moon"), 0x1f1f1f);
@@ -43,6 +44,11 @@ public class WhiteMoonEvent extends LunarEvent {
 			return EventResult.DENY;
 		}
 		return EventResult.ALLOW;
+	}
+
+	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
 	}
 
 	@Override

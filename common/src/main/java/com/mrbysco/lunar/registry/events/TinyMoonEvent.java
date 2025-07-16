@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 public class TinyMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/tiny.png");
 
 	public TinyMoonEvent() {
 		super(new ResourceLocation(Constants.MOD_ID, "tiny_moon"), 0xFFFFF1);
@@ -47,6 +48,11 @@ public class TinyMoonEvent extends LunarEvent {
 	public void applyPlayerEffect(Player player) {
 		if (!player.level().isClientSide)
 			Services.PLATFORM.syncDeltaMovement((ServerPlayer) player, player.getDeltaMovement());
+	}
+
+	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
 	}
 
 	@Override

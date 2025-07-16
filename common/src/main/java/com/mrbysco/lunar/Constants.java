@@ -11,4 +11,8 @@ public class Constants {
 
 	public static final ResourceLocation SYNC_EVENT_ID = new ResourceLocation(MOD_ID, "sync_event");
 	public static final ResourceLocation SYNC_MOVEMENT_EVENT_ID = new ResourceLocation(MOD_ID, "sync_movement_event");
+
+	public static final ResourceLocation modLoc(String path) {
+		return new ResourceLocation(MOD_ID, path);
+	}
 }
