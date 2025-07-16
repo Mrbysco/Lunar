@@ -20,6 +20,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 
 public class TinyMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/tiny.png");
 	private static final Pair<Holder<Attribute>, ResourceLocation> TINY_MOON_MODIFIER_PAIR = Pair.of(Attributes.GRAVITY, Constants.modLoc("tiny_moon_modifier"));
 
 	public TinyMoonEvent() {
@@ -65,6 +66,11 @@ public class TinyMoonEvent extends LunarEvent {
 
 	public List<Pair<Holder<Attribute>, ResourceLocation>> getAttributePairs() {
 		return List.of(TINY_MOON_MODIFIER_PAIR);
+	}
+
+	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
 	}
 
 	@Override

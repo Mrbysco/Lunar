@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
 public class BloodMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/blood.png");
 	private static final ResourceLocation DAMAGE_MODIFIER_UUID = Constants.modLoc("blood_moon_damage_modifier");
 	private static final ResourceLocation HEALTH_MODIFIER_UUID = Constants.modLoc("blood_moon_health_modifier");
 
@@ -87,6 +88,11 @@ public class BloodMoonEvent extends LunarEvent {
 				healthAttribute.removeModifier(HEALTH_MODIFIER_UUID);
 			}
 		}
+	}
+
+	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
 	}
 
 	@Override

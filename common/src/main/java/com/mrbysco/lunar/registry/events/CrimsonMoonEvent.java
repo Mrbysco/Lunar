@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import java.util.Map;
 
 public class CrimsonMoonEvent extends LunarEvent {
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/crimson.png");
 
 	public CrimsonMoonEvent() {
 		super(Constants.modLoc("crimson_moon"), 0xDC143C);
@@ -43,6 +44,11 @@ public class CrimsonMoonEvent extends LunarEvent {
 	@Override
 	public boolean dictatesMobSpawn() {
 		return true;
+	}
+
+	@Override
+	public ResourceLocation moonTexture() {
+		return MOON_TEXTURE;
 	}
 
 	@Override
