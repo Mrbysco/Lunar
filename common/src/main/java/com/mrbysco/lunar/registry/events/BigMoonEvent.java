@@ -8,10 +8,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 
 public class BigMoonEvent extends LunarEvent {
 	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/big.png");
+	public static final AttributeModifier GRAVITY_MODIFIER = new AttributeModifier(
+			Constants.modLoc("big_moon_gravity").toString(),
+			0.04F,
+			Operation.ADDITION
+	);
 
 	public BigMoonEvent() {
 		super(Constants.modLoc("big_moon"), 0xFFFFF1);
@@ -28,17 +39,31 @@ public class BigMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public boolean applyPlayerEffect() {
+	public boolean applyEntityEffect() {
 		return true;
 	}
 
 	@Override
-	public void applyPlayerEffect(Player player) {
-		player.addEffect(new MobEffectInstance(MobEffects.JUMP, 40, 2, false, false));
-		player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 40, 0, false, false));
+	public void applyEntityEffect(Entity entity) {
+		if (entity instanceof LivingEntity livingEntity) {
+			Attribute gravityAttribute = Services.PLATFORM.getGravityAttribute();
+			AttributeInstance attributeInstance = livingEntity.getAttribute(gravityAttribute);
+			if (attributeInstance != null && !attributeInstance.hasModifier(GRAVITY_MODIFIER)) {
+				attributeInstance.addPermanentModifier(
+						GRAVITY_MODIFIER
+				);
+			}
+		}
+	}
 
-		if (player.getRandom().nextInt(30) == 0) {
-			player.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 40, 0, false, false));
+	@Override
+	public void removeEntityEffect(Entity entity) {
+		if (entity instanceof LivingEntity livingEntity) {
+			Attribute gravityAttribute = Services.PLATFORM.getGravityAttribute();
+			AttributeInstance attributeInstance = livingEntity.getAttribute(gravityAttribute);
+			if (attributeInstance != null && attributeInstance.hasModifier(GRAVITY_MODIFIER)) {
+				attributeInstance.removeModifier(GRAVITY_MODIFIER);
+			}
 		}
 	}
 

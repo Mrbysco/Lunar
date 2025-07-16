@@ -115,6 +115,14 @@ public interface ILunarEvent {
 	}
 
 	/**
+	 * Called when the lunar event tries to stop an effect to an entity.
+	 *
+	 * @param entity the entity the effect was applied to
+	 */
+	default void removeEntityEffect(Entity entity) {
+	}
+
+	/**
 	 * Called when the lunar event checks if it can apply an effect to entities.
 	 *
 	 * @return if the entity should have an effect applied to it

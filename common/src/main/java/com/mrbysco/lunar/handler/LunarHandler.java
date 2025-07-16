@@ -3,10 +3,15 @@ package com.mrbysco.lunar.handler;
 import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
+import com.mrbysco.lunar.platform.Services;
+import com.mrbysco.lunar.registry.events.BigMoonEvent;
+import com.mrbysco.lunar.registry.events.TinyMoonEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -38,11 +43,28 @@ public class LunarHandler {
 			} else {
 				if (phaseData.hasEventActive()) {
 					if (event != null) {
+						if (event.applyEntityEffect()) {
+							serverLevel.getAllEntities().forEach(entity -> {
+								if (entity.isSpectator()) return;
+								event.removeEntityEffect(entity);
+							});
+						}
 						event.stopEffects(serverLevel);
 					}
 
 					phaseData.eraseEvent();
 					phaseData.syncEvent(serverLevel);
+				} else {
+					serverLevel.getAllEntities().forEach(entity -> {
+						Attribute gravityAttribute = Services.PLATFORM.getGravityAttribute();
+						if (entity instanceof LivingEntity livingEntity) {
+							AttributeInstance attributeInstance = livingEntity.getAttribute(gravityAttribute);
+							if (attributeInstance != null) {
+								attributeInstance.removeModifier(BigMoonEvent.GRAVITY_MODIFIER);
+								attributeInstance.removeModifier(TinyMoonEvent.GRAVITY_MODIFIER);
+							}
+						}
+					});
 				}
 			}
 		}

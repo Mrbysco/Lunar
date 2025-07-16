@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -143,5 +144,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public EntityType<?> getEntityType(ResourceLocation location) {
 		return BuiltInRegistries.ENTITY_TYPE.get(location);
+	}
+
+	@Override
+	public Attribute getGravityAttribute() {
+		return Lunar.ENTITY_GRAVITY;
 	}
 }

@@ -17,12 +17,16 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
@@ -30,6 +34,7 @@ import net.minecraft.world.level.LevelAccessor;
 
 
 public class Lunar implements ModInitializer {
+	public static final Attribute ENTITY_GRAVITY = new RangedAttribute("lunar.entity_gravity", 0.08D, -8.0D, 8.0D).setSyncable(true);
 	public static LunarConfig config;
 
 	@Override
@@ -61,6 +66,8 @@ public class Lunar implements ModInitializer {
 		}
 		ServerTickEvents.END_WORLD_TICK.register(this::onWorldTick);
 		PlayerEvents.PLAYER_LOGIN.register(this::onLogin);
+
+		Registry.register(BuiltInRegistries.ATTRIBUTE, Constants.modLoc("entity_gravity"), ENTITY_GRAVITY);
 	}
 
 	private InteractionResult onSleepCheck(Player player, BlockPos sleepingPos, boolean vanillaResult) {

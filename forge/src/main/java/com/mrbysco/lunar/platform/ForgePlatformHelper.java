@@ -10,8 +10,10 @@ import com.mrbysco.lunar.platform.services.IPlatformHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -104,5 +106,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public EntityType<?> getEntityType(ResourceLocation location) {
 		return ForgeRegistries.ENTITY_TYPES.getValue(location);
+	}
+
+	@Override
+	public Attribute getGravityAttribute() {
+		return ForgeMod.ENTITY_GRAVITY.get();
 	}
 }

@@ -4,6 +4,7 @@ import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -125,4 +126,10 @@ public interface IPlatformHelper {
 	 * @return the EntityType.
 	 */
 	EntityType<?> getEntityType(ResourceLocation location);
+
+	/**
+	 * Returns the gravity attribute used for the Lunar Event.
+	 * @return the gravity attribute
+	 */
+	Attribute getGravityAttribute();
 }
