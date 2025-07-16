@@ -15,7 +15,7 @@ public class TinyMoonEvent extends LunarEvent {
 	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/tiny.png");
 
 	public TinyMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "tiny_moon"), 0xFFFFF1);
+		super(Constants.modLoc("tiny_moon"), 0xFFFFF1);
 	}
 
 	@Override

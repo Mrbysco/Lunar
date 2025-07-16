@@ -11,10 +11,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
 public class HeroMoonEvent extends LunarEvent {
-	private static final ResourceLocation MOON_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/environment/hero.png");
+	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/hero.png");
 
 	public HeroMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "hero_moon"), 0x17dd61);
+		super(Constants.modLoc("hero_moon"), 0x17dd61);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/crimson.png");
 
 	public CrimsonMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "crimson_moon"), 0xDC143C);
+		super(Constants.modLoc("crimson_moon"), 0xDC143C);
 	}
 
 	@Override

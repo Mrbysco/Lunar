@@ -14,7 +14,7 @@ public class BigMoonEvent extends LunarEvent {
 	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/big.png");
 
 	public BigMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "big_moon"), 0xFFFFF1);
+		super(Constants.modLoc("big_moon"), 0xFFFFF1);
 	}
 
 	@Override

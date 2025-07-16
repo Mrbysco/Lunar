@@ -15,7 +15,7 @@ public class WhiteMoonEvent extends LunarEvent {
 	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/white.png");
 
 	public WhiteMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "white_moon"), 0x1f1f1f);
+		super(Constants.modLoc("white_moon"), 0x1f1f1f);
 	}
 
 	@Override

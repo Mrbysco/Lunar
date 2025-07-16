@@ -25,7 +25,7 @@ public class BloodMoonEvent extends LunarEvent {
 	private static final UUID HEALTH_MODIFIER_UUID = UUID.fromString("267db29a-2a6f-4c9d-b3c8-512c085bdf21");
 
 	public BloodMoonEvent() {
-		super(new ResourceLocation(Constants.MOD_ID, "blood_moon"), 0x882e2e);
+		super(Constants.modLoc("blood_moon"), 0x882e2e);
 	}
 
 	@Override
