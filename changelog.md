@@ -1,1 +1,1 @@
-* Add a moon texture for every lunar event (allowing for resource packs to change the moon textures)
+* Initial update to 1.21.4
