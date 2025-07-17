@@ -10,7 +10,7 @@ import net.minecraft.world.entity.npc.CatSpawner;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CatSpawner.class)
 public class CatSpawnerMixin {
@@ -25,10 +25,9 @@ public class CatSpawnerMixin {
 			),
 			cancellable = true
 	)
-	private void checkCatSpawn(BlockPos pos, ServerLevel level, CallbackInfoReturnable<Integer> cir, @Local Cat entity) {
+	private void checkCatSpawn(BlockPos pos, ServerLevel level, boolean persistenceRequired, CallbackInfo ci, @Local Cat entity) {
 		if (!EntityEvents.LIVING_CHECK_SPAWN.invoker().canSpawn(entity, level, pos.getX(), pos.getY(), pos.getZ(), EntitySpawnReason.NATURAL, null).consumesAction()) {
-			cir.setReturnValue(0);
-			cir.cancel();
+			ci.cancel();
 		}
 	}
 }

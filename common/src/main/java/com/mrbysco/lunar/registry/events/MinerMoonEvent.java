@@ -34,7 +34,7 @@ public class MinerMoonEvent extends LunarEvent {
 
 	@Override
 	public void applyPlayerEffect(Player player) {
-		player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 40, 0, false, true));
+		player.addEffect(new MobEffectInstance(MobEffects.HASTE, 40, 0, false, true));
 	}
 
 	@Override

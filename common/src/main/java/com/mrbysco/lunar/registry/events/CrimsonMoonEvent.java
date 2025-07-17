@@ -65,7 +65,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 						Entity replacementEntity = replacementType.create(level, EntitySpawnReason.CONVERSION);
 						if (replacementEntity != null) {
 							BlockPos position = livingEntity.blockPosition();
-							replacementEntity.moveTo(position, livingEntity.getYRot(), livingEntity.getXRot());
+							replacementEntity.snapTo(position, livingEntity.getYRot(), livingEntity.getXRot());
 							if (replacementEntity instanceof Mob mob) {
 								if (!mob.checkSpawnObstruction(level)) {
 									return EventResult.DEFAULT;

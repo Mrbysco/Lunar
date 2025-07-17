@@ -1,56 +1,59 @@
 package com.mrbysco.lunar;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.LunarRegistry;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.Random;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class LunarPhaseData extends SavedData {
 	private static final Random random = new Random();
 	private static final String DATA_NAME = Constants.MOD_ID + "_world_data";
+	public static final Codec<LunarPhaseData> CODEC = RecordCodecBuilder.create(
+			instance -> instance.group(
+							ResourceLocation.CODEC.optionalFieldOf("forcedEvent").forGetter(data -> data.forcedEventID),
+							ResourceLocation.CODEC.optionalFieldOf("activeEvent").forGetter(data -> data.activeEventID)
+					)
+					.apply(instance, LunarPhaseData::new)
+	);
+
+	public Optional<ResourceLocation> forcedEventID;
+	public Optional<ResourceLocation> activeEventID;
 
 	public ILunarEvent forcedEvent;
 	public ILunarEvent activeEvent;
 
-	public LunarPhaseData() {
-		setActiveEvent(null);
-		setForcedEvent(null);
+	private LunarPhaseData() {
+		this(Optional.empty(), Optional.empty());
 	}
 
-	public LunarPhaseData(ILunarEvent event, ILunarEvent forcedEvent) {
+	public LunarPhaseData(Optional<ResourceLocation> forcedEventID, Optional<ResourceLocation> activeEventID) {
+		this.forcedEventID = activeEventID;
+		ILunarEvent event = activeEventID.map(location -> LunarRegistry.instance().getEventByID(location)).orElse(null);
 		setActiveEvent(event);
+
+		this.activeEventID = forcedEventID;
+		ILunarEvent forcedEvent = forcedEventID.map(location -> LunarRegistry.instance().getEventByID(location)).orElse(null);
 		setForcedEvent(forcedEvent);
 	}
 
-	public CompoundTag save(CompoundTag compound, HolderLookup.Provider provider) {
-		if (activeEvent != null) {
-			compound.putString("event", activeEvent.getID().toString());
-		}
-		if (forcedEvent != null) {
-			compound.putString("forcedEvent", forcedEvent.getID().toString());
-		}
-		return compound;
-	}
-
-	public static LunarPhaseData load(CompoundTag compound, HolderLookup.Provider provider) {
-		ResourceLocation eventID = compound.getString("event").isEmpty() ? null : ResourceLocation.tryParse(compound.getString("event"));
-		ILunarEvent event = eventID != null ? LunarRegistry.instance().getEventByID(eventID) : null;
-
-		ResourceLocation forcedEventID = compound.getString("forcedEvent").isEmpty() ? null : ResourceLocation.tryParse(compound.getString("forcedEvent"));
-		ILunarEvent forcedEvent = forcedEventID != null ? LunarRegistry.instance().getEventByID(forcedEventID) : null;
-
-		return new LunarPhaseData(event, forcedEvent);
+	@SuppressWarnings("DataFlowIssue")
+	public static SavedDataType<LunarPhaseData> type() {
+		return new SavedDataType<>(DATA_NAME, LunarPhaseData::new, CODEC, null);
 	}
 
 	public static LunarPhaseData get(Level level) {
@@ -59,8 +62,9 @@ public class LunarPhaseData extends SavedData {
 		}
 		ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
 
+		assert overworld != null;
 		DimensionDataStorage storage = overworld.getDataStorage();
-		return storage.computeIfAbsent(new SavedData.Factory<>(LunarPhaseData::new, LunarPhaseData::load, null), DATA_NAME);
+		return storage.computeIfAbsent(type());
 	}
 
 	public void setRandomLunarEvent(@NotNull ServerLevel serverLevel) {
@@ -84,8 +88,9 @@ public class LunarPhaseData extends SavedData {
 		}
 	}
 
-	public void setForcedEvent(ILunarEvent event) {
+	public void setForcedEvent(@Nullable ILunarEvent event) {
 		this.forcedEvent = event;
+		this.forcedEventID = Optional.ofNullable(event != null ? event.getID() : null);
 		setDirty();
 	}
 
@@ -98,8 +103,9 @@ public class LunarPhaseData extends SavedData {
 		this.setForcedEvent(null);
 	}
 
-	public void setActiveEvent(ILunarEvent storage) {
-		this.activeEvent = storage;
+	public void setActiveEvent(@Nullable ILunarEvent event) {
+		this.activeEvent = event;
+		this.activeEventID = Optional.ofNullable(event != null ? event.getID() : null);
 		setDirty();
 	}
 
