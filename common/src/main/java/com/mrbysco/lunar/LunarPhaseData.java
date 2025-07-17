@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -62,19 +63,19 @@ public class LunarPhaseData extends SavedData {
 		return storage.computeIfAbsent(new SavedData.Factory<>(LunarPhaseData::new, LunarPhaseData::load, null), DATA_NAME);
 	}
 
-	public void setRandomLunarEvent(Level level) {
+	public void setRandomLunarEvent(@NotNull ServerLevel serverLevel) {
 		if (forcedEvent != null) {
 			Component startComponent = Component.translatable("lunar.event.start", Component.translatable(forcedEvent.getTranslationKey()));
-			level.players().forEach(player -> player.sendSystemMessage(startComponent));
+			serverLevel.players().forEach(player -> player.sendSystemMessage(startComponent));
 			setActiveEvent(forcedEvent);
 			setForcedEvent(null);
 		} else {
 			float rng = random.nextFloat();
 			if (rng <= Services.PLATFORM.getLunarChance()) {
-				ILunarEvent event = LunarRegistry.instance().getRandomLunarEvent(level);
+				ILunarEvent event = LunarRegistry.instance().getRandomLunarEvent(serverLevel);
 				if (event != null) {
 					Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
-					level.players().forEach(player -> player.sendSystemMessage(startComponent));
+					serverLevel.players().forEach(player -> player.sendSystemMessage(startComponent));
 					setActiveEvent(event);
 					return;
 				}

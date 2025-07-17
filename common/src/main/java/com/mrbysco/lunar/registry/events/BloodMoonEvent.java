@@ -8,8 +8,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -40,8 +40,8 @@ public class BloodMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public void applySpawnEffect(LivingEntity livingEntity, MobSpawnType spawnType) {
-		if (spawnType == MobSpawnType.NATURAL) {
+	public void applySpawnEffect(LivingEntity livingEntity, EntitySpawnReason spawnType) {
+		if (spawnType == EntitySpawnReason.NATURAL) {
 			final float difficultyMultiplier = livingEntity.level().getCurrentDifficultyAt(livingEntity.blockPosition()).getSpecialMultiplier();
 			final RandomSource random = livingEntity.getRandom();
 

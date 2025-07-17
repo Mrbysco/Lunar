@@ -5,8 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -80,7 +80,7 @@ public interface ILunarEvent {
 	 * @param spawnType    the spawn reason
 	 * @return if the lunar event changes mob spawning rules
 	 */
-	default EventResult getSpawnResult(LivingEntity livingEntity, MobSpawnType spawnType) {
+	default EventResult getSpawnResult(LivingEntity livingEntity, EntitySpawnReason spawnType) {
 		return EventResult.DEFAULT;
 	}
 
@@ -99,7 +99,7 @@ public interface ILunarEvent {
 	 * @param livingEntity the entity the effect is applied to
 	 * @param spawnType    the spawn reason
 	 */
-	default void applySpawnEffect(LivingEntity livingEntity, MobSpawnType spawnType) {
+	default void applySpawnEffect(LivingEntity livingEntity, EntitySpawnReason spawnType) {
 	}
 
 	/**

@@ -9,10 +9,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 
@@ -52,17 +52,17 @@ public class CrimsonMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public EventResult getSpawnResult(LivingEntity livingEntity, MobSpawnType spawnType) {
+	public EventResult getSpawnResult(LivingEntity livingEntity, EntitySpawnReason spawnType) {
 		ServerLevel level = (ServerLevel) livingEntity.level();
-		if (spawnType == MobSpawnType.NATURAL) {
+		if (spawnType == EntitySpawnReason.NATURAL) {
 			Map<ResourceLocation, ResourceLocation> replacementMap = Services.PLATFORM.getCrimsonReplacementMap();
 			ResourceLocation entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
 			if (replacementMap.containsKey(entityLocation)) {
 				ResourceLocation replacementLocation = replacementMap.get(entityLocation);
 				if (replacementLocation != null) {
-					EntityType<?> replacementType = BuiltInRegistries.ENTITY_TYPE.get(replacementLocation);
+					EntityType<?> replacementType = BuiltInRegistries.ENTITY_TYPE.getValue(replacementLocation);
 					if (replacementType != null) {
-						Entity replacementEntity = replacementType.create(level);
+						Entity replacementEntity = replacementType.create(level, EntitySpawnReason.CONVERSION);
 						if (replacementEntity != null) {
 							BlockPos position = livingEntity.blockPosition();
 							replacementEntity.moveTo(position, livingEntity.getYRot(), livingEntity.getXRot());
@@ -70,7 +70,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 								if (!mob.checkSpawnObstruction(level)) {
 									return EventResult.DEFAULT;
 								}
-								mob.finalizeSpawn(level, level.getCurrentDifficultyAt(position), MobSpawnType.NATURAL, null);
+								mob.finalizeSpawn(level, level.getCurrentDifficultyAt(position), EntitySpawnReason.NATURAL, null);
 							}
 							if (replacementEntity instanceof Ghast) {
 								if (level.random.nextDouble() <= 0.5) {

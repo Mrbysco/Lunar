@@ -1,10 +1,8 @@
 package com.mrbysco.lunar.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Camera;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor.ARGB32;
+import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
@@ -21,14 +19,8 @@ public class MoonHandler {
 
 	/**
 	 * Called to set the color of the moon.
-	 * @param level The level
-	 * @param frustumMatrix the frustum matrix
-	 * @param projectionMatrix the projection matrix
-	 * @param partialTick the partial tick
-	 * @param camera the camera
 	 */
-	public static void colorTheMoon(ClientLevel level, Matrix4f frustumMatrix, Matrix4f projectionMatrix,
-	                                float partialTick, Camera camera) {
+	public static void colorTheMoon() {
 		if (isEventActive()) {
 			RenderSystem.setShaderColor(moonColor[0], moonColor[1], moonColor[2], 1.0F);
 		}
@@ -42,9 +34,9 @@ public class MoonHandler {
 	 */
 	public static void setMoon(String eventID, int color, float scale) {
 		rawMoonColor = color;
-		int r = ARGB32.red(color);
-		int g = ARGB32.green(color);
-		int b = ARGB32.blue(color);
+		int r = ARGB.red(color);
+		int g = ARGB.green(color);
+		int b = ARGB.blue(color);
 		moonColor = new float[]{(float) r / 255.0F, (float) g / 255.0F, (float) b / 255.0F};
 		moonID = eventID;
 		if (scale != 1.0F) {

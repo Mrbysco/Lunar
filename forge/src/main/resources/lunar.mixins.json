@@ -4,7 +4,7 @@
   "package": "com.mrbysco.lunar.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "LevelRendererMixin"
+    "SkyRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

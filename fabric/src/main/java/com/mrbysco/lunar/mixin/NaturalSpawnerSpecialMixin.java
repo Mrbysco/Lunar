@@ -2,8 +2,8 @@ package com.mrbysco.lunar.mixin;
 
 import com.mrbysco.lunar.events.EntityEvents;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.NaturalSpawner;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +17,7 @@ public class NaturalSpawnerSpecialMixin {
 			ordinal = 0))
 	private static Entity lunar_onAddToWorld(Entity entity) {
 		if (entity instanceof Mob mob) {
-			EntityEvents.LIVING_CHECK_SPAWN.invoker().canSpawn(mob, mob.level(), mob.xOld, mob.yOld, mob.zOld, MobSpawnType.NATURAL, null);
+			EntityEvents.LIVING_CHECK_SPAWN.invoker().canSpawn(mob, mob.level(), mob.xOld, mob.yOld, mob.zOld, EntitySpawnReason.NATURAL, null);
 		}
 		return entity;
 	}

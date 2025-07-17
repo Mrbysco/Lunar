@@ -23,9 +23,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
@@ -80,13 +80,13 @@ public class Lunar implements ModInitializer {
 		return InteractionResult.PASS;
 	}
 
-	private void onLivingSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, MobSpawnType spawnReason) {
+	private void onLivingSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, EntitySpawnReason spawnReason) {
 		if (entity.level().dimension().equals(Level.OVERWORLD)) {
 			LunarHandler.uponLivingSpawn(spawnReason, entity);
 		}
 	}
 
-	private InteractionResult onCheckSpawn(LivingEntity entity, LevelAccessor level, double x, double y, double z, MobSpawnType type, @Nullable BaseSpawner spawner) {
+	private InteractionResult onCheckSpawn(LivingEntity entity, LevelAccessor level, double x, double y, double z, EntitySpawnReason type, @Nullable BaseSpawner spawner) {
 		if (entity.level().dimension().equals(Level.OVERWORLD)) {
 			EventResult spawnResult = LunarHandler.getSpawnResult(type, entity);
 			if (spawnResult != EventResult.DEFAULT) {

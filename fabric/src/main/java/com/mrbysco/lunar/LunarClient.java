@@ -5,7 +5,6 @@ import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 
@@ -32,7 +31,7 @@ public class LunarClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(SyncDeltaMovement.ID, (payload, context) -> {
 			Vec3 deltaMovement = payload.deltaMovement();
 			context.client().execute(() -> {
-				Minecraft.getInstance().player.setDeltaMovement(deltaMovement);
+				context.client().player.setDeltaMovement(deltaMovement);
 			});
 		});
 	}

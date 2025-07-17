@@ -7,7 +7,7 @@
   "mixins": [
   ],
   "client": [
-    "LevelRendererMixin"
+    "SkyRendererMixin"
   ],
   "server": [
   ],

@@ -14,7 +14,7 @@
     "PlayerListMixin"
   ],
   "client": [
-    "LevelRendererMixin"
+    "SkyRendererMixin"
   ],
   "server": [
   ],

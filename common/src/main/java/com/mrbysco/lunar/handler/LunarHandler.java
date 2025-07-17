@@ -8,8 +8,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -107,7 +107,7 @@ public class LunarHandler {
 		return EventResult.DEFAULT;
 	}
 
-	public static EventResult getSpawnResult(MobSpawnType mobSpawnType, LivingEntity livingEntity) {
+	public static EventResult getSpawnResult(EntitySpawnReason mobSpawnType, LivingEntity livingEntity) {
 		Level level = livingEntity.level();
 		if (!level.isClientSide) {
 			LunarPhaseData phaseData = LunarPhaseData.get(level);
@@ -119,7 +119,7 @@ public class LunarHandler {
 		return EventResult.DEFAULT;
 	}
 
-	public static void uponLivingSpawn(MobSpawnType mobSpawnType, LivingEntity livingEntity) {
+	public static void uponLivingSpawn(EntitySpawnReason mobSpawnType, LivingEntity livingEntity) {
 		Level level = livingEntity.level();
 		if (!level.isClientSide) {
 			LunarPhaseData phaseData = LunarPhaseData.get(level);
