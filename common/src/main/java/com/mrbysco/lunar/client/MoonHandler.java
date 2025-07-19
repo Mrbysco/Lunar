@@ -20,10 +20,11 @@ public class MoonHandler {
 	/**
 	 * Called to set the color of the moon.
 	 */
-	public static void colorTheMoon() {
+	public static int colorTheMoon(int originalColor) {
 		if (isEventActive()) {
-			RenderSystem.setShaderColor(moonColor[0], moonColor[1], moonColor[2], 1.0F);
+			return ARGB.colorFromFloat(1.0F, moonColor[0], moonColor[1], moonColor[2]);
 		}
+		return originalColor;
 	}
 
 	/**
