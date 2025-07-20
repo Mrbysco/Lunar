@@ -27,14 +27,6 @@ public interface IPlatformHelper {
 	void syncEvent(ServerPlayer player, ILunarEvent event);
 
 	/**
-	 * Sync the deltaMovement to the client.
-	 *
-	 * @param player        The player to sync to
-	 * @param deltaMovement The deltaMovement to sync
-	 */
-	void syncDeltaMovement(ServerPlayer player, Vec3 deltaMovement);
-
-	/**
 	 * Returns the configured chance of a Lunar Event happening.
 	 *
 	 * @return the Lunar Event Chance

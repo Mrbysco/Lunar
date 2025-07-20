@@ -4,18 +4,14 @@ import com.google.common.collect.Maps;
 import com.mrbysco.lunar.Lunar;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
-import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
 
@@ -33,16 +29,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public void syncEvent(ServerPlayer player, ILunarEvent event) {
 		ServerPlayNetworking.send(player, new SyncEventMessage(event));
-	}
-
-	@Override
-	public void syncDeltaMovement(ServerPlayer player, Vec3 deltaMovement) {
-		FriendlyByteBuf buf = PacketByteBufs.create();
-		buf.writeDouble(deltaMovement.x);
-		buf.writeDouble(deltaMovement.y);
-		buf.writeDouble(deltaMovement.z);
-
-		ServerPlayNetworking.send(player, new SyncDeltaMovement(deltaMovement));
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import com.mrbysco.lunar.events.EntityEvents;
 import com.mrbysco.lunar.events.PlayerEvents;
 import com.mrbysco.lunar.handler.LunarHandler;
 import com.mrbysco.lunar.handler.result.EventResult;
-import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
@@ -40,7 +39,6 @@ public class Lunar implements ModInitializer {
 		ConfigHolder<LunarConfig> holder = AutoConfig.register(LunarConfig.class, Toml4jConfigSerializer::new);
 		config = holder.getConfig();
 
-		PayloadTypeRegistry.playS2C().register(SyncDeltaMovement.ID, SyncDeltaMovement.CODEC);
 		PayloadTypeRegistry.playS2C().register(SyncEventMessage.ID, SyncEventMessage.CODEC);
 
 		ServerLifecycleEvents.SERVER_STARTING.register((server) -> {

@@ -3,13 +3,11 @@ package com.mrbysco.lunar.platform;
 import com.google.common.collect.Maps;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
-import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Map;
@@ -24,11 +22,6 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public void syncEvent(ServerPlayer player, ILunarEvent event) {
 		player.connection.send(new SyncEventMessage(event));
-	}
-
-	@Override
-	public void syncDeltaMovement(ServerPlayer player, Vec3 deltaMovement) {
-		player.connection.send(new SyncDeltaMovement(deltaMovement));
 	}
 
 	@Override

@@ -1,12 +1,10 @@
 package com.mrbysco.lunar;
 
 import com.mrbysco.lunar.client.MoonHandler;
-import com.mrbysco.lunar.network.message.SyncDeltaMovement;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.Vec3;
 
 public class LunarClient implements ClientModInitializer {
 
@@ -26,12 +24,6 @@ public class LunarClient implements ClientModInitializer {
 						MoonHandler.setMoonTexture(customTexture);
 					}
 				}
-			});
-		});
-		ClientPlayNetworking.registerGlobalReceiver(SyncDeltaMovement.ID, (payload, context) -> {
-			Vec3 deltaMovement = payload.deltaMovement();
-			context.client().execute(() -> {
-				context.client().player.setDeltaMovement(deltaMovement);
 			});
 		});
 	}
