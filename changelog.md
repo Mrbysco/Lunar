@@ -1,1 +1,2 @@
-* Add a moon texture for every lunar event (allowing for resource packs to change the moon textures)
+* Enable in-game config
+* Add config options that allows users to disable sleeping during certain lunar events
