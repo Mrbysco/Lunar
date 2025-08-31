@@ -1,9 +1,9 @@
 package com.mrbysco.lunar.registry.events;
 
 import com.mrbysco.lunar.Constants;
+import com.mrbysco.lunar.api.LunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
-import com.mrbysco.lunar.api.LunarEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -44,7 +44,8 @@ public class BadOmenMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult canSleep(Player player, BlockPos sleepingLocation) {
-		//TODO: Config?
+		if (!Services.PLATFORM.canSleepIn(getID()))
+			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
 }
