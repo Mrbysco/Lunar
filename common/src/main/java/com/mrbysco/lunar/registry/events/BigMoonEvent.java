@@ -6,8 +6,6 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -78,7 +76,8 @@ public class BigMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult canSleep(Player player, BlockPos sleepingLocation) {
-		//TODO: Config?
+		if (!Services.PLATFORM.canSleepIn(getID()))
+			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
 }

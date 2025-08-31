@@ -21,6 +21,9 @@ public class LunarConfig implements ConfigData {
 	@CollapsibleObject
 	public Crimson crimson = new Crimson();
 
+	@CollapsibleObject
+	public Sleeping sleeping = new Sleeping();
+
 	@SuppressWarnings("CanBeFinal")
 	public static class General {
 		//General
@@ -73,5 +76,36 @@ public class LunarConfig implements ConfigData {
 	public static class Crimson {
 		@Comment("List of entities to replace during the Crimson Moon Event [Example: \"minecraft:zombie,minecraft:zombified_piglin\"]")
 		public List<String> crimsonReplacements = CommonClass.DEFAULT_CRIMSON_REPLACEMENT;
+	}
+
+	@SuppressWarnings("CanBeFinal")
+	public static class Sleeping {
+		//Sleeping
+		@Comment("Allow sleeping during the Blood Moon Event [Default: true]")
+		public boolean bloodMoonSleeping = true;
+
+		@Comment("Allow sleeping during the Crimson Moon Event [Default: true]")
+		public boolean crimsonMoonSleeping = true;
+
+		@Comment("Allow sleeping during the Miner Moon Event [Default: true]")
+		public boolean minerMoonSleeping = true;
+
+		@Comment("Allow sleeping during the White Moon Event [Default: true]")
+		public boolean whiteMoonSleeping = true;
+
+		@Comment("Allow sleeping during the Tiny Moon Event [Default: true]")
+		public boolean tinyMoonSleeping = true;
+
+		@Comment("Allow sleeping during the Big Moon Event [Default: true]")
+		public boolean bigMoonSleeping = true;
+
+		@Comment("Allow sleeping during the Bad Omen Moon Event [Default: true]")
+		public boolean badOmenMoonSleeping = true;
+
+		@Comment("Allow sleeping during the Hero Moon Event [Default: true]")
+		public boolean heroMoonSleeping = true;
+
+		@Comment("Allow sleeping during the Eclipse Moon Event [Default: true]")
+		public boolean eclipseMoonSleeping = true;
 	}
 }

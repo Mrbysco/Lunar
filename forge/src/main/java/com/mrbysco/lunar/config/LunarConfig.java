@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -22,6 +23,16 @@ public class LunarConfig {
 		public final IntValue badOmenMoonWeight;
 		public final IntValue heroMoonWeight;
 		public final IntValue eclipseMoonWeight;
+
+		public final BooleanValue bloodMoonSleeping;
+		public final BooleanValue crimsonMoonSleeping;
+		public final BooleanValue minerMoonSleeping;
+		public final BooleanValue whiteMoonSleeping;
+		public final BooleanValue tinyMoonSleeping;
+		public final BooleanValue bigMoonSleeping;
+		public final BooleanValue badOmenMoonSleeping;
+		public final BooleanValue heroMoonSleeping;
+		public final BooleanValue eclipseMoonSleeping;
 
 		public final ConfigValue<List<? extends String>> crimsonReplacements;
 
@@ -80,6 +91,46 @@ public class LunarConfig {
 			crimsonReplacements = builder
 					.comment("List of entities to replace during the Crimson Moon Event [Example: \"minecraft:zombie,minecraft:zombified_piglin\"]")
 					.defineListAllowEmpty(List.of("crimsonReplacements"), () -> CommonClass.DEFAULT_CRIMSON_REPLACEMENT, o -> (o instanceof String entry && entry.contains(",")));
+
+			builder.pop();
+			builder.comment("Sleep settings")
+					.push("Sleep");
+
+			bloodMoonSleeping = builder
+					.comment("Allow sleeping during the Blood Moon Event [Default: true]")
+					.define("bloodMoonSleeping", true);
+
+			crimsonMoonSleeping = builder
+					.comment("Allow sleeping during the Crimson Moon Event [Default: true]")
+					.define("crimsonMoonSleeping", true);
+
+			minerMoonSleeping = builder
+					.comment("Allow sleeping during the Miner Moon Event [Default: true]")
+					.define("minerMoonSleeping", true);
+
+			whiteMoonSleeping = builder
+					.comment("Allow sleeping during the White Moon Event [Default: true]")
+					.define("whiteMoonSleeping", true);
+
+			tinyMoonSleeping = builder
+					.comment("Allow sleeping during the Tiny Moon Event [Default: true]")
+					.define("tinyMoonSleeping", true);
+
+			bigMoonSleeping = builder
+					.comment("Allow sleeping during the Big Moon Event [Default: true]")
+					.define("bigMoonSleeping", true);
+
+			badOmenMoonSleeping = builder
+					.comment("Allow sleeping during the Bad Omen Moon Event [Default: true]")
+					.define("badOmenMoonSleeping", true);
+
+			heroMoonSleeping = builder
+					.comment("Allow sleeping during the Hero Moon Event [Default: true]")
+					.define("heroMoonSleeping", true);
+
+			eclipseMoonSleeping = builder
+					.comment("Allow sleeping during the Eclipse Moon Event [Default: true]")
+					.define("eclipseMoonSleeping", true);
 
 			builder.pop();
 		}

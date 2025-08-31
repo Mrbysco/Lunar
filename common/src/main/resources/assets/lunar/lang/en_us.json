@@ -1,6 +1,7 @@
 {
   "lunar.event.start": "A %s has appeared!",
   "lunar.event.rain": "Due to bad weather the effects of %s have been cleansed!",
+  "lunar.event.sleep_canceled": "You cannot sleep during a %s!",
 
   "lunar.event.regular": "Moon",
   "lunar.event.blood_moon": "Blood Moon",
@@ -27,5 +28,15 @@
   "text.autoconfig.lunar.option.events.heroMoonWeight": "Hero Moon Weight",
   "text.autoconfig.lunar.option.events.eclipseMoonWeight": "Eclipse Moon Weight",
   "text.autoconfig.lunar.option.crimson": "Crimson",
-  "text.autoconfig.lunar.option.events.crimsonReplacements": "Crimson Replacements"
+  "text.autoconfig.lunar.option.events.crimsonReplacements": "Crimson Replacements",
+  "text.autoconfig.lunar.option.sleeping": "Sleeping",
+  "text.autoconfig.lunar.option.sleeping.bloodMoonSleeping": "Blood Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.crimsonMoonSleeping": "Crimson Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.minerMoonSleeping": "Miner Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.whiteMoonSleeping": "White Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.tinyMoonSleeping": "Tiny Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.bigMoonSleeping": "Big Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.badOmenMoonSleeping": "Bad Omen Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.heroMoonSleeping": "Hero Moon Sleeping",
+  "text.autoconfig.lunar.option.sleeping.eclipseMoonSleeping": "Eclipse Moon Sleeping"
 }

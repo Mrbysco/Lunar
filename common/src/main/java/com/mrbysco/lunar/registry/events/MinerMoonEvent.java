@@ -44,7 +44,8 @@ public class MinerMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult canSleep(Player player, BlockPos sleepingLocation) {
-		//TODO: Config?
+		if (!Services.PLATFORM.canSleepIn(getID()))
+			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
 }

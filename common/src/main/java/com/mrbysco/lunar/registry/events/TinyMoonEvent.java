@@ -6,7 +6,6 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 
 public class TinyMoonEvent extends LunarEvent {
 	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/tiny.png");
@@ -79,7 +77,8 @@ public class TinyMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult canSleep(Player player, BlockPos sleepingLocation) {
-		//TODO: Config?
+		if (!Services.PLATFORM.canSleepIn(getID()))
+			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
 }

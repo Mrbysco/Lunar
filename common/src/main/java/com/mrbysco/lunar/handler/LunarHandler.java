@@ -6,7 +6,10 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.events.BigMoonEvent;
 import com.mrbysco.lunar.registry.events.TinyMoonEvent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -21,7 +24,7 @@ public class LunarHandler {
 			ServerLevel serverLevel = (ServerLevel) level;
 			LunarPhaseData phaseData = LunarPhaseData.get(serverLevel);
 			ILunarEvent event = phaseData.getActiveLunarEvent();
-			int currentTime = (int)(serverLevel.getDayTime() % 24000L);
+			int currentTime = (int) (serverLevel.getDayTime() % 24000L);
 
 			if (currentTime > 13000 && currentTime < 23000) {
 				if (!phaseData.hasEventActive()) {
@@ -75,7 +78,15 @@ public class LunarHandler {
 		if (!level.isClientSide) {
 			LunarPhaseData phaseData = LunarPhaseData.get(level);
 			ILunarEvent lunarEvent = phaseData.getActiveLunarEvent();
-			if (lunarEvent != null) return lunarEvent.canSleep(player, sleepingPos);
+			if (lunarEvent != null) {
+				EventResult result = lunarEvent.canSleep(player, sleepingPos);
+				if (result == EventResult.DENY) {
+					MutableComponent denyComponent = Component.translatable("lunar.event.sleep_canceled",
+							Component.translatable(lunarEvent.getTranslationKey())).withStyle(ChatFormatting.RED);
+					player.displayClientMessage(denyComponent, true);
+				}
+				return result;
+			}
 		}
 		return EventResult.DEFAULT;
 	}
