@@ -110,4 +110,11 @@ public interface IPlatformHelper {
 	 * @return the configured Crimson Replacement Map.
 	 */
 	Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap();
+
+	/**
+	 * Checks if sleeping is allowed during the given moon event.
+	 * @param moonID the moon event to check
+	 * @return true if sleeping is allowed, false otherwise
+	 */
+	boolean canSleepIn(ResourceLocation moonID);
 }
