@@ -4,8 +4,11 @@ import com.mrbysco.lunar.LunarPhaseData;
 import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.registry.LunarRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -102,7 +105,15 @@ public class LunarHandler {
 		if (!level.isClientSide) {
 			LunarPhaseData phaseData = LunarPhaseData.get(level);
 			ILunarEvent lunarEvent = phaseData.getActiveLunarEvent();
-			if (lunarEvent != null) return lunarEvent.canSleep(player, sleepingPos);
+			if (lunarEvent != null) {
+				EventResult result = lunarEvent.canSleep(player, sleepingPos);
+				if (result == EventResult.DENY) {
+					MutableComponent denyComponent = Component.translatable("lunar.event.sleep_canceled",
+							Component.translatable(lunarEvent.getTranslationKey())).withStyle(ChatFormatting.RED);
+					player.displayClientMessage(denyComponent, true);
+				}
+				return result;
+			}
 		}
 		return EventResult.DEFAULT;
 	}

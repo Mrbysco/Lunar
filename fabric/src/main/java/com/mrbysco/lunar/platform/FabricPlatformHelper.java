@@ -103,4 +103,22 @@ public class FabricPlatformHelper implements IPlatformHelper {
 		});
 		return map;
 	}
+
+	@Override
+	public boolean canSleepIn(ResourceLocation moonID) {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		boolean result = true;
+		switch(moonID.toString()) {
+			case "lunar:blood_moon" -> result = Lunar.config.sleeping.bloodMoonSleeping;
+			case "lunar:crimson_moon" -> result = Lunar.config.sleeping.crimsonMoonSleeping;
+			case "lunar:miner_moon" -> result = Lunar.config.sleeping.minerMoonSleeping;
+			case "lunar:white_moon" -> result = Lunar.config.sleeping.whiteMoonSleeping;
+			case "lunar:big_moon" -> result = Lunar.config.sleeping.bigMoonSleeping;
+			case "lunar:tiny_moon" -> result = Lunar.config.sleeping.tinyMoonSleeping;
+			case "lunar:bad_omen_moon" -> result = Lunar.config.sleeping.badOmenMoonSleeping;
+			case "lunar:hero_moon" -> result = Lunar.config.sleeping.heroMoonSleeping;
+			case "lunar:eclipse_moon" -> result = Lunar.config.sleeping.eclipseMoonSleeping;
+		}
+		return result;
+	}
 }

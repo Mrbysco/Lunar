@@ -85,4 +85,21 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 		});
 		return map;
 	}
+
+	@Override
+	public boolean canSleepIn(ResourceLocation moonID) {
+		boolean result = true;
+		switch(moonID.toString()) {
+			case "lunar:blood_moon" -> result = LunarConfig.COMMON.bloodMoonSleeping.get();
+			case "lunar:crimson_moon" -> result = LunarConfig.COMMON.crimsonMoonSleeping.get();
+			case "lunar:miner_moon" -> result = LunarConfig.COMMON.minerMoonSleeping.get();
+			case "lunar:white_moon" -> result = LunarConfig.COMMON.whiteMoonSleeping.get();
+			case "lunar:big_moon" -> result = LunarConfig.COMMON.bigMoonSleeping.get();
+			case "lunar:tiny_moon" -> result = LunarConfig.COMMON.tinyMoonSleeping.get();
+			case "lunar:bad_omen_moon" -> result = LunarConfig.COMMON.badOmenMoonSleeping.get();
+			case "lunar:hero_moon" -> result = LunarConfig.COMMON.heroMoonSleeping.get();
+			case "lunar:eclipse_moon" -> result = LunarConfig.COMMON.eclipseMoonSleeping.get();
+		}
+		return result;
+	}
 }
