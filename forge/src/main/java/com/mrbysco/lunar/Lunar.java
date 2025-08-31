@@ -9,11 +9,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -25,7 +28,7 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 @Mod(Constants.MOD_ID)
 public class Lunar {
 
-	public Lunar(IEventBus eventBus, ModContainer container) {
+	public Lunar(IEventBus eventBus, ModContainer container, Dist dist) {
 		container.registerConfig(ModConfig.Type.COMMON, LunarConfig.commonSpec);
 		eventBus.addListener(this::setup);
 
@@ -38,6 +41,10 @@ public class Lunar {
 		NeoForge.EVENT_BUS.addListener(this::onLogin);
 
 		NeoForge.EVENT_BUS.addListener(this::onCommandRegister);
+
+		if (dist.isClient()) {
+			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+		}
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
