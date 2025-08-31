@@ -52,6 +52,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 		return MOON_TEXTURE;
 	}
 
+	@SuppressWarnings("ConstantValue")
 	@Override
 	public EventResult getSpawnResult(LivingEntity livingEntity, MobSpawnType spawnType) {
 		ServerLevel level = (ServerLevel) livingEntity.level();
