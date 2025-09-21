@@ -1,1 +1,1 @@
-* Add config options that allows users to disable sleeping during certain lunar events
+* Add `clearGravity` command to remove any left-over gravity effects from lunar events
