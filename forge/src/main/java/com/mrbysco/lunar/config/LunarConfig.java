@@ -99,7 +99,7 @@ public class LunarConfig {
 
 			maxBadOmen = builder
 					.comment("The max level of Bad Omen effect applied during the Bad Omen Moon Event (It will apply a level between 1 and this max) [Default: 3]")
-					.defineInRange("maxBadOmen", 1, 1, 5);
+					.defineInRange("maxBadOmen", 3, 1, 5);
 
 			builder.pop();
 			builder.comment("Sleep settings")
