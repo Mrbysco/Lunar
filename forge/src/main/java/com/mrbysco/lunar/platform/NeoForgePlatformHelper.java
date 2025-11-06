@@ -109,4 +109,9 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 		}
 		return result;
 	}
+
+	@Override
+	public int maxBadOmen() {
+		return LunarConfig.COMMON.maxBadOmen.get();
+	}
 }
