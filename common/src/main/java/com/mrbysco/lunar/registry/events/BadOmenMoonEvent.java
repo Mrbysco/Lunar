@@ -37,7 +37,7 @@ public class BadOmenMoonEvent extends LunarEvent {
 	@Override
 	public void applyPlayerEffect(Player player) {
 		if (player instanceof ServerPlayer serverPlayer) {
-			ServerLevel serverLevel = serverPlayer.serverLevel();
+			ServerLevel serverLevel = serverPlayer.level();
 			if (!serverLevel.isRaided(player.blockPosition())) {
 				final int maxLevel = Services.PLATFORM.maxBadOmen();
 				int randomLevel = serverPlayer.getRandom().nextInt(maxLevel);
