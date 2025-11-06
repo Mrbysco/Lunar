@@ -10,13 +10,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import javax.annotation.Nullable;
-
 @Mixin(SkyRenderer.class)
 public abstract class SkyRendererMixin {
 
 	@Shadow
-	@Nullable
 	private AbstractTexture moonTexture;
 
 	@ModifyArg(
@@ -34,7 +31,8 @@ public abstract class SkyRendererMixin {
 			method = "renderMoon(IFLcom/mojang/blaze3d/vertex/PoseStack;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lcom/mojang/blaze3d/systems/RenderPass;bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V"),
+					target = "Lcom/mojang/blaze3d/systems/RenderPass;bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V",
+					remap = false),
 			index = 1)
 	public GpuTextureView lunar_changeMoonTexture(GpuTextureView gpuTextureView) {
 		AbstractTexture moonTexture = MoonHandler.getMoonTexture(this.moonTexture);
