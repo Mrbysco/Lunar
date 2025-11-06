@@ -19,7 +19,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
 	@Override
 	public void syncEvent(Level level, ILunarEvent event) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			for (ServerPlayer player : ((ServerLevel) level).players()) {
 				ServerPlayNetworking.send(player, new SyncEventMessage(event));
 			}

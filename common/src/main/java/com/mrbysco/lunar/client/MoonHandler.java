@@ -1,9 +1,14 @@
 package com.mrbysco.lunar.client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
+import org.joml.Vector4fc;
 
 /**
  * Handles the moon color, texture and scale.
@@ -14,14 +19,15 @@ public class MoonHandler {
 	private static float[] moonColor = null;
 	private static float rawMoonScale = 1.0F;
 	private static Matrix4f moonScale;
-	private static ResourceLocation moonTexture;
+	private static AbstractTexture moonTexture;
 
 	/**
 	 * Called to set the color of the moon.
 	 */
-	public static int colorTheMoon(int originalColor) {
+	public static Vector4fc colorTheMoon(Vector4fc originalColor) {
 		if (isEventActive()) {
-			return ARGB.colorFromFloat(1.0F, moonColor[0], moonColor[1], moonColor[2]);
+			int color = getMoonColor();
+			return new Vector4f(ARGB.redFloat(color), ARGB.greenFloat(color), ARGB.blueFloat(color), originalColor.w());
 		}
 		return originalColor;
 	}
@@ -34,10 +40,10 @@ public class MoonHandler {
 	 */
 	public static void setMoon(String eventID, int color, float scale) {
 		rawMoonColor = color;
-		int r = ARGB.red(color);
-		int g = ARGB.green(color);
-		int b = ARGB.blue(color);
-		moonColor = new float[]{(float) r / 255.0F, (float) g / 255.0F, (float) b / 255.0F};
+		float r = ARGB.redFloat(color);
+		float g = ARGB.greenFloat(color);
+		float b = ARGB.blueFloat(color);
+		moonColor = new float[]{r, g, b};
 		moonID = eventID;
 		if (scale != 1.0F) {
 			rawMoonScale = scale;
@@ -47,10 +53,10 @@ public class MoonHandler {
 
 	/**
 	 * Called to set the texture used for the moon.
-	 * @param location The resource location of the texture
+	 * @param textureLocation The AbstractTexture of the texture
 	 */
-	public static void setMoonTexture(@Nullable ResourceLocation location) {
-		moonTexture = location;
+	public static void setMoonTexture(@Nullable ResourceLocation textureLocation) {
+		moonTexture = getTexture(textureLocation);
 	}
 
 	/**
@@ -84,7 +90,7 @@ public class MoonHandler {
 	 * @param defaultTexture The default texture
 	 * @return the resource location of the moon texture
 	 */
-	public static ResourceLocation getMoonTexture(ResourceLocation defaultTexture) {
+	public static AbstractTexture getMoonTexture(AbstractTexture defaultTexture) {
 		if (moonTexture != null) {
 			return moonTexture;
 		}
@@ -125,5 +131,17 @@ public class MoonHandler {
 	 */
 	public static float getRawMoonScale() {
 		return rawMoonScale;
+	}
+
+	/**
+	 * Method copied from SkyRenderer to get an abstract texture from a resource location.
+	 * @param location The resource location of the texture
+	 * @return the abstract texture of the texture
+	 */
+	private static AbstractTexture getTexture(ResourceLocation location) {
+		TextureManager texturemanager = Minecraft.getInstance().getTextureManager();
+		AbstractTexture abstracttexture = texturemanager.getTexture(location);
+		abstracttexture.setUseMipmaps(false);
+		return abstracttexture;
 	}
 }

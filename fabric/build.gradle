@@ -108,7 +108,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         def mainFile = upload(project.curseforge_id, remapJar)
         mainFile.releaseType = 'alpha'
         mainFile.addGameVersion "Fabric"
-        mainFile.addGameVersion("1.21.7", "${minecraft_version}")
+        mainFile.addGameVersion("${minecraft_version}")
         mainFile.addGameVersion "Java 21"
 
         mainFile.changelog = file("$project.rootDir/changelog.md")
@@ -129,7 +129,7 @@ if (System.getenv().MODRINTH_KEY) {
         versionNumber = project.version
         uploadFile = remapJar
         changelog = fileContents
-        gameVersions = ["1.21.7", "${minecraft_version}"]
+        gameVersions = ["${minecraft_version}"]
         loaders = ["fabric"]
 
         dependencies {

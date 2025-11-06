@@ -4,7 +4,6 @@ import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
 

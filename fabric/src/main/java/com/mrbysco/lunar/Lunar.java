@@ -108,7 +108,7 @@ public class Lunar implements ModInitializer {
 
 	public void onLogin(ServerPlayer player) {
 		Level level = player.level();
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			LunarPhaseData phaseData = LunarPhaseData.get(player.level());
 			phaseData.syncEvent(player);
 		}

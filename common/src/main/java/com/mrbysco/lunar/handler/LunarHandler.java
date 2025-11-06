@@ -102,7 +102,7 @@ public class LunarHandler {
 
 	public static EventResult canSleep(Player player, BlockPos sleepingPos) {
 		Level level = player.level();
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			LunarPhaseData phaseData = LunarPhaseData.get(level);
 			ILunarEvent lunarEvent = phaseData.getActiveLunarEvent();
 			if (lunarEvent != null) {
@@ -120,7 +120,7 @@ public class LunarHandler {
 
 	public static EventResult getSpawnResult(EntitySpawnReason mobSpawnType, LivingEntity livingEntity) {
 		Level level = livingEntity.level();
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			LunarPhaseData phaseData = LunarPhaseData.get(level);
 			ILunarEvent lunarEvent = phaseData.getActiveLunarEvent();
 			if (lunarEvent != null && lunarEvent.dictatesMobSpawn()) {
@@ -132,7 +132,7 @@ public class LunarHandler {
 
 	public static void uponLivingSpawn(EntitySpawnReason mobSpawnType, LivingEntity livingEntity) {
 		Level level = livingEntity.level();
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			LunarPhaseData phaseData = LunarPhaseData.get(level);
 			ILunarEvent lunarEvent = phaseData.getActiveLunarEvent();
 			if (lunarEvent != null && lunarEvent.applySpawnEffect()) {

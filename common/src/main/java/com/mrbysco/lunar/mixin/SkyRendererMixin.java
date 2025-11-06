@@ -1,45 +1,43 @@
 package com.mrbysco.lunar.mixin;
 
+import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mrbysco.lunar.client.MoonHandler;
 import net.minecraft.client.renderer.SkyRenderer;
-import net.minecraft.resources.ResourceLocation;
-import org.joml.Matrix4f;
+import net.minecraft.client.renderer.texture.AbstractTexture;
+import org.joml.Vector4fc;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+
+import javax.annotation.Nullable;
 
 @Mixin(SkyRenderer.class)
-public class SkyRendererMixin {
+public abstract class SkyRendererMixin {
+
+	@Shadow
+	@Nullable
+	private AbstractTexture moonTexture;
 
 	@ModifyArg(
-			method = "renderMoon(IFLnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+			method = "renderMoon(IFLcom/mojang/blaze3d/vertex/PoseStack;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;setColor(I)Lcom/mojang/blaze3d/vertex/VertexConsumer;"
-			)
+					target = "Lnet/minecraft/client/renderer/DynamicUniforms;writeTransform(Lorg/joml/Matrix4fc;Lorg/joml/Vector4fc;Lorg/joml/Vector3fc;Lorg/joml/Matrix4fc;F)Lcom/mojang/blaze3d/buffers/GpuBufferSlice;"
+			), index = 1
 	)
-	private int lunar_colorMoon(int originalColor) {
-		return MoonHandler.colorTheMoon(originalColor);
-	}
-
-	@ModifyVariable(
-			method = "renderMoon(IFLnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
-			at = @At(value = "CONSTANT", args = "floatValue=20.0"),
-			ordinal = 1,
-			require = 0,
-			argsOnly = true)
-	private Matrix4f lunar_scaleMoon(Matrix4f matrix) {
-		return MoonHandler.scaleMoon(matrix);
+	private Vector4fc lunar_colorMoon(Vector4fc colorVector) {
+		return MoonHandler.colorTheMoon(colorVector);
 	}
 
 	@ModifyArg(
-			method = "renderMoon(IFLnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+			method = "renderMoon(IFLcom/mojang/blaze3d/vertex/PoseStack;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/renderer/RenderType;celestial(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;"),
-			index = 0)
-	public ResourceLocation lunar_changeMoonTexture(ResourceLocation location) {
-		return MoonHandler.getMoonTexture(location);
+					target = "Lcom/mojang/blaze3d/systems/RenderPass;bindSampler(Ljava/lang/String;Lcom/mojang/blaze3d/textures/GpuTextureView;)V"),
+			index = 1)
+	public GpuTextureView lunar_changeMoonTexture(GpuTextureView gpuTextureView) {
+		AbstractTexture moonTexture = MoonHandler.getMoonTexture(this.moonTexture);
+		return moonTexture.getTextureView();
 	}
 }

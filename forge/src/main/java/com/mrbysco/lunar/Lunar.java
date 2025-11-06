@@ -96,7 +96,7 @@ public class Lunar {
 	public void onLogin(PlayerLoggedInEvent event) {
 		Player player = event.getEntity();
 		Level level = player.level();
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			LunarPhaseData phaseData = LunarPhaseData.get(player.level());
 			phaseData.syncEvent((ServerPlayer) player);
 		}
