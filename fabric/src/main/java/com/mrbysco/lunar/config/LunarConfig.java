@@ -22,6 +22,9 @@ public class LunarConfig implements ConfigData {
 	public final Crimson crimson = new Crimson();
 
 	@CollapsibleObject
+	public BadOmen badomen = new BadOmen();
+
+	@CollapsibleObject
 	public Sleeping sleeping = new Sleeping();
 
 	@SuppressWarnings("CanBeFinal")
@@ -76,6 +79,12 @@ public class LunarConfig implements ConfigData {
 	public static class Crimson {
 		@Comment("List of entities to replace during the Crimson Moon Event [Example: \"minecraft:zombie,minecraft:zombified_piglin\"]")
 		public List<String> crimsonReplacements = CommonClass.DEFAULT_CRIMSON_REPLACEMENT;
+	}
+
+	@SuppressWarnings("CanBeFinal")
+	public static class BadOmen {
+		@Comment("The max level of Bad Omen effect applied during the Bad Omen Moon Event (It will apply a level between 1 and this max) [Default: 3]")
+		public int maxBadOmen = 3;
 	}
 
 	@SuppressWarnings("CanBeFinal")

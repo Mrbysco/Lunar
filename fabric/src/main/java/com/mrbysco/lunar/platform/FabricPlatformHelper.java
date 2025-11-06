@@ -121,4 +121,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
 		}
 		return result;
 	}
+
+	@Override
+	public int maxBadOmen() {
+		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
+		return Lunar.config.badomen.maxBadOmen;
+	}
 }
