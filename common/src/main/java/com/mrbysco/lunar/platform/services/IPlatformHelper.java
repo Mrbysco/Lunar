@@ -139,4 +139,10 @@ public interface IPlatformHelper {
 	 * @return true if sleeping is allowed, false otherwise
 	 */
 	boolean canSleepIn(ResourceLocation moonID);
+
+	/**
+	 * Returns the max level of Bad Omen applied during the Bad Omen Moon Event.
+	 * @return the max level of Bad Omen
+	 */
+	int maxBadOmen();
 }

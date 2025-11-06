@@ -2,10 +2,10 @@ package com.mrbysco.lunar.config;
 
 import com.mrbysco.lunar.CommonClass;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -35,6 +35,7 @@ public class LunarConfig {
 		public final BooleanValue eclipseMoonSleeping;
 
 		public final ConfigValue<List<? extends String>> crimsonReplacements;
+		public final IntValue maxBadOmen;
 
 		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("General settings")
@@ -91,6 +92,14 @@ public class LunarConfig {
 			crimsonReplacements = builder
 					.comment("List of entities to replace during the Crimson Moon Event [Example: \"minecraft:zombie,minecraft:zombified_piglin\"]")
 					.defineListAllowEmpty(List.of("crimsonReplacements"), () -> CommonClass.DEFAULT_CRIMSON_REPLACEMENT, o -> (o instanceof String entry && entry.contains(",")));
+
+			builder.pop();
+			builder.comment("Bad Omen settings")
+					.push("BadOmen");
+
+			maxBadOmen = builder
+					.comment("The max level of Bad Omen effect applied during the Bad Omen Moon Event (It will apply a level between 1 and this max) [Default: 3]")
+					.defineInRange("maxBadOmen", 1, 1, 5);
 
 			builder.pop();
 			builder.comment("Sleep settings")
