@@ -114,4 +114,58 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	public int maxBadOmen() {
 		return LunarConfig.COMMON.maxBadOmen.get();
 	}
+
+	@Override
+	public int getBloodMoonPhase() { return LunarConfig.COMMON.bloodMoonPhase.get(); }
+
+	@Override
+	public int getCrimsonMoonPhase() { return LunarConfig.COMMON.crimsonMoonPhase.get(); }
+
+	@Override
+	public int getMinerMoonPhase() { return LunarConfig.COMMON.minerMoonPhase.get(); }
+
+	@Override
+	public int getWhiteMoonPhase() { return LunarConfig.COMMON.whiteMoonPhase.get(); }
+
+	@Override
+	public int getBigMoonPhase() { return LunarConfig.COMMON.bigMoonPhase.get(); }
+
+	@Override
+	public int getTinyMoonPhase() { return LunarConfig.COMMON.tinyMoonPhase.get(); }
+
+	@Override
+	public int getBadOmenMoonPhase() { return LunarConfig.COMMON.badOmenMoonPhase.get(); }
+
+	@Override
+	public int getHeroMoonPhase() { return LunarConfig.COMMON.heroMoonPhase.get(); }
+
+	@Override
+	public int getEclipseMoonPhase() { return LunarConfig.COMMON.eclipseMoonPhase.get(); }
+
+	@Override
+	public int getBloodMoonDay() { return LunarConfig.COMMON.bloodMoonDay.get(); }
+
+	@Override
+	public int getCrimsonMoonDay() { return LunarConfig.COMMON.crimsonMoonDay.get(); }
+
+	@Override
+	public int getMinerMoonDay() { return LunarConfig.COMMON.minerMoonDay.get(); }
+
+	@Override
+	public int getWhiteMoonDay() { return LunarConfig.COMMON.whiteMoonDay.get(); }
+
+	@Override
+	public int getBigMoonDay() { return LunarConfig.COMMON.bigMoonDay.get(); }
+
+	@Override
+	public int getTinyMoonDay() { return LunarConfig.COMMON.tinyMoonDay.get(); }
+
+	@Override
+	public int getBadOmenMoonDay() { return LunarConfig.COMMON.badOmenMoonDay.get(); }
+
+	@Override
+	public int getHeroMoonDay() { return LunarConfig.COMMON.heroMoonDay.get(); }
+
+	@Override
+	public int getEclipseMoonDay() { return LunarConfig.COMMON.eclipseMoonDay.get(); }
 }
