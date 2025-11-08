@@ -47,7 +47,7 @@ public class TinyMoonEvent extends LunarEvent {
 		if (entity instanceof LivingEntity livingEntity) {
 			AttributeInstance attributeInstance = livingEntity.getAttribute(TINY_MOON_MODIFIER_PAIR.getLeft());
 			if (attributeInstance != null && !attributeInstance.hasModifier(TINY_MOON_MODIFIER_PAIR.getRight())) {
-				attributeInstance.addPermanentModifier(
+				attributeInstance.addTransientModifier(
 						new AttributeModifier(TINY_MOON_MODIFIER_PAIR.getRight(), -0.06F, Operation.ADD_VALUE)
 				);
 			}
