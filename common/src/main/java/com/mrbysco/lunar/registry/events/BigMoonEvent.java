@@ -47,7 +47,7 @@ public class BigMoonEvent extends LunarEvent {
 			Attribute gravityAttribute = Services.PLATFORM.getGravityAttribute();
 			AttributeInstance attributeInstance = livingEntity.getAttribute(gravityAttribute);
 			if (attributeInstance != null && !attributeInstance.hasModifier(GRAVITY_MODIFIER)) {
-				attributeInstance.addPermanentModifier(
+				attributeInstance.addTransientModifier(
 						GRAVITY_MODIFIER
 				);
 			}
