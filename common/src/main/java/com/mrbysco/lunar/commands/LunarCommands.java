@@ -137,18 +137,20 @@ public class LunarCommands {
 	 * @return 0 if successful
 	 */
 	private static int clearGravity(CommandContext<CommandSourceStack> ctx) {
-		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
-		level.getAllEntities().forEach(entity -> {
-			// Remove gravity modifiers from all living entities
-			Attribute gravityAttribute = Services.PLATFORM.getGravityAttribute();
-			if (entity instanceof LivingEntity livingEntity) {
-				AttributeInstance attributeInstance = livingEntity.getAttribute(gravityAttribute);
-				if (attributeInstance != null) {
-					attributeInstance.removeModifier(BigMoonEvent.GRAVITY_MODIFIER);
-					attributeInstance.removeModifier(TinyMoonEvent.GRAVITY_MODIFIER);
+		Iterable<ServerLevel> levels = ctx.getSource().getServer().getAllLevels();
+		for (ServerLevel level : levels) {
+			level.getAllEntities().forEach(entity -> {
+				// Remove gravity modifiers from all living entities
+				Attribute gravityAttribute = Services.PLATFORM.getGravityAttribute();
+				if (entity instanceof LivingEntity livingEntity) {
+					AttributeInstance attributeInstance = livingEntity.getAttribute(gravityAttribute);
+					if (attributeInstance != null) {
+						attributeInstance.removeModifier(BigMoonEvent.GRAVITY_MODIFIER);
+						attributeInstance.removeModifier(TinyMoonEvent.GRAVITY_MODIFIER);
+					}
 				}
-			}
-		});
+			});
+		}
 
 		ctx.getSource().sendSuccess(() ->
 				Component.literal("Successfully cleared gravity modifiers from all entities"), true);
