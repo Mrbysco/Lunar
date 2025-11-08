@@ -47,7 +47,7 @@ public class BigMoonEvent extends LunarEvent {
 		if (entity instanceof LivingEntity livingEntity) {
 			AttributeInstance attributeInstance = livingEntity.getAttribute(BIG_MOON_MODIFIER_PAIR.getLeft());
 			if (attributeInstance != null && !attributeInstance.hasModifier(BIG_MOON_MODIFIER_PAIR.getRight())) {
-				attributeInstance.addPermanentModifier(
+				attributeInstance.addTransientModifier(
 						new AttributeModifier(BIG_MOON_MODIFIER_PAIR.getRight(), 0.04F, Operation.ADD_VALUE)
 				);
 			}
