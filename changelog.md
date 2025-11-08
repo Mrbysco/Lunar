@@ -1,1 +1,1 @@
-* Update to 1.21.10
+* Make it so new gravity adjusting modifiers are non-permanent (in case the attribute isn't removed somehow)
