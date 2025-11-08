@@ -53,7 +53,7 @@ public class BloodMoonEvent extends LunarEvent {
 					damageBoost = i > 0 ? random.nextInt(i) : 0;
 				}
 				if (damageBoost > 0) {
-					attackAttribute.addPermanentModifier(
+					attackAttribute.addTransientModifier(
 							new AttributeModifier(DAMAGE_MODIFIER_UUID,
 									damageBoost, AttributeModifier.Operation.ADD_VALUE));
 				}
@@ -67,7 +67,7 @@ public class BloodMoonEvent extends LunarEvent {
 					healthBoost = i > 0 ? random.nextInt(i) : 0;
 				}
 				if (healthBoost > 0) {
-					healthAttribute.addPermanentModifier(
+					healthAttribute.addTransientModifier(
 							new AttributeModifier(HEALTH_MODIFIER_UUID,
 									healthBoost, AttributeModifier.Operation.ADD_VALUE));
 				}
