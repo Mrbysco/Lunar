@@ -33,7 +33,11 @@ public class LunarHandler {
 
 			if (currentTime > 13000 && currentTime < 23000) {
 				if (!phaseData.hasEventActive()) {
-					phaseData.setRandomLunarEvent(serverLevel);
+					if(!phaseData.executeForcedEvent(serverLevel)) {
+						if(!phaseData.setPhaseEvent(serverLevel) && !phaseData.setDayEvent(serverLevel)){
+							phaseData.setRandomLunarEvent(serverLevel);
+						}
+					}
 					phaseData.syncEvent(serverLevel);
 				} else {
 					if (event != null) {

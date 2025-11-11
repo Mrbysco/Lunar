@@ -57,4 +57,14 @@ public class WhiteMoonEvent extends LunarEvent {
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
+
+	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getWhiteMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getWhiteMoonDay();
+	}
 }

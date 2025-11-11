@@ -101,4 +101,14 @@ public class BloodMoonEvent extends LunarEvent {
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
+
+	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getBloodMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getBloodMoonDay();
+	}
 }

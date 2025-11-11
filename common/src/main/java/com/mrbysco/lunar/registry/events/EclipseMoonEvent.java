@@ -49,4 +49,14 @@ public class EclipseMoonEvent extends LunarEvent {
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
+
+	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getEclipseMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getEclipseMoonDay();
+	}
 }

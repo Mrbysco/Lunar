@@ -180,4 +180,18 @@ public interface ILunarEvent {
 	default EventResult canSleep(Player player, BlockPos sleepingLocation) {
 		return EventResult.DEFAULT;
 	}
+
+	/**
+	 * The phase of the moon in which the lunar event will always be picked.
+	 *
+	 * @return The moon phase, -1 being disabled and 0-7 being corresponding phases (min -1, max 7)
+	 */
+	int getPhase();
+
+	/**
+	 * The nth day in which the lunar event will always be picked.
+	 *
+	 * @return The nth day, 0 being disabled and 255 the maximum (min 0, max 255)
+	 */
+	int getDay();
 }

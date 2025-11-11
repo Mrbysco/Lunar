@@ -85,4 +85,14 @@ public class BigMoonEvent extends LunarEvent {
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
+
+	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getBigMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getBigMoonDay();
+	}
 }

@@ -28,6 +28,8 @@ public class LunarRegistry {
 	private static LunarRegistry INSTANCE;
 	private final Map<ResourceLocation, ILunarEvent> eventMap = Maps.newHashMap();
 	private final List<ILunarEvent> eventList = new ArrayList<>();
+	private final List<ILunarEvent> dayEventList = new ArrayList<>();
+	private final List<ILunarEvent> phaseEventList = new ArrayList<>();
 
 	public static LunarRegistry instance() {
 		if (INSTANCE == null)
@@ -38,6 +40,8 @@ public class LunarRegistry {
 	public void initializeLunarEvents() {
 		eventMap.clear();
 		eventList.clear();
+		dayEventList.clear();
+		phaseEventList.clear();
 
 		registerEvent(new BloodMoonEvent());
 		registerEvent(new CrimsonMoonEvent());
@@ -64,6 +68,14 @@ public class LunarRegistry {
 			Constants.LOGGER.debug("Adding Lunar Event: {}", id.toString());
 			eventMap.put(id, event);
 			eventList.add(event);
+
+			if(event.getPhase() != -1){
+				phaseEventList.add(event);
+			}
+
+			if(event.getDay() != 0) {
+				dayEventList.add(event);
+			}
 		} else {
 			Constants.LOGGER.error("Failed to add lunar event. There was an attempt to add duplicate lunar event {} of class {}", id, event.getClass().getName());
 		}
@@ -101,6 +113,39 @@ public class LunarRegistry {
 			}
 		}
 		return eventCopy.get(randomIndex);
+	}
+
+	public ILunarEvent getPhaseEvent(Level level) {
+		List<ILunarEvent> phaseEventListCopy = new ArrayList<>(phaseEventList);
+		if (!phaseConfigured())
+			return null;
+
+		for(ILunarEvent i : phaseEventListCopy) {
+			if(level.getMoonPhase() == i.getPhase())
+				return i;
+		}
+
+		return null;
+	}
+
+	public ILunarEvent getDayEvent(Level level){
+		List<ILunarEvent> dayEventListCopy = new ArrayList<>(dayEventList);
+		if (!dayConfigured())
+			return null;
+
+		for(ILunarEvent i : dayEventListCopy) {
+			if((level.getDayTime() / 24000) % i.getDay() == 0)
+				return i;
+		}
+		return null;
+	}
+
+	public boolean phaseConfigured() {
+		return !phaseEventList.isEmpty();
+	}
+
+	public boolean dayConfigured() {
+		return !dayEventList.isEmpty();
 	}
 
 	public List<Pair<Holder<Attribute>, ResourceLocation>> getEventModifiers() {

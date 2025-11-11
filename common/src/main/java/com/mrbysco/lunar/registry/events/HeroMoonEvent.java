@@ -48,4 +48,14 @@ public class HeroMoonEvent extends LunarEvent {
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
+
+	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getHeroMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getHeroMoonDay();
+	}
 }

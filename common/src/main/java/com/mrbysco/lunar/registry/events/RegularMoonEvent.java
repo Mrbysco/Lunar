@@ -29,4 +29,10 @@ public class RegularMoonEvent extends LunarEvent {
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
+
+	@Override
+	public int getPhase() { return 0; }
+
+	@Override
+	public int getDay() { return 0; }
 }
