@@ -63,24 +63,67 @@ public class LunarPhaseData extends SavedData {
 	}
 
 	public void setRandomLunarEvent(Level level) {
-		if (forcedEvent != null) {
-			Component startComponent = Component.translatable("lunar.event.start", Component.translatable(forcedEvent.getTranslationKey()));
-			level.players().forEach(player -> player.sendSystemMessage(startComponent));
-			setActiveEvent(forcedEvent);
-			setForcedEvent(null);
-		} else {
 			float rng = random.nextFloat();
 			if (rng <= Services.PLATFORM.getLunarChance()) {
 				ILunarEvent event = LunarRegistry.instance().getRandomLunarEvent(level);
-				if (event != null) {
-					Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
-					level.players().forEach(player -> player.sendSystemMessage(startComponent));
-					setActiveEvent(event);
-					return;
-				}
+				attemptStartEvent(event, level);
+				return;
 			}
 			setDefaultMoon();
+	}
+
+	/**
+	 * Check if there is a forced event queued, and if so, set the current event to it
+	 *
+	 * @param level The server level being ticked
+	 * @return True if there was a forced event and it was set, false otherwise
+	 */
+	public boolean executeForcedEvent(Level level) {
+		if(forcedEvent != null) {
+			attemptStartEvent(forcedEvent, level);
+			setForcedEvent(null);
+			return true;
 		}
+		return false;
+	}
+
+	/**
+	 * Check if there is a lunar event configured for the current phase, and set it if so
+	 *
+	 * @param level The server level being ticked
+	 * @return True if a phase event was set, false if there was no configured event for this phase
+	 */
+	public boolean setPhaseEvent(Level level) {
+		ILunarEvent event = LunarRegistry.instance().getPhaseEvent(level);
+		return attemptStartEvent(event, level);
+	}
+
+	/**
+	 * Check if there is a lunar event configured for this day, and set it if so
+	 *
+	 * @param level The server level being ticked
+	 * @return True if a day event was set, false if there was no configured event for this day
+	 */
+	public boolean setDayEvent(Level level) {
+		ILunarEvent event = LunarRegistry.instance().getDayEvent(level);
+		return attemptStartEvent(event, level);
+	}
+
+	/**
+	 * Attempt to set a lunar event
+	 *
+	 * @param event The event to try setting
+	 * @param level The server level being ticked
+	 * @return True if the event was set, otherwise false
+	 */
+	public boolean attemptStartEvent(ILunarEvent event, Level level) {
+		if (event == null)
+			return false;
+
+		Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));
+		level.players().forEach(player -> player.sendSystemMessage(startComponent));
+		setActiveEvent(event);
+		return true;
 	}
 
 	public void setForcedEvent(ILunarEvent event) {
