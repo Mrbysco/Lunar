@@ -4,6 +4,7 @@ import com.mrbysco.lunar.CommonClass;
 import com.mrbysco.lunar.Constants;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.BoundedDiscrete;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
@@ -165,38 +166,47 @@ public class LunarConfig implements ConfigData {
 	public static class Days {
 		@Comment("Triggers the Blood Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int bloodMoonDay = 0;
 
 		@Comment("Triggers the Crimson Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int crimsonMoonDay = 0;
 
 		@Comment("Triggers the Miner Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int minerMoonDay = 0;
 
 		@Comment("Triggers the White Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int whiteMoonDay = 0;
 
 		@Comment("Triggers the Big Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int bigMoonDay = 0;
 
 		@Comment("Triggers the Tiny Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int tinyMoonDay = 0;
 
 		@Comment("Triggers the Bad Omen Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int badOmenMoonDay = 0;
 
 		@Comment("Triggers the Hero Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int heroMoonDay = 0;
 
 		@Comment("Triggers the Eclipse Moon every number of days, as defined. [Default: 0]")
 		@BoundedDiscrete(min = 0, max = 255)
+		@ConfigEntry.Gui.RequiresRestart
 		public int eclipseMoonDay = 0;
 	}
 }
