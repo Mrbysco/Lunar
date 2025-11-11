@@ -43,6 +43,16 @@ public class CrimsonMoonEvent extends LunarEvent {
 	}
 
 	@Override
+	public int getPhase() {
+		return Services.PLATFORM.getCrimsonMoonPhase();
+	}
+
+	@Override
+	public int getDay() {
+		return Services.PLATFORM.getCrimsonMoonDay();
+	}
+
+	@Override
 	public boolean dictatesMobSpawn() {
 		return true;
 	}
