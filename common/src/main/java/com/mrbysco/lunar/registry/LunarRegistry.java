@@ -14,7 +14,7 @@ import com.mrbysco.lunar.registry.events.RegularMoonEvent;
 import com.mrbysco.lunar.registry.events.TinyMoonEvent;
 import com.mrbysco.lunar.registry.events.WhiteMoonEvent;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.tuple.Pair;
@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class LunarRegistry {
 	private static LunarRegistry INSTANCE;
-	private final Map<ResourceLocation, ILunarEvent> eventMap = Maps.newHashMap();
+	private final Map<Identifier, ILunarEvent> eventMap = Maps.newHashMap();
 	private final List<ILunarEvent> eventList = new ArrayList<>();
 
 	public static LunarRegistry instance() {
@@ -59,7 +59,7 @@ public class LunarRegistry {
 	}
 
 	public void registerEvent(ILunarEvent event) {
-		ResourceLocation id = event.getID();
+		Identifier id = event.getID();
 		if (!eventMap.containsKey(id)) {
 			Constants.LOGGER.debug("Adding Lunar Event: {}", id.toString());
 			eventMap.put(id, event);
@@ -70,7 +70,7 @@ public class LunarRegistry {
 		sortByWeight();
 	}
 
-	public ILunarEvent getEventByID(ResourceLocation ID) {
+	public ILunarEvent getEventByID(Identifier ID) {
 		if (eventMap.containsKey(ID)) {
 			return eventMap.get(ID);
 		}
@@ -103,8 +103,8 @@ public class LunarRegistry {
 		return eventCopy.get(randomIndex);
 	}
 
-	public List<Pair<Holder<Attribute>, ResourceLocation>> getEventModifiers() {
-		List<Pair<Holder<Attribute>, ResourceLocation>> list = new ArrayList<>();
+	public List<Pair<Holder<Attribute>, Identifier>> getEventModifiers() {
+		List<Pair<Holder<Attribute>, Identifier>> list = new ArrayList<>();
 		for (ILunarEvent i : eventList) {
 			list.addAll(i.getAttributePairs());
 		}

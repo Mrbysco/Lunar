@@ -4,7 +4,7 @@ import com.mrbysco.lunar.client.MoonHandler;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class LunarClient implements ClientModInitializer {
 
@@ -14,14 +14,14 @@ public class LunarClient implements ClientModInitializer {
 			int moonColor = payload.color();
 			String eventID = payload.eventID();
 			float moonScale = payload.moonScale();
-			ResourceLocation customTexture = payload.customTexture();
+			Identifier customTexture = payload.customTexture();
 			context.client().execute(() -> {
 				MoonHandler.disableMoon();
 				if (moonColor == -1 || eventID.isBlank()) {
 				} else {
 					MoonHandler.setMoon(eventID, moonColor, moonScale);
 					if (customTexture != null) {
-						MoonHandler.setMoonTexture(customTexture);
+						MoonHandler.setMoonBuffer(customTexture);
 					}
 				}
 			});

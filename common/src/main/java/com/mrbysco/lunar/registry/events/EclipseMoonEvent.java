@@ -5,13 +5,13 @@ import com.mrbysco.lunar.api.LunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
 public class EclipseMoonEvent extends LunarEvent {
-	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/eclipse.png");
+	private static final Identifier MOON_LOCATION = Constants.modLoc("eclipse");
 
 	public EclipseMoonEvent() {
 		super(Constants.modLoc("eclipse_moon"), 0x000008);
@@ -39,8 +39,8 @@ public class EclipseMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public ResourceLocation moonTexture() {
-		return MOON_TEXTURE;
+	public Identifier moonTexture() {
+		return MOON_LOCATION;
 	}
 
 	@Override

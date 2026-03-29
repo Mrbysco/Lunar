@@ -10,7 +10,6 @@ import com.mrbysco.lunar.network.message.SyncEventMessage;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -29,6 +28,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+
+import org.jspecify.annotations.Nullable;
 
 
 public class Lunar implements ModInitializer {
@@ -49,7 +50,7 @@ public class Lunar implements ModInitializer {
 			LunarCommands.initializeCommands(dispatcher);
 		});
 
-		EntitySleepEvents.ALLOW_SLEEP_TIME.register(this::onSleepCheck);
+		EntitySleepEvents.ALLOW_SLEEPING.register(this::onSleepCheck);
 		EntityEvents.LIVING_SPECIAL_SPAWN.register(this::onLivingSpawn);
 		if (FabricLoader.getInstance().isModLoaded("architectury")) {
 			dev.architectury.event.events.common.EntityEvent.LIVING_CHECK_SPAWN.register((entity, level, x, y, z, type, spawner) -> {
@@ -67,17 +68,17 @@ public class Lunar implements ModInitializer {
 		PlayerEvents.PLAYER_LOGIN.register(this::onLogin);
 	}
 
-	private InteractionResult onSleepCheck(Player player, BlockPos sleepingPos, boolean vanillaResult) {
+	private Player.@Nullable BedSleepingProblem onSleepCheck(Player player, BlockPos sleepingPos) {
 		if (player.level().dimension().equals(Level.OVERWORLD)) {
 			EventResult result = LunarHandler.canSleep(player, sleepingPos);
 			if (result != EventResult.DEFAULT) {
-				return result == EventResult.DENY ? InteractionResult.FAIL : InteractionResult.SUCCESS;
+				return result == EventResult.DENY ? Player.BedSleepingProblem.NOT_SAFE : null;
 			}
 		}
 
-		return InteractionResult.PASS;
+		return null;
 	}
-
+	
 	private void onLivingSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, EntitySpawnReason spawnReason) {
 		if (entity.level().dimension().equals(Level.OVERWORLD)) {
 			LunarHandler.uponLivingSpawn(spawnReason, entity);

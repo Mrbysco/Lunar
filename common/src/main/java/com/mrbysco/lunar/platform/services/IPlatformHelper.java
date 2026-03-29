@@ -1,7 +1,7 @@
 package com.mrbysco.lunar.platform.services;
 
 import com.mrbysco.lunar.api.ILunarEvent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 
@@ -100,14 +100,14 @@ public interface IPlatformHelper {
 	 *
 	 * @return the configured Crimson Replacement Map.
 	 */
-	Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap();
+	Map<Identifier, Identifier> getCrimsonReplacementMap();
 
 	/**
 	 * Checks if sleeping is allowed during the given moon event.
 	 * @param moonID the moon event to check
 	 * @return true if sleeping is allowed, false otherwise
 	 */
-	boolean canSleepIn(ResourceLocation moonID);
+	boolean canSleepIn(Identifier moonID);
 
 	/**
 	 * Returns the max level of Bad Omen applied during the Bad Omen Moon Event.

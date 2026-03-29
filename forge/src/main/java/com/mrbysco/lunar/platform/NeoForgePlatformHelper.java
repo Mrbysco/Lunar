@@ -5,7 +5,7 @@ import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.config.LunarConfig;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -75,19 +75,19 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	}
 
 	@Override
-	public Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap() {
-		Map<ResourceLocation, ResourceLocation> map = Maps.newHashMap();
+	public Map<Identifier, Identifier> getCrimsonReplacementMap() {
+		Map<Identifier, Identifier> map = Maps.newHashMap();
 		LunarConfig.COMMON.crimsonReplacements.get().forEach(entry -> {
 			if (entry.contains(",")) {
 				String[] split = entry.split(",");
-				map.put(ResourceLocation.tryParse(split[0]), ResourceLocation.tryParse(split[1]));
+				map.put(Identifier.tryParse(split[0]), Identifier.tryParse(split[1]));
 			}
 		});
 		return map;
 	}
 
 	@Override
-	public boolean canSleepIn(ResourceLocation moonID) {
+	public boolean canSleepIn(Identifier moonID) {
 		boolean result = true;
 		switch(moonID.toString()) {
 			case "lunar:blood_moon" -> result = LunarConfig.COMMON.bloodMoonSleeping.get();

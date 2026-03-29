@@ -20,7 +20,7 @@ public class ClientPayloadHandler {
 					} else {
 						MoonHandler.setMoon(payload.eventID(), payload.color(), payload.moonScale());
 						if (payload.customTexture() != null) {
-							MoonHandler.setMoonTexture(payload.customTexture());
+							MoonHandler.setMoonBuffer(payload.customTexture());
 						}
 					}
 				})

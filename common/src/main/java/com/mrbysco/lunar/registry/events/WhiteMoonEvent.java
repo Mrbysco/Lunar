@@ -5,14 +5,14 @@ import com.mrbysco.lunar.api.LunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
 
 public class WhiteMoonEvent extends LunarEvent {
-	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/white.png");
+	private static final Identifier MOON_LOCATION = Constants.modLoc("white.png");
 
 	public WhiteMoonEvent() {
 		super(Constants.modLoc("white_moon"), 0x1f1f1f);
@@ -47,8 +47,8 @@ public class WhiteMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public ResourceLocation moonTexture() {
-		return MOON_TEXTURE;
+	public Identifier moonTexture() {
+		return MOON_LOCATION;
 	}
 
 	@Override

@@ -1,10 +1,21 @@
 package com.mrbysco.lunar.client;
 
+import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.data.AtlasIds;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
+import net.minecraft.world.level.MoonPhase;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
@@ -19,7 +30,7 @@ public class MoonHandler {
 	private static float[] moonColor = null;
 	private static float rawMoonScale = 1.0F;
 	private static Matrix4f moonScale;
-	private static AbstractTexture moonTexture;
+	private static GpuBuffer moonBuffer;
 
 	/**
 	 * Called to set the color of the moon.
@@ -34,9 +45,10 @@ public class MoonHandler {
 
 	/**
 	 * Called to set the local values of the moon.
+	 *
 	 * @param eventID The event ID
-	 * @param color The color of the moon
-	 * @param scale The scale of the moon
+	 * @param color   The color of the moon
+	 * @param scale   The scale of the moon
 	 */
 	public static void setMoon(String eventID, int color, float scale) {
 		rawMoonColor = color;
@@ -53,10 +65,11 @@ public class MoonHandler {
 
 	/**
 	 * Called to set the texture used for the moon.
+	 *
 	 * @param textureLocation The AbstractTexture of the texture
 	 */
-	public static void setMoonTexture(@Nullable ResourceLocation textureLocation) {
-		moonTexture = getTexture(textureLocation);
+	public static void setMoonBuffer(@Nullable Identifier textureLocation) {
+		moonBuffer = buildMoonPhases(textureLocation);
 	}
 
 	/**
@@ -66,11 +79,12 @@ public class MoonHandler {
 		moonColor = null;
 		moonID = null;
 		moonScale = null;
-		moonTexture = null;
+		moonBuffer = null;
 	}
 
 	/**
 	 * Check if the event is active.
+	 *
 	 * @return true if the event is active, false otherwise
 	 */
 	public static boolean isEventActive() {
@@ -79,6 +93,7 @@ public class MoonHandler {
 
 	/**
 	 * Check if the moon is scaled.
+	 *
 	 * @return true if the moon is scaled, false otherwise
 	 */
 	public static boolean isMoonScaled() {
@@ -87,18 +102,20 @@ public class MoonHandler {
 
 	/**
 	 * Get the ID of the moon.
-	 * @param defaultTexture The default texture
+	 *
+	 * @param defaultBuffer The default gpu buffer
 	 * @return the resource location of the moon texture
 	 */
-	public static AbstractTexture getMoonTexture(AbstractTexture defaultTexture) {
-		if (moonTexture != null) {
-			return moonTexture;
+	public static GpuBuffer getMoonBuffer(GpuBuffer defaultBuffer) {
+		if (moonBuffer != null) {
+			return moonBuffer;
 		}
-		return defaultTexture;
+		return defaultBuffer;
 	}
 
 	/**
 	 * Get the scale of the moon.
+	 *
 	 * @return the scale of the moon
 	 */
 	public static Matrix4f getMoonScale() {
@@ -107,6 +124,7 @@ public class MoonHandler {
 
 	/**
 	 * Scale the moon.
+	 *
 	 * @param matrix the matrix to scale
 	 * @return the scaled matrix
 	 */
@@ -119,6 +137,7 @@ public class MoonHandler {
 
 	/**
 	 * Get the color of the moon.
+	 *
 	 * @return the color int of the moon
 	 */
 	public static int getMoonColor() {
@@ -127,6 +146,7 @@ public class MoonHandler {
 
 	/**
 	 * Get the color of the moon as a float array.
+	 *
 	 * @return the color of the moon as a float array
 	 */
 	public static float getRawMoonScale() {
@@ -135,13 +155,43 @@ public class MoonHandler {
 
 	/**
 	 * Method copied from SkyRenderer to get an abstract texture from a resource location.
+	 *
 	 * @param location The resource location of the texture
 	 * @return the abstract texture of the texture
 	 */
-	private static AbstractTexture getTexture(ResourceLocation location) {
+	private static AbstractTexture getTexture(Identifier location) {
 		TextureManager texturemanager = Minecraft.getInstance().getTextureManager();
 		AbstractTexture abstracttexture = texturemanager.getTexture(location);
-		abstracttexture.setUseMipmaps(false);
+//		abstracttexture.setUseMipmaps(false);
 		return abstracttexture;
+	}
+
+	private static GpuBuffer buildMoonPhases(@Nullable Identifier location) {
+		if (location == null) {
+			return null;
+		}
+		TextureAtlas atlas = Minecraft.getInstance().getAtlasManager().getAtlasOrThrow(AtlasIds.CELESTIALS);
+		MoonPhase[] amoonphase = MoonPhase.values();
+		VertexFormat vertexformat = DefaultVertexFormat.POSITION_TEX;
+
+		GpuBuffer gpubuffer;
+		try (ByteBufferBuilder bytebufferbuilder = ByteBufferBuilder.exactlySized(amoonphase.length * 4 * vertexformat.getVertexSize())) {
+			BufferBuilder bufferbuilder = new BufferBuilder(bytebufferbuilder, VertexFormat.Mode.QUADS, vertexformat);
+
+			for (MoonPhase moonphase : amoonphase) {
+				Identifier moonLocation = location.withSuffix("/" + moonphase.getSerializedName());
+				TextureAtlasSprite textureatlassprite = atlas.getSprite(moonLocation);
+				bufferbuilder.addVertex(-1.0F, 0.0F, -1.0F).setUv(textureatlassprite.getU1(), textureatlassprite.getV1());
+				bufferbuilder.addVertex(1.0F, 0.0F, -1.0F).setUv(textureatlassprite.getU0(), textureatlassprite.getV1());
+				bufferbuilder.addVertex(1.0F, 0.0F, 1.0F).setUv(textureatlassprite.getU0(), textureatlassprite.getV0());
+				bufferbuilder.addVertex(-1.0F, 0.0F, 1.0F).setUv(textureatlassprite.getU1(), textureatlassprite.getV0());
+			}
+
+			try (MeshData meshdata = bufferbuilder.buildOrThrow()) {
+				gpubuffer = RenderSystem.getDevice().createBuffer(() -> "Moon phases", 32, meshdata.vertexBuffer());
+			}
+		}
+
+		return gpubuffer;
 	}
 }

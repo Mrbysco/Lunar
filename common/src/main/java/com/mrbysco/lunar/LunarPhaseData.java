@@ -6,7 +6,7 @@ import com.mrbysco.lunar.api.ILunarEvent;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.LunarRegistry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -25,14 +25,14 @@ public class LunarPhaseData extends SavedData {
 	private static final String DATA_NAME = Constants.MOD_ID + "_world_data";
 	public static final Codec<LunarPhaseData> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
-							ResourceLocation.CODEC.optionalFieldOf("forcedEvent").forGetter(data -> data.forcedEventID),
-							ResourceLocation.CODEC.optionalFieldOf("activeEvent").forGetter(data -> data.activeEventID)
+							Identifier.CODEC.optionalFieldOf("forcedEvent").forGetter(data -> data.forcedEventID),
+							Identifier.CODEC.optionalFieldOf("activeEvent").forGetter(data -> data.activeEventID)
 					)
 					.apply(instance, LunarPhaseData::new)
 	);
 
-	public Optional<ResourceLocation> forcedEventID;
-	public Optional<ResourceLocation> activeEventID;
+	public Optional<Identifier> forcedEventID;
+	public Optional<Identifier> activeEventID;
 
 	public ILunarEvent forcedEvent;
 	public ILunarEvent activeEvent;
@@ -41,7 +41,7 @@ public class LunarPhaseData extends SavedData {
 		this(Optional.empty(), Optional.empty());
 	}
 
-	public LunarPhaseData(Optional<ResourceLocation> forcedEventID, Optional<ResourceLocation> activeEventID) {
+	public LunarPhaseData(Optional<Identifier> forcedEventID, Optional<Identifier> activeEventID) {
 		this.forcedEventID = activeEventID;
 		ILunarEvent event = activeEventID.map(location -> LunarRegistry.instance().getEventByID(location)).orElse(null);
 		setActiveEvent(event);

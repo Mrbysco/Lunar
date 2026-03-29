@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
@@ -66,7 +66,7 @@ public class LunarHandler {
 					phaseData.syncEvent(serverLevel);
 				} else {
 					// Remove any accidental modifiers that might have been left behind
-					for (Pair<Holder<Attribute>, ResourceLocation> modifierPair : LunarRegistry.instance().getEventModifiers()) {
+					for (Pair<Holder<Attribute>, Identifier> modifierPair : LunarRegistry.instance().getEventModifiers()) {
 						serverLevel.getAllEntities().forEach(entity -> {
 							if (entity instanceof LivingEntity livingEntity && !entity.isSpectator()) {
 								AttributeInstance modifier = livingEntity.getAttribute(modifierPair.getLeft());

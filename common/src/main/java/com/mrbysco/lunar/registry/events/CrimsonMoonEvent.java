@@ -6,7 +6,7 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import java.util.Map;
 
 public class CrimsonMoonEvent extends LunarEvent {
-	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/crimson.png");
+	private static final Identifier MOON_LOCATION = Constants.modLoc("crimson");
 
 	public CrimsonMoonEvent() {
 		super(Constants.modLoc("crimson_moon"), 0xDC143C);
@@ -48,8 +48,8 @@ public class CrimsonMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public ResourceLocation moonTexture() {
-		return MOON_TEXTURE;
+	public Identifier moonTexture() {
+		return MOON_LOCATION;
 	}
 
 	@SuppressWarnings("ConstantValue")
@@ -57,10 +57,10 @@ public class CrimsonMoonEvent extends LunarEvent {
 	public EventResult getSpawnResult(LivingEntity livingEntity, EntitySpawnReason spawnType) {
 		ServerLevel level = (ServerLevel) livingEntity.level();
 		if (spawnType == EntitySpawnReason.NATURAL) {
-			Map<ResourceLocation, ResourceLocation> replacementMap = Services.PLATFORM.getCrimsonReplacementMap();
-			ResourceLocation entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
+			Map<Identifier, Identifier> replacementMap = Services.PLATFORM.getCrimsonReplacementMap();
+			Identifier entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
 			if (replacementMap.containsKey(entityLocation)) {
-				ResourceLocation replacementLocation = replacementMap.get(entityLocation);
+				Identifier replacementLocation = replacementMap.get(entityLocation);
 				if (replacementLocation != null) {
 					EntityType<?> replacementType = BuiltInRegistries.ENTITY_TYPE.getValue(replacementLocation);
 					if (replacementType != null) {

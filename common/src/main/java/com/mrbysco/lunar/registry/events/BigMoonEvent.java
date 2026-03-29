@@ -6,7 +6,7 @@ import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -20,8 +20,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 
 public class BigMoonEvent extends LunarEvent {
-	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/big.png");
-	private static final Pair<Holder<Attribute>, ResourceLocation> BIG_MOON_MODIFIER_PAIR = Pair.of(Attributes.GRAVITY, Constants.modLoc("big_moon_modifier"));
+	private static final Identifier MOON_LOCATION = Constants.modLoc("big");
+	private static final Pair<Holder<Attribute>, Identifier> BIG_MOON_MODIFIER_PAIR = Pair.of(Attributes.GRAVITY, Constants.modLoc("big_moon_modifier"));
 
 	public BigMoonEvent() {
 		super(Constants.modLoc("big_moon"), 0xFFFFF1);
@@ -65,13 +65,13 @@ public class BigMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public List<Pair<Holder<Attribute>, ResourceLocation>> getAttributePairs() {
+	public List<Pair<Holder<Attribute>, Identifier>> getAttributePairs() {
 		return List.of(BIG_MOON_MODIFIER_PAIR);
 	}
 
 	@Override
-	public ResourceLocation moonTexture() {
-		return MOON_TEXTURE;
+	public Identifier moonTexture() {
+		return MOON_LOCATION;
 	}
 
 	@Override

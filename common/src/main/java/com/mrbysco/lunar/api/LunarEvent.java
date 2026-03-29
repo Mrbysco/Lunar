@@ -1,18 +1,18 @@
 package com.mrbysco.lunar.api;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public abstract class LunarEvent implements ILunarEvent {
-	private final ResourceLocation resourceLocation;
+	private final Identifier resourceLocation;
 	private final int moonColor;
 
-	public LunarEvent(ResourceLocation resourceLocation, int moonColor) {
+	public LunarEvent(Identifier resourceLocation, int moonColor) {
 		this.resourceLocation = resourceLocation;
 		this.moonColor = moonColor;
 	}
 
 	@Override
-	public ResourceLocation getID() {
+	public Identifier getID() {
 		return resourceLocation;
 	}
 

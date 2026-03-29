@@ -12,10 +12,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -27,9 +27,9 @@ import org.jetbrains.annotations.NotNull;
 public class LunarCommands {
 	public static void initializeCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
 		final LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal(Constants.MOD_ID);
-		root.requires((sourceStack) -> sourceStack.hasPermission(2))
+		root.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("forceEvent")
-						.then(Commands.argument("eventID", ResourceLocationArgument.id())
+						.then(Commands.argument("eventID", IdentifierArgument.id())
 								.suggests((cs, builder) ->
 										SharedSuggestionProvider.suggest(LunarRegistry.instance().getIDList(), builder))
 								.executes((ctx) ->
@@ -42,11 +42,11 @@ public class LunarCommands {
 								)
 						)
 				);
-		root.requires((sourceStack) -> sourceStack.hasPermission(2))
+		root.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("skip")
 						.executes(LunarCommands::skipEvent)
 				);
-		root.requires((sourceStack) -> sourceStack.hasPermission(2))
+		root.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("randomize")
 						.executes(LunarCommands::randomizeEvent)
 				);
@@ -61,7 +61,7 @@ public class LunarCommands {
 	 * @return 0 if successful, or an error message if the event ID is invalid
 	 */
 	private static int forceEvent(CommandContext<CommandSourceStack> ctx, boolean forceCurrent) {
-		final ResourceLocation eventID = ResourceLocationArgument.getId(ctx, "eventID");
+		final Identifier eventID = IdentifierArgument.getId(ctx, "eventID");
 		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
 		LunarPhaseData phaseData = LunarPhaseData.get(level);
 		ILunarEvent event = LunarRegistry.instance().getEventByID(eventID);
@@ -177,7 +177,7 @@ public class LunarCommands {
 			level.players().forEach(event::removePlayerEffect);
 		}
 
-		for (Pair<Holder<Attribute>, ResourceLocation> modifierPair : LunarRegistry.instance().getEventModifiers()) {
+		for (Pair<Holder<Attribute>, Identifier> modifierPair : LunarRegistry.instance().getEventModifiers()) {
 			level.getAllEntities().forEach(entity -> {
 				if (entity instanceof LivingEntity livingEntity && !entity.isSpectator()) {
 					AttributeInstance modifier = livingEntity.getAttribute(modifierPair.getLeft());

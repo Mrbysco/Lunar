@@ -5,10 +5,10 @@ import com.mrbysco.lunar.api.ILunarEvent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public record SyncEventMessage(int color, String eventID, float moonScale,
-                               ResourceLocation customTexture) implements CustomPacketPayload {
+                               Identifier customTexture) implements CustomPacketPayload {
 	public static final StreamCodec<FriendlyByteBuf, SyncEventMessage> CODEC = CustomPacketPayload.codec(
 			SyncEventMessage::write,
 			SyncEventMessage::new);
@@ -28,7 +28,7 @@ public record SyncEventMessage(int color, String eventID, float moonScale,
 				color,
 				eventName,
 				scale,
-				(moonTexture == null || moonTexture.isEmpty()) ? null : ResourceLocation.tryParse(moonTexture)
+				(moonTexture == null || moonTexture.isEmpty()) ? null : Identifier.tryParse(moonTexture)
 		);
 	}
 

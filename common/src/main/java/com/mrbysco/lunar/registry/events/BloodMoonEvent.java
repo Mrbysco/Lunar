@@ -5,7 +5,8 @@ import com.mrbysco.lunar.api.LunarEvent;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -16,9 +17,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
 public class BloodMoonEvent extends LunarEvent {
-	private static final ResourceLocation MOON_TEXTURE = Constants.modLoc("textures/environment/blood.png");
-	private static final ResourceLocation DAMAGE_MODIFIER_UUID = Constants.modLoc("blood_moon_damage_modifier");
-	private static final ResourceLocation HEALTH_MODIFIER_UUID = Constants.modLoc("blood_moon_health_modifier");
+	private static final Identifier MOON_LOCATION = Constants.modLoc("blood");
+	private static final Identifier DAMAGE_MODIFIER_UUID = Constants.modLoc("blood_moon_damage_modifier");
+	private static final Identifier HEALTH_MODIFIER_UUID = Constants.modLoc("blood_moon_health_modifier");
 
 	public BloodMoonEvent() {
 		super(Constants.modLoc("blood_moon"), 0x882e2e);
@@ -41,8 +42,8 @@ public class BloodMoonEvent extends LunarEvent {
 
 	@Override
 	public void applySpawnEffect(LivingEntity livingEntity, EntitySpawnReason spawnType) {
-		if (spawnType == EntitySpawnReason.NATURAL) {
-			final float difficultyMultiplier = livingEntity.level().getCurrentDifficultyAt(livingEntity.blockPosition()).getSpecialMultiplier();
+		if (spawnType == EntitySpawnReason.NATURAL && livingEntity.level() instanceof ServerLevel serverLevel) {
+			final float difficultyMultiplier = serverLevel.getCurrentDifficultyAt(livingEntity.blockPosition()).getSpecialMultiplier();
 			final RandomSource random = livingEntity.getRandom();
 
 			AttributeInstance attackAttribute = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
@@ -91,8 +92,8 @@ public class BloodMoonEvent extends LunarEvent {
 	}
 
 	@Override
-	public ResourceLocation moonTexture() {
-		return MOON_TEXTURE;
+	public Identifier moonTexture() {
+		return MOON_LOCATION;
 	}
 
 	@Override

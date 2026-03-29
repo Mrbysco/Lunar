@@ -8,7 +8,7 @@ import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -92,20 +92,20 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	}
 
 	@Override
-	public Map<ResourceLocation, ResourceLocation> getCrimsonReplacementMap() {
+	public Map<Identifier, Identifier> getCrimsonReplacementMap() {
 		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		Map<ResourceLocation, ResourceLocation> map = Maps.newHashMap();
+		Map<Identifier, Identifier> map = Maps.newHashMap();
 		Lunar.config.crimson.crimsonReplacements.forEach(entry -> {
 			if (entry.contains(",")) {
 				String[] split = entry.split(",");
-				map.put(ResourceLocation.tryParse(split[0]), ResourceLocation.tryParse(split[1]));
+				map.put(Identifier.tryParse(split[0]), Identifier.tryParse(split[1]));
 			}
 		});
 		return map;
 	}
 
 	@Override
-	public boolean canSleepIn(ResourceLocation moonID) {
+	public boolean canSleepIn(Identifier moonID) {
 		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
 		boolean result = true;
 		switch(moonID.toString()) {

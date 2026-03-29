@@ -3,7 +3,7 @@ package com.mrbysco.lunar.api;
 import com.mrbysco.lunar.handler.result.EventResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,7 @@ public interface ILunarEvent {
 	 *
 	 * @return the resource location of the lunar event
 	 */
-	ResourceLocation getID();
+	Identifier getID();
 
 	/**
 	 * Get the translation key for the lunar event.
@@ -55,7 +55,7 @@ public interface ILunarEvent {
 	 *
 	 * @return the resource location of the custom moon texture
 	 */
-	default ResourceLocation moonTexture() {
+	default Identifier moonTexture() {
 		return null;
 	}
 
@@ -166,7 +166,7 @@ public interface ILunarEvent {
 	 * Returns a list of attribute pairs that are associated with the lunar event.
 	 * @return a list of pairs containing the attribute and the resource location of the modifier
 	 */
-	default List<Pair<Holder<Attribute>, ResourceLocation>> getAttributePairs() {
+	default List<Pair<Holder<Attribute>, Identifier>> getAttributePairs() {
 		return new ArrayList<>();
 	}
 
