@@ -8,10 +8,8 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
@@ -151,19 +149,6 @@ public class MoonHandler {
 	 */
 	public static float getRawMoonScale() {
 		return rawMoonScale;
-	}
-
-	/**
-	 * Method copied from SkyRenderer to get an abstract texture from a resource location.
-	 *
-	 * @param location The resource location of the texture
-	 * @return the abstract texture of the texture
-	 */
-	private static AbstractTexture getTexture(Identifier location) {
-		TextureManager texturemanager = Minecraft.getInstance().getTextureManager();
-		AbstractTexture abstracttexture = texturemanager.getTexture(location);
-//		abstracttexture.setUseMipmaps(false);
-		return abstracttexture;
 	}
 
 	private static GpuBuffer buildMoonPhases(@Nullable Identifier location) {

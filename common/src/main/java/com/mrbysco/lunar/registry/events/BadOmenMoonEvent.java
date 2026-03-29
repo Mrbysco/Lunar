@@ -2,6 +2,7 @@ package com.mrbysco.lunar.registry.events;
 
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.api.LunarEvent;
+import com.mrbysco.lunar.config.ConfigHelper;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,7 @@ public class BadOmenMoonEvent extends LunarEvent {
 
 	@Override
 	public int spawnWeight() {
-		return Services.PLATFORM.getBadOmenMoonWeight();
+		return ConfigHelper.getBadOmenMoonWeight();
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class BadOmenMoonEvent extends LunarEvent {
 		if (player instanceof ServerPlayer serverPlayer) {
 			ServerLevel serverLevel = serverPlayer.level();
 			if (!serverLevel.isRaided(player.blockPosition())) {
-				final int maxLevel = Services.PLATFORM.maxBadOmen();
+				final int maxLevel = ConfigHelper.maxBadOmen();
 				int randomLevel = serverPlayer.getRandom().nextInt(maxLevel);
 				player.addEffect(new MobEffectInstance(MobEffects.BAD_OMEN, 40, randomLevel, false, true));
 			}
@@ -53,7 +54,7 @@ public class BadOmenMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult canSleep(Player player, BlockPos sleepingLocation) {
-		if (!Services.PLATFORM.canSleepIn(getID()))
+		if (!ConfigHelper.canSleepIn(getID()))
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}

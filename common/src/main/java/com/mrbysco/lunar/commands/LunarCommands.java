@@ -70,7 +70,7 @@ public class LunarCommands {
 			return 0;
 		}
 		if (forceCurrent) {
-			int currentTime = (int) (level.getDayTime() % 24000L);
+			int currentTime = (int) (level.getOverworldClockTime() % 24000L);
 			// If it's night time, we can override the current event
 			if (currentTime > 13000 && currentTime < 23000) {
 				// Stop the current event effects
@@ -140,7 +140,7 @@ public class LunarCommands {
 	private static int randomizeEvent(CommandContext<CommandSourceStack> ctx) {
 		ServerLevel level = ctx.getSource().getServer().getLevel(Level.OVERWORLD);
 		LunarPhaseData phaseData = LunarPhaseData.get(level);
-		int currentTime = (int) (level.getDayTime() % 24000L);
+		int currentTime = (int) (level.getOverworldClockTime() % 24000L);
 		// If it's night time, we can override the current event
 		if (currentTime > 13000 && currentTime < 23000) {
 			// Stop the current event effects

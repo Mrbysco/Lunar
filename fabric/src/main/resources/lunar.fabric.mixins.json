@@ -3,8 +3,7 @@
   "minVersion": "0.8.4",
   "package": "com.mrbysco.lunar.mixin",
   "plugin": "com.mrbysco.lunar.plugin.LunarMixinPlugin",
-  "refmap": "lunar.refmap.json",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [
     "BaseSpawnerMixin",
     "BaseSpawnerSpecialMixin",

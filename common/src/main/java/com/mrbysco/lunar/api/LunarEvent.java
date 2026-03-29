@@ -3,17 +3,17 @@ package com.mrbysco.lunar.api;
 import net.minecraft.resources.Identifier;
 
 public abstract class LunarEvent implements ILunarEvent {
-	private final Identifier resourceLocation;
+	private final Identifier identifier;
 	private final int moonColor;
 
-	public LunarEvent(Identifier resourceLocation, int moonColor) {
-		this.resourceLocation = resourceLocation;
+	public LunarEvent(Identifier identifier, int moonColor) {
+		this.identifier = identifier;
 		this.moonColor = moonColor;
 	}
 
 	@Override
 	public Identifier getID() {
-		return resourceLocation;
+		return identifier;
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public abstract class LunarEvent implements ILunarEvent {
 	@Override
 	public String toString() {
 		return "LunarEvent{" +
-				"resourceLocation=" + resourceLocation +
+				"identifier=" + identifier +
 				", moonColor=" + moonColor +
 				", weight=" + spawnWeight() +
 				'}';

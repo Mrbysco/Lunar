@@ -1,16 +1,11 @@
 package com.mrbysco.lunar.platform;
 
-import com.google.common.collect.Maps;
 import com.mrbysco.lunar.api.ILunarEvent;
-import com.mrbysco.lunar.config.LunarConfig;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
-
-import java.util.Map;
 
 public class NeoForgePlatformHelper implements IPlatformHelper {
 
@@ -22,89 +17,5 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public void syncEvent(ServerPlayer player, ILunarEvent event) {
 		player.connection.send(new SyncEventMessage(event));
-	}
-
-	@Override
-	public float getLunarChance() {
-		return LunarConfig.COMMON.lunarEventChance.get().floatValue();
-	}
-
-	@Override
-	public int getBloodMoonWeight() {
-		return LunarConfig.COMMON.bloodMoonWeight.get();
-	}
-
-	@Override
-	public int getCrimsonMoonWeight() {
-		return LunarConfig.COMMON.crimsonMoonWeight.get();
-	}
-
-	@Override
-	public int getMinerMoonWeight() {
-		return LunarConfig.COMMON.minerMoonWeight.get();
-	}
-
-	@Override
-	public int getWhiteMoonWeight() {
-		return LunarConfig.COMMON.whiteMoonWeight.get();
-	}
-
-	@Override
-	public int getBigMoonWeight() {
-		return LunarConfig.COMMON.bigMoonWeight.get();
-	}
-
-	@Override
-	public int getTinyMoonWeight() {
-		return LunarConfig.COMMON.tinyMoonWeight.get();
-	}
-
-	@Override
-	public int getBadOmenMoonWeight() {
-		return LunarConfig.COMMON.badOmenMoonWeight.get();
-	}
-
-	@Override
-	public int getHeroMoonWeight() {
-		return LunarConfig.COMMON.heroMoonWeight.get();
-	}
-
-	@Override
-	public int getEclipseMoonWeight() {
-		return LunarConfig.COMMON.eclipseMoonWeight.get();
-	}
-
-	@Override
-	public Map<Identifier, Identifier> getCrimsonReplacementMap() {
-		Map<Identifier, Identifier> map = Maps.newHashMap();
-		LunarConfig.COMMON.crimsonReplacements.get().forEach(entry -> {
-			if (entry.contains(",")) {
-				String[] split = entry.split(",");
-				map.put(Identifier.tryParse(split[0]), Identifier.tryParse(split[1]));
-			}
-		});
-		return map;
-	}
-
-	@Override
-	public boolean canSleepIn(Identifier moonID) {
-		boolean result = true;
-		switch(moonID.toString()) {
-			case "lunar:blood_moon" -> result = LunarConfig.COMMON.bloodMoonSleeping.get();
-			case "lunar:crimson_moon" -> result = LunarConfig.COMMON.crimsonMoonSleeping.get();
-			case "lunar:miner_moon" -> result = LunarConfig.COMMON.minerMoonSleeping.get();
-			case "lunar:white_moon" -> result = LunarConfig.COMMON.whiteMoonSleeping.get();
-			case "lunar:big_moon" -> result = LunarConfig.COMMON.bigMoonSleeping.get();
-			case "lunar:tiny_moon" -> result = LunarConfig.COMMON.tinyMoonSleeping.get();
-			case "lunar:bad_omen_moon" -> result = LunarConfig.COMMON.badOmenMoonSleeping.get();
-			case "lunar:hero_moon" -> result = LunarConfig.COMMON.heroMoonSleeping.get();
-			case "lunar:eclipse_moon" -> result = LunarConfig.COMMON.eclipseMoonSleeping.get();
-		}
-		return result;
-	}
-
-	@Override
-	public int maxBadOmen() {
-		return LunarConfig.COMMON.maxBadOmen.get();
 	}
 }

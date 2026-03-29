@@ -2,6 +2,7 @@ package com.mrbysco.lunar.registry.events;
 
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.api.LunarEvent;
+import com.mrbysco.lunar.config.ConfigHelper;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 
 	@Override
 	public int spawnWeight() {
-		return Services.PLATFORM.getCrimsonMoonWeight();
+		return ConfigHelper.getCrimsonMoonWeight();
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult canSleep(Player player, BlockPos sleepingLocation) {
-		if (!Services.PLATFORM.canSleepIn(getID()))
+		if (!ConfigHelper.canSleepIn(getID()))
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}
@@ -57,7 +58,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 	public EventResult getSpawnResult(LivingEntity livingEntity, EntitySpawnReason spawnType) {
 		ServerLevel level = (ServerLevel) livingEntity.level();
 		if (spawnType == EntitySpawnReason.NATURAL) {
-			Map<Identifier, Identifier> replacementMap = Services.PLATFORM.getCrimsonReplacementMap();
+			Map<Identifier, Identifier> replacementMap = ConfigHelper.getCrimsonReplacementMap();
 			Identifier entityLocation = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
 			if (replacementMap.containsKey(entityLocation)) {
 				Identifier replacementLocation = replacementMap.get(entityLocation);
@@ -75,7 +76,7 @@ public class CrimsonMoonEvent extends LunarEvent {
 								mob.finalizeSpawn(level, level.getCurrentDifficultyAt(position), EntitySpawnReason.NATURAL, null);
 							}
 							if (replacementEntity instanceof Ghast) {
-								if (level.random.nextDouble() <= 0.5) {
+								if (level.getRandom().nextDouble() <= 0.5) {
 									level.addFreshEntity(replacementEntity);
 								}
 								livingEntity.discard();

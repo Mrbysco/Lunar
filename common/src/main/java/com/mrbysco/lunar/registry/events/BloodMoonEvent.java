@@ -2,6 +2,7 @@ package com.mrbysco.lunar.registry.events;
 
 import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.api.LunarEvent;
+import com.mrbysco.lunar.config.ConfigHelper;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ public class BloodMoonEvent extends LunarEvent {
 
 	@Override
 	public int spawnWeight() {
-		return Services.PLATFORM.getBloodMoonWeight();
+		return ConfigHelper.getBloodMoonWeight();
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class BloodMoonEvent extends LunarEvent {
 
 	@Override
 	public EventResult canSleep(Player player, BlockPos sleepingLocation) {
-		if (!Services.PLATFORM.canSleepIn(getID()))
+		if (!ConfigHelper.canSleepIn(getID()))
 			return EventResult.DENY;
 		return EventResult.DEFAULT;
 	}

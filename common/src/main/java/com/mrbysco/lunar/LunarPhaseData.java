@@ -3,6 +3,7 @@ package com.mrbysco.lunar;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.lunar.api.ILunarEvent;
+import com.mrbysco.lunar.config.ConfigHelper;
 import com.mrbysco.lunar.platform.Services;
 import com.mrbysco.lunar.registry.LunarRegistry;
 import net.minecraft.network.chat.Component;
@@ -12,7 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
-import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.storage.SavedDataStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +23,7 @@ import java.util.Random;
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class LunarPhaseData extends SavedData {
 	private static final Random random = new Random();
-	private static final String DATA_NAME = Constants.MOD_ID + "_world_data";
+	private static final Identifier DATA_NAME = Constants.modLoc("lunar_data");
 	public static final Codec<LunarPhaseData> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
 							Identifier.CODEC.optionalFieldOf("forcedEvent").forGetter(data -> data.forcedEventID),
@@ -63,7 +64,7 @@ public class LunarPhaseData extends SavedData {
 		ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
 
 		assert overworld != null;
-		DimensionDataStorage storage = overworld.getDataStorage();
+		SavedDataStorage storage = overworld.getDataStorage();
 		return storage.computeIfAbsent(type());
 	}
 
@@ -75,7 +76,7 @@ public class LunarPhaseData extends SavedData {
 			setForcedEvent(null);
 		} else {
 			float rng = random.nextFloat();
-			if (rng <= Services.PLATFORM.getLunarChance()) {
+			if (rng <= ConfigHelper.getLunarChance()) {
 				ILunarEvent event = LunarRegistry.instance().getRandomLunarEvent(serverLevel);
 				if (event != null) {
 					Component startComponent = Component.translatable("lunar.event.start", Component.translatable(event.getTranslationKey()));

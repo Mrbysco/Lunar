@@ -7,9 +7,7 @@ import com.mrbysco.lunar.events.PlayerEvents;
 import com.mrbysco.lunar.handler.LunarHandler;
 import com.mrbysco.lunar.handler.result.EventResult;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -28,19 +26,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-
+import net.neoforged.fml.config.ModConfig;
 import org.jspecify.annotations.Nullable;
 
 
 public class Lunar implements ModInitializer {
-	public static LunarConfig config;
 
 	@Override
 	public void onInitialize() {
-		ConfigHolder<LunarConfig> holder = AutoConfig.register(LunarConfig.class, Toml4jConfigSerializer::new);
-		config = holder.getConfig();
-
-		PayloadTypeRegistry.playS2C().register(SyncEventMessage.ID, SyncEventMessage.CODEC);
+		ConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.COMMON, LunarConfig.commonSpec);
+		PayloadTypeRegistry.clientboundPlay().register(SyncEventMessage.ID, SyncEventMessage.CODEC);
 
 		ServerLifecycleEvents.SERVER_STARTING.register((server) -> {
 			CommonClass.initRegistry();
@@ -53,18 +48,18 @@ public class Lunar implements ModInitializer {
 		EntitySleepEvents.ALLOW_SLEEPING.register(this::onSleepCheck);
 		EntityEvents.LIVING_SPECIAL_SPAWN.register(this::onLivingSpawn);
 		if (FabricLoader.getInstance().isModLoaded("architectury")) {
-			dev.architectury.event.events.common.EntityEvent.LIVING_CHECK_SPAWN.register((entity, level, x, y, z, type, spawner) -> {
-				InteractionResult result = onCheckSpawn(entity, level, x, y, z, type, spawner);
-				if (result == InteractionResult.FAIL)
-					return dev.architectury.event.EventResult.interruptDefault();
-				if (result == InteractionResult.SUCCESS)
-					return dev.architectury.event.EventResult.interruptTrue();
-				return dev.architectury.event.EventResult.pass();
-			});
+//			dev.architectury.event.events.common.EntityEvent.LIVING_CHECK_SPAWN.register((entity, level, x, y, z, type, spawner) -> {
+//				InteractionResult result = onCheckSpawn(entity, level, x, y, z, type, spawner);
+//				if (result == InteractionResult.FAIL)
+//					return dev.architectury.event.EventResult.interruptDefault();
+//				if (result == InteractionResult.SUCCESS)
+//					return dev.architectury.event.EventResult.interruptTrue();
+//				return dev.architectury.event.EventResult.pass();
+//			});
 		} else {
 			EntityEvents.LIVING_CHECK_SPAWN.register(this::onCheckSpawn);
 		}
-		ServerTickEvents.END_WORLD_TICK.register(this::onWorldTick);
+		ServerTickEvents.END_LEVEL_TICK.register(this::onWorldTick);
 		PlayerEvents.PLAYER_LOGIN.register(this::onLogin);
 	}
 
@@ -78,7 +73,7 @@ public class Lunar implements ModInitializer {
 
 		return null;
 	}
-	
+
 	private void onLivingSpawn(Mob entity, LevelAccessor level, float x, float y, float z, @Nullable BaseSpawner spawner, EntitySpawnReason spawnReason) {
 		if (entity.level().dimension().equals(Level.OVERWORLD)) {
 			LunarHandler.uponLivingSpawn(spawnReason, entity);

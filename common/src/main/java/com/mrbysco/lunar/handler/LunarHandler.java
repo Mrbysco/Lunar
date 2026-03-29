@@ -29,7 +29,7 @@ public class LunarHandler {
 		if (level.getGameTime() % 20 == 0 && level instanceof ServerLevel serverLevel) {
 			LunarPhaseData phaseData = LunarPhaseData.get(serverLevel);
 			ILunarEvent event = phaseData.getActiveLunarEvent();
-			int currentTime = (int) (serverLevel.getDayTime() % 24000L);
+			int currentTime = (int) (serverLevel.getOverworldClockTime() % 24000L);
 
 			if (currentTime > 13000 && currentTime < 23000) {
 				if (!phaseData.hasEventActive()) {
@@ -110,7 +110,7 @@ public class LunarHandler {
 				if (result == EventResult.DENY) {
 					MutableComponent denyComponent = Component.translatable("lunar.event.sleep_canceled",
 							Component.translatable(lunarEvent.getTranslationKey())).withStyle(ChatFormatting.RED);
-					player.displayClientMessage(denyComponent, true);
+					player.sendOverlayMessage(denyComponent);
 				}
 				return result;
 			}

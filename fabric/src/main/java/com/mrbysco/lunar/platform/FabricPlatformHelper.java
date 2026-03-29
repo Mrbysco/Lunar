@@ -1,19 +1,12 @@
 package com.mrbysco.lunar.platform;
 
-import com.google.common.collect.Maps;
-import com.mrbysco.lunar.Lunar;
 import com.mrbysco.lunar.api.ILunarEvent;
-import com.mrbysco.lunar.config.LunarConfig;
 import com.mrbysco.lunar.network.message.SyncEventMessage;
 import com.mrbysco.lunar.platform.services.IPlatformHelper;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-
-import java.util.Map;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 
@@ -29,102 +22,5 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public void syncEvent(ServerPlayer player, ILunarEvent event) {
 		ServerPlayNetworking.send(player, new SyncEventMessage(event));
-	}
-
-	@Override
-	public float getLunarChance() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.general.lunarEventChance;
-	}
-
-	@Override
-	public int getBloodMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.bloodMoonWeight;
-	}
-
-	@Override
-	public int getCrimsonMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.crimsonMoonWeight;
-	}
-
-	@Override
-	public int getMinerMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.minerMoonWeight;
-	}
-
-	@Override
-	public int getWhiteMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.whiteMoonWeight;
-	}
-
-	@Override
-	public int getBigMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.bigMoonWeight;
-	}
-
-	@Override
-	public int getTinyMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.tinyMoonWeight;
-	}
-
-	@Override
-	public int getBadOmenMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.badOmenMoonWeight;
-	}
-
-	@Override
-	public int getHeroMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.heroMoonWeight;
-	}
-
-	@Override
-	public int getEclipseMoonWeight() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.events.eclipseMoonWeight;
-	}
-
-	@Override
-	public Map<Identifier, Identifier> getCrimsonReplacementMap() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		Map<Identifier, Identifier> map = Maps.newHashMap();
-		Lunar.config.crimson.crimsonReplacements.forEach(entry -> {
-			if (entry.contains(",")) {
-				String[] split = entry.split(",");
-				map.put(Identifier.tryParse(split[0]), Identifier.tryParse(split[1]));
-			}
-		});
-		return map;
-	}
-
-	@Override
-	public boolean canSleepIn(Identifier moonID) {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		boolean result = true;
-		switch(moonID.toString()) {
-			case "lunar:blood_moon" -> result = Lunar.config.sleeping.bloodMoonSleeping;
-			case "lunar:crimson_moon" -> result = Lunar.config.sleeping.crimsonMoonSleeping;
-			case "lunar:miner_moon" -> result = Lunar.config.sleeping.minerMoonSleeping;
-			case "lunar:white_moon" -> result = Lunar.config.sleeping.whiteMoonSleeping;
-			case "lunar:big_moon" -> result = Lunar.config.sleeping.bigMoonSleeping;
-			case "lunar:tiny_moon" -> result = Lunar.config.sleeping.tinyMoonSleeping;
-			case "lunar:bad_omen_moon" -> result = Lunar.config.sleeping.badOmenMoonSleeping;
-			case "lunar:hero_moon" -> result = Lunar.config.sleeping.heroMoonSleeping;
-			case "lunar:eclipse_moon" -> result = Lunar.config.sleeping.eclipseMoonSleeping;
-		}
-		return result;
-	}
-
-	@Override
-	public int maxBadOmen() {
-		if (Lunar.config == null) Lunar.config = AutoConfig.getConfigHolder(LunarConfig.class).getConfig();
-		return Lunar.config.badomen.maxBadOmen;
 	}
 }
