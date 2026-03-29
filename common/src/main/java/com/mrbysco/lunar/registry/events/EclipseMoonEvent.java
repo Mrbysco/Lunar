@@ -4,7 +4,6 @@ import com.mrbysco.lunar.Constants;
 import com.mrbysco.lunar.api.LunarEvent;
 import com.mrbysco.lunar.config.ConfigHelper;
 import com.mrbysco.lunar.handler.result.EventResult;
-import com.mrbysco.lunar.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
