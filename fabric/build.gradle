@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'maven-publish'
-    id "net.fabricmc.fabric-loom" version '1.15-SNAPSHOT'
+    id "net.fabricmc.fabric-loom" version '1.17-SNAPSHOT'
     id 'net.darkhax.curseforgegradle'
     id 'com.modrinth.minotaur'
 }
@@ -11,28 +11,16 @@ base {
     archivesName = "${mod_name}-fabric-${minecraft_version}"
 }
 
-repositories {
-    maven {
-        url "https://maven.shedaniel.me/"
-    }
-    maven {
-        url "https://maven.terraformersmc.com/"
-        content {
-            includeGroup "com.terraformersmc"
-        }
-    }
-}
-
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     implementation project(":common")
 
-//    modApi "dev.architectury:architectury-fabric:${architectury_version}"
+    api "dev.architectury:architectury-fabric:${architectury_version}"
 
     api("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_version}")
-    implementation("com.terraformersmc:modmenu:${mod_menu_version}"){
+    implementation("com.terraformersmc:modmenu:${mod_menu_version}") {
         exclude(group: "eu.pb4")
     }
 }
