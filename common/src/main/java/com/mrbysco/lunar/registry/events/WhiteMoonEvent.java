@@ -12,7 +12,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
 
 public class WhiteMoonEvent extends LunarEvent {
-	private static final Identifier MOON_LOCATION = Constants.modLoc("white.png");
+	private static final Identifier MOON_LOCATION = Constants.modLoc("white");
 
 	public WhiteMoonEvent() {
 		super(Constants.modLoc("white_moon"), 0x1f1f1f);
