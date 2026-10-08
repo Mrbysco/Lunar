@@ -43,13 +43,13 @@ public class LunarPhaseData extends SavedData {
 	}
 
 	public LunarPhaseData(Optional<Identifier> forcedEventID, Optional<Identifier> activeEventID) {
-		this.forcedEventID = activeEventID;
-		ILunarEvent event = activeEventID.map(location -> LunarRegistry.instance().getEventByID(location)).orElse(null);
-		setActiveEvent(event);
-
-		this.activeEventID = forcedEventID;
+		this.forcedEventID = forcedEventID;
 		ILunarEvent forcedEvent = forcedEventID.map(location -> LunarRegistry.instance().getEventByID(location)).orElse(null);
 		setForcedEvent(forcedEvent);
+
+		this.activeEventID = activeEventID;
+		ILunarEvent event = activeEventID.map(location -> LunarRegistry.instance().getEventByID(location)).orElse(null);
+		setActiveEvent(event);
 	}
 
 	@SuppressWarnings("DataFlowIssue")
