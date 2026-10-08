@@ -1,1 +1,1 @@
-* Fix White Moon texture
+* Fix mistake in the saved data constructor (Courtesy of [rim5432](https://github.com/Mrbysco/Lunar/pull/35))
