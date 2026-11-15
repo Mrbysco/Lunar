@@ -1,9 +1,9 @@
 package com.mrbysco.lunar.mixin;
 
-import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
 import com.mrbysco.lunar.client.MoonHandler;
 import net.minecraft.client.renderer.SkyRenderer;
-import org.joml.Vector4fc;
+import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -12,23 +12,23 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public abstract class SkyRendererMixin {
 
 	@ModifyArg(
-			method = "renderMoon(Lnet/minecraft/world/level/MoonPhase;FLcom/mojang/blaze3d/vertex/PoseStack;)V",
+			method = "renderMoon(Lcom/mojang/renderpearl/api/commands/RenderPass;Lnet/minecraft/world/level/MoonPhase;FLcom/mojang/blaze3d/vertex/PoseStack;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/renderer/DynamicUniforms;writeTransform(Lorg/joml/Matrix4fc;Lorg/joml/Vector4fc;Lorg/joml/Vector3fc;Lorg/joml/Matrix4fc;)Lcom/mojang/blaze3d/buffers/GpuBufferSlice;"
+					target = "Lnet/minecraft/client/renderer/DynamicGpuData;writeTransform(Lorg/joml/Matrix4f;Lorg/joml/Vector4f;)Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;"
 			), index = 1
 	)
-	private Vector4fc lunar_colorMoon(Vector4fc colorVector) {
-		return MoonHandler.colorTheMoon(colorVector);
+	private Vector4f lunar_colorMoon(Vector4f colorModulator) {
+		return MoonHandler.colorTheMoon(colorModulator);
 	}
 
 	@ModifyArg(
-			method = "renderMoon(Lnet/minecraft/world/level/MoonPhase;FLcom/mojang/blaze3d/vertex/PoseStack;)V",
+			method = "renderMoon(Lcom/mojang/renderpearl/api/commands/RenderPass;Lnet/minecraft/world/level/MoonPhase;FLcom/mojang/blaze3d/vertex/PoseStack;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lcom/mojang/blaze3d/systems/RenderPass;setVertexBuffer(ILcom/mojang/blaze3d/buffers/GpuBuffer;)V",
+					target = "Lnet/minecraft/client/renderer/SkyRenderer;drawCelestialBody(Ljava/util/function/Supplier;Lcom/mojang/renderpearl/api/commands/RenderPass;Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;Lcom/mojang/renderpearl/api/buffers/GpuBuffer;Lcom/mojang/renderpearl/api/buffers/GpuBuffer;I)V",
 					remap = false),
-			index = 1)
+			index = 4)
 	public GpuBuffer lunar_changeMoonTexture(GpuBuffer gpuBuffer) {
 		return MoonHandler.getMoonBuffer(gpuBuffer);
 	}

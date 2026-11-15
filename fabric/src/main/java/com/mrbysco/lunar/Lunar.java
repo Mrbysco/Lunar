@@ -48,14 +48,14 @@ public class Lunar implements ModInitializer {
 		EntitySleepEvents.ALLOW_SLEEPING.register(this::onSleepCheck);
 		EntityEvents.LIVING_SPECIAL_SPAWN.register(this::onLivingSpawn);
 		if (FabricLoader.getInstance().isModLoaded("architectury")) {
-//			dev.architectury.event.events.common.EntityEvent.LIVING_CHECK_SPAWN.register((entity, level, x, y, z, type, spawner) -> {
-//				InteractionResult result = onCheckSpawn(entity, level, x, y, z, type, spawner);
-//				if (result == InteractionResult.FAIL)
-//					return dev.architectury.event.EventResult.interruptDefault();
-//				if (result == InteractionResult.SUCCESS)
-//					return dev.architectury.event.EventResult.interruptTrue();
-//				return dev.architectury.event.EventResult.pass();
-//			});
+			dev.architectury.event.events.common.EntityEvent.LIVING_CHECK_SPAWN.register((entity, level, x, y, z, type, spawner) -> {
+				InteractionResult result = onCheckSpawn(entity, level, x, y, z, type, spawner);
+				if (result == InteractionResult.FAIL)
+					return dev.architectury.event.EventResult.interruptDefault();
+				if (result == InteractionResult.SUCCESS)
+					return dev.architectury.event.EventResult.interruptTrue();
+				return dev.architectury.event.EventResult.pass();
+			});
 		} else {
 			EntityEvents.LIVING_CHECK_SPAWN.register(this::onCheckSpawn);
 		}

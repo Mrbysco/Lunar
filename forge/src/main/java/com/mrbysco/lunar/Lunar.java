@@ -29,7 +29,7 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 public class Lunar {
 
 	public Lunar(IEventBus eventBus, ModContainer container, Dist dist) {
-		container.registerConfig(ModConfig.Type.COMMON, LunarConfig.commonSpec);
+		container.registerConfig(ModConfig.Type.LOCAL, LunarConfig.commonSpec);
 		eventBus.addListener(this::setup);
 
 		eventBus.addListener(PacketHandler::setupPackets);

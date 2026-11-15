@@ -8,7 +8,7 @@ modId="lunar"
 version="${file.jarVersion}"
 displayName="Lunar"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/lunar"
-logoFile="icon.png"
+iconFile="icon.png"
 authors="Mrbysco"
 description='''
 Adding Lunar events to the game
@@ -16,7 +16,7 @@ Adding Lunar events to the game
 [[dependencies.lunar]]
 modId="minecraft"
 type="required"
-versionRange="[26.1,)"
+versionRange="[26.3,)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]

@@ -1,12 +1,13 @@
 package com.mrbysco.lunar.client;
 
-import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
+import com.mojang.renderpearl.api.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -33,7 +34,7 @@ public class MoonHandler {
 	/**
 	 * Called to set the color of the moon.
 	 */
-	public static Vector4fc colorTheMoon(Vector4fc originalColor) {
+	public static Vector4f colorTheMoon(Vector4f originalColor) {
 		if (isEventActive()) {
 			int color = getMoonColor();
 			return new Vector4f(ARGB.redFloat(color), ARGB.greenFloat(color), ARGB.blueFloat(color), originalColor.w());
@@ -161,7 +162,7 @@ public class MoonHandler {
 
 		GpuBuffer gpubuffer;
 		try (ByteBufferBuilder bytebufferbuilder = ByteBufferBuilder.exactlySized(amoonphase.length * 4 * vertexformat.getVertexSize())) {
-			BufferBuilder bufferbuilder = new BufferBuilder(bytebufferbuilder, VertexFormat.Mode.QUADS, vertexformat);
+			BufferBuilder bufferbuilder = new BufferBuilder(bytebufferbuilder, PrimitiveTopology.QUADS, vertexformat);
 
 			for (MoonPhase moonphase : amoonphase) {
 				Identifier moonLocation = location.withSuffix("/" + moonphase.getSerializedName());
